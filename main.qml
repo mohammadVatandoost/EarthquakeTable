@@ -1,5 +1,10 @@
 import QtQuick 2.9
 import QtQuick.Window 2.2
+import QtQml 2.0
+import QtQuick.Controls 2.4
+import QtQuick.Layouts 1.3
+import QtQuick.Extras 1.4
+import QtQuick.Controls.Material 2.3
 import QtQuick.VirtualKeyboard 2.2
 
 Window {
@@ -9,32 +14,32 @@ Window {
     height: 480
     title: qsTr("Hello World")
 
-    InputPanel {
-        id: inputPanel
-        z: 99
-        x: 0
-        y: window.height
-        width: window.width
-
-        states: State {
-            name: "visible"
-            when: inputPanel.active
-            PropertyChanges {
-                target: inputPanel
-                y: window.height - inputPanel.height
+    TabBar {
+        id: bar
+        width: parent.width
+        TabButton {
+            text: qsTr("Control")
+            onClicked: {
+                console.log("Control")
             }
         }
-        transitions: Transition {
-            from: ""
-            to: "visible"
-            reversible: true
-            ParallelAnimation {
-                NumberAnimation {
-                    properties: "y"
-                    duration: 250
-                    easing.type: Easing.InOutQuad
-                }
+        TabButton {
+            text: qsTr("Charts")
+            onClicked: {
+                console.log("Charts")
             }
+        }
+    }
+
+    StackLayout {
+        anchors.top:  bar.bottom
+        width: parent.width
+        currentIndex: bar.currentIndex
+        ControlPanel {
+            id: controlTab
+        }
+        ChartComponent {
+            id: chartsTab
         }
     }
 }

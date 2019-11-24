@@ -20,7 +20,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-    backend.cpp
+    backend.cpp \
+    csv.cpp
 
 RESOURCES += qml.qrc
 
@@ -37,4 +38,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     backend.h \
-    sensor.h
+    sensor.h \
+    packet.h \
+    csv.h

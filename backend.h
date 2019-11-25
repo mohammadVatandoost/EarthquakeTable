@@ -28,6 +28,7 @@ public:
     void getSensorPkt(QByteArray data);
     void getMotorSpeedPkt(QByteArray data);
     void getTorquePkt(QByteArray data);
+//    Q_INVOKABLE int getSensor();
 signals:
 
 public slots:

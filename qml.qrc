@@ -3,5 +3,9 @@
         <file>main.qml</file>
         <file>ChartComponent.qml</file>
         <file>ControlPanel.qml</file>
+        <file>ChooseFile.qml</file>
+        <file>MotorSpeed.qml</file>
+        <file>Move.qml</file>
+        <file>SetSensorFloor.qml</file>
     </qresource>
 </RCC>

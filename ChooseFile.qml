@@ -10,42 +10,33 @@ import QtQuick.VirtualKeyboard 2.2
 Pane {
     id: comboBoxes
     implicitHeight: 100
-    implicitWidth: parent.width*0.95
+    implicitWidth: parent.width
     Material.elevation: 5
     Layout.alignment: Qt.AlignHCenter
-    RowLayout {
+    ColumnLayout {
         width: parent.width
         spacing: 5
-        ColumnLayout {
-            width: parent.width/2
-            Layout.alignment: Qt.AlignHCenter
+        RowLayout {
+            width: parent.width
             Label {
-              Layout.alignment: Qt.AlignHCenter
-              anchors.horizontalCenter: parent.horizontalCenter
-              text: "File"
-              font.pixelSize: 22
+              Layout.alignment: Qt.AlignLeft
+              anchors.left: parent.left
+              text: "File :"
+              font.pixelSize: 18
             }
             Text {
-                Layout.alignment: Qt.AlignHCenter
-                anchors.horizontalCenter: parent.horizontalCenter
+                Layout.leftMargin: 80
+                font.pixelSize: 22
                 text: qsTr("test.txt")
             }
         }
-        ColumnLayout {
-            width: parent.width/2
-            Rectangle {
-                width: parent.width
-                color: "red"
-                height: 70
-            }
+         Button {
+                Layout.alignment: Qt.AlignHCenter
+                text: qsTr("Choose File")
+//                anchors.horizontalCenter: parent.horizontalCenter
+                highlighted: true
+                Material.background: Material.Green
+         }
 
-//            Button {
-//                Layout.alignment: Qt.AlignRight
-//                text: qsTr("Choose File")
-////                anchors.horizontalCenter: parent.horizontalCenter
-//                highlighted: true
-//                Material.background: Material.Green
-//            }
-        }
     }
 }

@@ -18,57 +18,14 @@ Page {
         leftPadding: 10
 
        ColumnLayout {
-           width: parent.width/2
+                width: parent.width/2
+                spacing: 15
                ChooseFile {}
-               Label {
-                 Layout.alignment: Qt.AlignHCenter
-                 text: "Motor speed"
-                 font.pixelSize: 22
-                 anchors.horizontalCenter: parent.horizontalCenter
-               }
-               Text {
-                   Layout.alignment: Qt.AlignHCenter
-                   text: qsTr("1000rpm")
-                   anchors.horizontalCenter: parent.horizontalCenter
-               }
-               Button {
-                   Layout.alignment: Qt.AlignHCenter
-                   anchors.horizontalCenter: parent.horizontalCenter
-                   text: qsTr("Colibrate")
-                   highlighted: true
-                   Material.background: Material.Green
-               }
-               Label {
-                 Layout.alignment: Qt.AlignHCenter
-                 text: "Positioning Something"
-                 font.pixelSize: 22
-                 anchors.horizontalCenter: parent.horizontalCenter
-               }
-               RowLayout {
-                   Layout.alignment: Qt.AlignHCenter
-                   Button {
-                       Layout.alignment: Qt.AlignHCenter
-//                       anchors.horizontalCenter: parent.horizontalCenter
-                       text: qsTr("left")
-                       highlighted: true
-                       Material.background: Material.Blue
-                   }
-                   Button {
-                       Layout.alignment: Qt.AlignHCenter
-//                       anchors.horizontalCenter: parent.horizontalCenter
-                       text: qsTr("right")
-                       highlighted: true
-                       Material.background: Material.Blue
-                   }
-               }
+               MotorSpeed {}
+               Move {}
        }
        ColumnLayout {
            width: parent.width/2
-
-//           Rectangle {
-//               border.width: 1
-//               border.color: "red"
-//              ColumnLayout {
               Rectangle {
                  width: 0.8*parent.width
                  height: 250
@@ -77,13 +34,7 @@ Page {
                  Layout.alignment: Qt.AlignHCenter
                  Material.elevation: 6
 
-//                 Rectangle {
-//                     id: padding3
-//                     height: 5
-//                     width: parent.width
-//                     anchors.topMargin: 100
-                 //                     color: "red"
-//                 }
+
                  Label {
                    id: ax1Label
                    text: "Ax1"
@@ -152,35 +103,14 @@ Page {
                  }
               }
 
-              Pane {
-                  id: comboBoxes
-                  implicitHeight: 100
-                  implicitWidth: parent.width*0.9
-                  Material.elevation: 6
-
-                  RowLayout {
-                      ComboBox {
-                          id: comboBoxGas
-                          property var gasTypes: [ "NO", "CO", "SO2", "O2", "BTEX", "VOC" ]
-                          function getIndex() {
-//                              var gasType = SensorsList.getGasTypeValue(root.sensorId)
-                              var gasType = 1;
-                              for(var i=0; i< gasTypes.length; i++) {
-                                  if(gasTypes[i] === gasType) {
-                                      return i;
-                                  }
-                              }
-                              return 0;
-                          }
-
-                          width: 200
-                          model: gasTypes
-                          currentIndex: getIndex()
-//                          onActivated:SensorsList.setGasTypeValue(root.sensorId, gasTypes[currentIndex])
-                      }
-                  }
+              SetSensorFloor {}
+              Button {
+                     Layout.alignment: Qt.AlignHCenter
+                     text: qsTr("Set Sensor")
+     //                anchors.horizontalCenter: parent.horizontalCenter
+                     highlighted: true
+                     Material.background: Material.Green
               }
-
        }
 
    }

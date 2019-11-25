@@ -10,8 +10,8 @@ import QtQuick.VirtualKeyboard 2.2
 Window {
     id: window
     visible: true
-    width: 640
-    height: 480
+    width: 840
+    height: 680
     title: qsTr("Hello World")
 
     TabBar {

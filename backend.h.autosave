@@ -6,12 +6,17 @@
 #include <QSerialPort>
 #include <QSerialPortInfo>
 #include <QTimer>
+#include <QtCharts/QAbstractSeries>
+#include <QTime>
+#include <QtCharts/QDateTimeAxis>
 #include <iostream>
 #include <QDir>
 #include "packet.h"
 #include "sensorslist.h"
 
 using namespace std;
+
+QT_CHARTS_USE_NAMESPACE
 
 class Backend : public QObject
 {
@@ -26,7 +31,7 @@ public:
     QByteArray dataBuf;
     uint16_t recieveState = 0;
     uint16_t packetSize = 0;
-
+    void updateChart(QAbstractSeries *chartSeries, int sensorId);
     void decodePacket(QByteArray data);
     void getSensorPkt(QByteArray data);
     void getMotorSpeedPkt(QByteArray data);

@@ -1,4 +1,11 @@
+#include <QtCharts/QXYSeries>
+#include <QtCharts/QAreaSeries>
 #include "backend.h"
+
+Q_DECLARE_METATYPE(QAbstractSeries *)
+Q_DECLARE_METATYPE(QAbstractAxis *)
+Q_DECLARE_METATYPE(QDateTimeAxis *)
+
 
 Backend::Backend(QObject *parent) : QObject(parent)
 {
@@ -18,6 +25,18 @@ Backend::Backend(QObject *parent) : QObject(parent)
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(timerSlot()));
     timer->start(1000);
+}
+
+void Backend::updateChart(QAbstractSeries *chartSeries, int sensorId)
+{
+  if(sensorId < mList->items().size() && -1 < sensorId) {
+    if (chartSeries) {
+        QXYSeries *xySeries = static_cast<QXYSeries *>(chartSeries);
+        QVector<Sensor> sensors = mList->items();
+        QVector<QPointF> points = sensors[sensorId].data;
+        xySeries->replace(points);
+    }
+  }
 }
 
 void Backend::decodePacket(QByteArray data)

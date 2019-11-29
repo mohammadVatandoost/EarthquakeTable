@@ -21,7 +21,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
     backend.cpp \
-    csv.cpp
+    csv.cpp \
+    sensorslist.cpp
 
 RESOURCES += qml.qrc
 
@@ -40,4 +41,6 @@ HEADERS += \
     backend.h \
     sensor.h \
     packet.h \
-    csv.h
+    csv.h \
+    myutitlity.h \
+    sensorslist.h

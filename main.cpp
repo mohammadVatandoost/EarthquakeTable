@@ -5,6 +5,7 @@
 #include <QQuickWindow>
 #include <QApplication>
 #include "backend.h"
+#include "sensorslist.h"
 
 int main(int argc, char *argv[])
 {
@@ -19,9 +20,9 @@ int main(int argc, char *argv[])
 //    qmlRegisterType<SensorModel>("SensorModel", 1, 0, "SensorModel");
 //    qmlRegisterUncreatableType<SensorsList>("SensorsList",1,0,"SensorsList",
 //                                         QStringLiteral("SensorsList should not be created in QML"));
-//    SensorsList sensorsList;
+    SensorsList sensorsList;
     Backend backEnd;
-//    backEnd.setSensorsList(&sensorsList);
+    backEnd.setSensorsList(&sensorsList);
     QQmlApplicationEngine engine;
 //    engine.rootContext()->setContextProperty(QStringLiteral("SensorsList"), &sensorsList);
     engine.rootContext()->setContextProperty(QStringLiteral("BackEnd"), &backEnd);

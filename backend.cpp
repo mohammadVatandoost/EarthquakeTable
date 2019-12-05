@@ -1,4 +1,11 @@
+#include <QtCharts/QXYSeries>
+#include <QtCharts/QAreaSeries>
 #include "backend.h"
+
+Q_DECLARE_METATYPE(QAbstractSeries *)
+Q_DECLARE_METATYPE(QAbstractAxis *)
+Q_DECLARE_METATYPE(QDateTimeAxis *)
+
 
 Backend::Backend(QObject *parent) : QObject(parent)
 {
@@ -18,6 +25,33 @@ Backend::Backend(QObject *parent) : QObject(parent)
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(timerSlot()));
     timer->start(1000);
+}
+
+void Backend::updateChart(QAbstractSeries *chartSeries, int sensorId)
+{
+  if(sensorId < mList->sensorItems.size() && -1 < sensorId) {
+      if(axisXTimes[sensorId]) {
+          axisXTimes[sensorId]->setMin(QDateTime::fromMSecsSinceEpoch(QDateTime::currentDateTime().toMSecsSinceEpoch()-60000));
+          axisXTimes[sensorId]->setMax(QDateTime::currentDateTime());
+      }
+    if (chartSeries) {
+        QXYSeries *xySeries = static_cast<QXYSeries *>(chartSeries);
+        qDebug()<< "chart update:"<< chartSeries->name() << ", data size:" << xySeries->points().size() <<endl;
+        QVector<QPointF> points = mList->sensorItems[sensorId].data;
+        xySeries->replace(points);
+
+    }
+  }
+}
+
+void Backend::setAxisXTime(QDateTimeAxis *axis, int num) {
+    if(num < chartsNumber) {
+        axisXTimes[num] = axis;
+        axisXTimes[num]->setMin(QDateTime::currentDateTime());
+        axisXTimes[num]->setMax(QDateTime::currentDateTime().addSecs(60));
+    } else {
+        qDebug()<< "chart number is not valid:"<<num ;
+    }
 }
 
 void Backend::decodePacket(QByteArray data)
@@ -148,6 +182,17 @@ void Backend::timerSlot()
        serial->close();
 //       connectState = false;qDebug() << "Disconndected : ";
    }
+//   if(mList->sensorItems.size() > 0) {
+////       cout<< "test add data"<<endl;
+//       SensorRx *temp = new SensorRx();
+//       temp->sensorId = 0;
+//       temp->x = 5;
+//       mList->setSensorData(temp);
+////       for(int i=0; i<mList->sensorItems[0].data.size(); i++) {
+////           cout<< mList->sensorItems[0].data[i].x() << " : "<<  mList->sensorItems[0].data[i].y()<<endl ;
+////       }
+////       cout<<endl;
+//   }
 
 //   emit notifyInfoDataChanged();
 }

@@ -2,7 +2,15 @@
 
 SensorsList::SensorsList(QObject *parent) : QObject(parent)
 {
-
+   Sensor sensor;
+   sensor.sensorNumber = 0;
+   addSensor(sensor);
+   sensor.sensorNumber = 1;
+   addSensor(sensor);
+   sensor.sensorNumber = 2;
+   addSensor(sensor);
+   sensor.sensorNumber = 3;
+   addSensor(sensor);
 }
 
 void SensorsList::addSensor(Sensor newSensor)

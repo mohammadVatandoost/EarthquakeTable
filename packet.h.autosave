@@ -36,7 +36,7 @@ struct MotorSpeedRx {
 struct ConfigTx {
     uint8_t packetCode = ConfigTxPkt;
     uint8_t mode;
-    uint8_t move;
+    uint8_t move = Stop;
     uint8_t loopTime;
 };
 

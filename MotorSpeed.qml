@@ -41,6 +41,7 @@ Pane {
             text: qsTr("Colibrate")
             highlighted: true
             Material.background: Material.Green
+            onClicked: {BackEnd.colibrate()}
         }
     }
 }

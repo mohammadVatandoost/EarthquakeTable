@@ -29,6 +29,7 @@ Pane {
                 text: qsTr("left")
                 highlighted: true
                 Material.background: Material.Blue
+                onClicked: {BackEnd.moveRight()}
             }
             Button {
                 Layout.alignment: Qt.AlignHCenter
@@ -36,6 +37,7 @@ Pane {
                 text: qsTr("right")
                 highlighted: true
                 Material.background: Material.Blue
+                onClicked: {BackEnd.moveLeft()}
             }
         }
     }

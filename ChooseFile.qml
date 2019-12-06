@@ -5,7 +5,7 @@ import QtQuick.Extras 1.4
 import QtQuick.Controls.Material 2.3
 import QtQuick.Controls.Styles 1.4
 import QtQuick.VirtualKeyboard 2.2
-
+import QtQuick.Dialogs 1.0
 
 Pane {
     id: comboBoxes
@@ -36,7 +36,21 @@ Pane {
 //                anchors.horizontalCenter: parent.horizontalCenter
                 highlighted: true
                 Material.background: Material.Green
+                onClicked: {fileDialog.open();}
          }
 
+    }
+
+    FileDialog {
+        id: fileDialog
+        title: "Please choose a file"
+        folder: shortcuts.home
+        onAccepted: {
+            console.log("You chose: " + fileDialog.fileUrls)
+        }
+        onRejected: {
+            console.log("Canceled")
+        }
+//        Component.onCompleted: visible = true
     }
 }

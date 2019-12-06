@@ -6,6 +6,7 @@ import QtQuick.Controls.Material 2.3
 import QtQuick.Controls.Styles 1.4
 import QtQuick.VirtualKeyboard 2.2
 
+
 Page {
     id: root
     width: window.width
@@ -110,8 +111,11 @@ Page {
      //                anchors.horizontalCenter: parent.horizontalCenter
                      highlighted: true
                      Material.background: Material.Green
+                     onClicked: {BackEnd.setSensorInfo();}
               }
        }
 
    }
+
+
 }

@@ -116,10 +116,9 @@ void Backend::getTorquePkt(QByteArray data)
     }
 }
 
-void Backend::sendConfig()
+void Backend::sendConfig(ConfigTx temp)
 {
     uint32_t sum = 0;
-    ConfigTx temp;
     char* dataBytes = static_cast<char*>(static_cast<void*>(&temp));
     for(int i=1; i<sizeof(struct ConfigTx); i++) {
         sum = sum + ((uint8_t)dataBytes[i]);
@@ -226,17 +225,25 @@ void Backend::setSensorsList(SensorsList *sensorsList)
 
 void Backend::colibrate()
 {
-
+  ConfigTx temp; 
+  temp.mode = CALIBRATION;
+  sendConfig(temp);
 }
 
 void Backend::moveRight()
 {
-
+   ConfigTx temp;
+   temp.mode = CONFIG;
+   temp.move = MoveRight;
+   sendConfig(temp);
 }
 
 void Backend::moveLeft()
 {
-
+    ConfigTx temp;
+    temp.mode = CONFIG;
+    temp.move = MoveLeft;
+    sendConfig(temp);
 }
 
 void Backend::setSensorInfo()

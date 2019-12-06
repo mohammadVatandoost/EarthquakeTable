@@ -2,15 +2,7 @@
 
 SensorsList::SensorsList(QObject *parent) : QObject(parent)
 {
-   Sensor sensor;
-   sensor.sensorNumber = 0;
-   addSensor(sensor);
-   sensor.sensorNumber = 1;
-   addSensor(sensor);
-   sensor.sensorNumber = 2;
-   addSensor(sensor);
-   sensor.sensorNumber = 3;
-   addSensor(sensor);
+
 }
 
 void SensorsList::addSensor(Sensor newSensor)
@@ -22,9 +14,13 @@ void SensorsList::addSensor(Sensor newSensor)
 
 void SensorsList::setSensorData(SensorRx *data)
 {
+  if(data->sensorId < sensorItems.size()) {
    sensorItems[data->sensorId].lastData = data->x;
    double tempDateTime = QDateTime::currentMSecsSinceEpoch();
    sensorItems[data->sensorId].addData(tempDateTime, data->x);
+  } else {
+      cout<< "err setSensorData: sensor id not valid:"<<data->sensorId<<endl;
+  }
 }
 
 bool SensorsList::isNewId(uint8_t id)

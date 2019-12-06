@@ -41,7 +41,7 @@ public:
     void getSensorPkt(QByteArray data);
     void getMotorSpeedPkt(QByteArray data);
     void getTorquePkt(QByteArray data);
-    void sendConfig();
+    void sendConfig(ConfigTx temp);
     // charts
     QDateTimeAxis* axisXTimes[chartsNumber];
 

@@ -22,7 +22,8 @@ SOURCES += \
         main.cpp \
     backend.cpp \
     csv.cpp \
-    sensorslist.cpp
+    sensorslist.cpp \
+    jsonstoring.cpp
 
 RESOURCES += qml.qrc
 
@@ -43,4 +44,5 @@ HEADERS += \
     packet.h \
     csv.h \
     myutitlity.h \
-    sensorslist.h
+    sensorslist.h \
+    jsonstoring.h

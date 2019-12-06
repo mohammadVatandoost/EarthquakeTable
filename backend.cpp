@@ -25,6 +25,7 @@ Backend::Backend(QObject *parent) : QObject(parent)
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(timerSlot()));
     timer->start(1000);
+    generalData = jsonStoring.getGeneralData();
 }
 
 void Backend::updateChart(QAbstractSeries *chartSeries, int sensorId)
@@ -37,9 +38,8 @@ void Backend::updateChart(QAbstractSeries *chartSeries, int sensorId)
     if (chartSeries) {
         QXYSeries *xySeries = static_cast<QXYSeries *>(chartSeries);
 //        qDebug()<< "chart update:"<< chartSeries->name() << ", data size:" << xySeries->points().size() <<endl;
-        QVector<QPointF> points = mList->sensorItems[sensorId].data;
-        xySeries->replace(points);
-
+//        QVector<QPointF> points = mList->sensorItems[sensorId].dataAccX;
+        xySeries->replace(mList->sensorItems[sensorId].dataAccX);
     }
   }
 }
@@ -71,9 +71,9 @@ void Backend::decodePacket(QByteArray data)
              getMotorSpeedPkt(data);
           } else if (packetCode == TorqueRxPkt) {
               getTorquePkt(data);
-           }
+          }
         } else {
-            cout << ", " << unsigned(static_cast<uint8_t>(data[data.size()-1])) << " checsum is wrong " << sum%256  << endl;
+            cout <<unsigned(((uint8_t)data[0])) << ": " << unsigned(static_cast<uint8_t>(data[data.size()-1])) << " checsum is wrong " << unsigned(((uint8_t)sum%256)&0xff)  << endl;
         }
     }
 }
@@ -81,12 +81,15 @@ void Backend::decodePacket(QByteArray data)
 void Backend::getSensorPkt(QByteArray data)
 {
     if(data.size() == sizeof(struct SensorRx)) {
+
      SensorRx *m = reinterpret_cast<SensorRx*>(data.data());
+//     cout<< "Get sensor paket:"<< m->sensorId <<endl;
       if(mList->isNewId(m->sensorId)) {
             Sensor temp;
             temp.sensorNumber =  m->sensorId;
             temp.lastData = m->x;
             mList->addSensor(temp);
+//            testBug.append(m->x);
       } else {
              mList->setSensorData(m);
       }
@@ -100,7 +103,8 @@ void Backend::getMotorSpeedPkt(QByteArray data)
 {
     if(data.size() == sizeof(struct MotorSpeedRx)) {
      MotorSpeedRx *m = reinterpret_cast<MotorSpeedRx*>(data.data());
-
+//     cout<< "Get MotorSpeedRx paket:"<< m->frq <<endl;
+     motorSpeed = m->frq;
     } else {
         cout<< "getMotorSpeedPkt "<< data.size() << " must be "<<sizeof(struct MotorSpeedRx);
     }
@@ -110,18 +114,19 @@ void Backend::getTorquePkt(QByteArray data)
 {
     if(data.size() == sizeof(struct TorqueRx)) {
      TorqueRx *m = reinterpret_cast<TorqueRx*>(data.data());
-
+     cout<< "Get TorqueRx paket:"<< m->torque <<endl;
+     generalData.torque = m->torque;
+     jsonStoring.storeGeneralData(generalData);
     } else {
         cout<< "getTorquePkt "<< data.size() << " must be "<<sizeof(struct TorqueRx);
     }
 }
 
-void Backend::sendConfig()
+void Backend::sendConfig(ConfigTx temp)
 {
     uint32_t sum = 0;
-    ConfigTx temp;
     char* dataBytes = static_cast<char*>(static_cast<void*>(&temp));
-    for(int i=1; i<sizeof(struct ConfigTx); i++) {
+    for(int i=0; i<sizeof(struct ConfigTx); i++) {
         sum = sum + ((uint8_t)dataBytes[i]);
     }
     QString packet = "*@" ;
@@ -132,6 +137,19 @@ void Backend::sendConfig()
     QByteArray checkSumByte;
     checkSumByte.append(checkSum);
     serial->write(checkSumByte);
+}
+
+void Backend::runSimulation()
+{
+    ConfigTx temp;
+    temp.mode = RUN;
+    temp.loopTime = 20;
+    sendConfig(temp);
+}
+
+void Backend::sendSimulationData()
+{
+
 }
 
 void Backend::recieveSerialPort()
@@ -166,6 +184,7 @@ void Backend::recieveSerialPort()
                 dataBuf.append(data[i]);
                 recieveState = recieveState + 1;
             }  else {
+                cout<< " recieveSerialPort packet code is wrong: "<< packetCode<< endl;
                 packetSize = 0;
                 recieveState = 0;
                 dataBuf.clear();
@@ -197,6 +216,18 @@ void Backend::timerSlot()
             connectState = false; qDebug() << "Not conndected : ";
             serial->close();
         }
+    } else {
+//        counter++;
+//        if(counter %3 == 0) {
+//           colibrate();
+//        } else if(counter %3 == 1) {
+//            moveRight();
+//        } else if(counter %3 == 2) {
+//           runSimulation();
+//        }
+
+
+
     }
    } else {
        serial->close();
@@ -221,25 +252,85 @@ void Backend::timerSlot()
 
 void Backend::setSensorsList(SensorsList *sensorsList)
 {
+    qDebug()<< "set sensorList";
     mList = sensorsList;
 }
 
 void Backend::colibrate()
 {
-
+  ConfigTx temp;
+  temp.mode = CALIBRATION;
+  temp.loopTime = 20;
+  sendConfig(temp);
 }
 
 void Backend::moveRight()
 {
-
+   ConfigTx temp;
+   temp.mode = CONFIG;
+   temp.move = MoveRight;
+   temp.loopTime = 20;
+   sendConfig(temp);
 }
 
 void Backend::moveLeft()
 {
+    ConfigTx temp;
+    temp.mode = CONFIG;
+    temp.move = MoveLeft;
+    temp.loopTime = 20;
+    sendConfig(temp);
+}
 
+void Backend::readFile(QString fileDirectory)
+{
+    fileAddress = fileDirectory;
+    sendFileData();
 }
 
 void Backend::setSensorInfo()
 {
 
+}
+
+QString Backend::getMotorSpeed()
+{
+    return QString::number(motorSpeed) + " rpm";
+}
+
+void Backend::sendFileData()
+{
+    qDebug()<< "sendFileData";
+    QString message;
+    QVector<uint16_t> dataList;
+    if(fileAddress.contains(".txt")) {
+        fileAddress.replace("file://", "");
+        qDebug()<< fileAddress;
+        QFile file(fileAddress);
+        if ( !file.open(QFile::ReadOnly | QFile::Text) ) {
+            message = "File not exists" ;
+            qDebug() << message;
+        } else {
+            QTextStream in(&file);
+            while (!in.atEnd())
+            {
+                QString line = in.readLine();
+                for (QString item : line.split(" ")) {
+                    if( myUtitlity.checkStringContainsNum(item.toUtf8().toStdString()) ) {
+                            item.replace(" ", "");
+//                            qDebug()<< item;
+                            dataList.append(static_cast<uint16_t>(item.toDouble()*10000));
+                    }
+                }
+            }
+          file.close();
+//          qDebug()<< "file size:"<< dataList.size();
+//          for(int i=0;i<dataList.size(); i++) {
+//              qDebug()<< i << ": "<< dataList[i];
+//          }
+        }
+    } else {
+        message = "invalid file: does not contains .txt";
+        qDebug() << message;
+    }
 }

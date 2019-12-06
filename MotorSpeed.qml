@@ -8,11 +8,12 @@ import QtQuick.VirtualKeyboard 2.2
 
 
 Pane {
-    id: comboBoxes
+    id: root
     implicitHeight: 100
     implicitWidth: parent.width
     Material.elevation: 5
     Layout.alignment: Qt.AlignHCenter
+    property string motorSpeed: "0 rpm"
     ColumnLayout {
         width: parent.width
         spacing: 5
@@ -29,7 +30,7 @@ Pane {
             Text {
                 Layout.leftMargin: 140
 //                anchors.left: label.right
-                text: qsTr("1000 rpm")
+                text: qsTr(motorSpeend)
                 font.pixelSize: 22
                 anchors.horizontalCenter: parent.horizontalCenter
             }
@@ -42,6 +43,16 @@ Pane {
             highlighted: true
             Material.background: Material.Green
             onClicked: {BackEnd.colibrate()}
+        }
+    }
+
+    Timer {
+        id: refreshTimer
+        interval: 500//30 // 60 Hz
+        running: true
+        repeat: true
+        onTriggered: {
+          root.motorSpeed = BackEnd.getMotorSpeed();
         }
     }
 }

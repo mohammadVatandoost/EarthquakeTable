@@ -31,7 +31,7 @@ Page {
                 ValueAxis {
                     id: axisXData0
                     min: 0
-                    max: 10
+                    max: 1000
                 }
                 LineSeries {
                     id: lineSeries0
@@ -57,7 +57,7 @@ Page {
                 ValueAxis {
                     id: axisXData1
                     min: 0
-                    max: 10
+                    max: 1000
                 }
                 LineSeries {
                     id: lineSeries1
@@ -83,7 +83,7 @@ Page {
                 ValueAxis {
                     id: axisXData2
                     min: 0
-                    max: 10
+                    max: 1000
                 }
                 LineSeries {
                     id: lineSeries2
@@ -109,7 +109,7 @@ Page {
                 ValueAxis {
                     id: axisXData3
                     min: 0
-                    max: 10
+                    max: 1000
                 }
                 LineSeries {
                     id: lineSeries3

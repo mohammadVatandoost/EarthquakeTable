@@ -3,6 +3,7 @@
 #include <iostream>
 #include <QString>
 #include <QVector>
+#include <QVector2D>
 #include <QPointF>
 #include "myutitlity.h"
 
@@ -10,18 +11,28 @@
 
 using namespace std;
 
-struct Sensor {
+struct Sensor2 {
     uint8_t sensorNumber;
     uint8_t floor;
-    QVector<QPointF> data;
-    double lastData;
+    QString sensorInfo = "off";
+    double lastData = 10.5;
+};
+
+struct Sensor {
+    uint8_t sensorNumber;
+    uint8_t floor;  
+    QString sensorInfo = "off";
+    double lastData = 10.5;
+    QVector<QPointF> dataAccX;
+
 
     void addData(double time, double value) {
         QPointF temp(time,value);
-        data.append(temp);
-        if(data.size() > saveToFile*2) {
+//        qDebug()<< time << " : "<< value;
+        dataAccX.append(temp);
+        if(dataAccX.size() > saveToFile*2) {
             cout<< "store to csv file"<<endl;
-            saveSensorDataToCSVFile(&data, sensorNumber, "Ax", saveToFile);
+            saveSensorDataToCSVFile(&dataAccX, sensorNumber, "Ax", saveToFile);
         }
     }
 };

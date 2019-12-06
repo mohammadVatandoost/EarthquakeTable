@@ -10,11 +10,11 @@ RowLayout {
     width: parent.width*0.95
     Layout.alignment: Qt.AlignHCenter
     spacing: 10
+
     ComboBox {
         id: comboBoxGas
-        property var gasTypes: [ "NO", "CO", "SO2", "O2", "BTEX", "VOC" ]
+        property var gasTypes: [ "off", "Floor1", "Floor2", "Floor3"]
         function getIndex() {
-//                              var gasType = SensorsList.getGasTypeValue(root.sensorId)
             var gasType = 1;
             for(var i=0; i< gasTypes.length; i++) {
                 if(gasTypes[i] === gasType) {

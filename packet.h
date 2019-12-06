@@ -15,15 +15,17 @@ using namespace std;
 #define CALIBRATION	10
 #define CONFIG		20
 #define RUN			30
+#define SendData	40
 
+#define Stop		0
 #define MoveRight	1
 #define MoveLeft	2
-#define Stop		0
 
-#pragma pack(push, 1)
+
+//#pragma pack(push, 1)
 
 struct SensorRx {
-    uint8_t sensorId;
+    int16_t sensorId;
     int16_t x;
     int16_t y;
     int16_t z;
@@ -36,12 +38,17 @@ struct MotorSpeedRx {
 struct ConfigTx {
     uint8_t packetCode = ConfigTxPkt;
     uint8_t mode;
-    uint8_t move;
+    uint8_t move = Stop;
     uint8_t loopTime;
 };
 
 struct TorqueRx {
     uint16_t torque;
+};
+
+
+struct GeneralData {
+    int torque;
 };
 
 

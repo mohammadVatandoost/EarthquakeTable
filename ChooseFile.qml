@@ -8,11 +8,12 @@ import QtQuick.VirtualKeyboard 2.2
 import QtQuick.Dialogs 1.0
 
 Pane {
-    id: comboBoxes
+    id: root
     implicitHeight: 100
     implicitWidth: parent.width
     Material.elevation: 5
     Layout.alignment: Qt.AlignHCenter
+    property string fileUrl: ""
     ColumnLayout {
         width: parent.width
         spacing: 5
@@ -27,7 +28,7 @@ Pane {
             Text {
                 Layout.leftMargin: 80
                 font.pixelSize: 22
-                text: qsTr("test.txt")
+                text: qsTr(fileUrl)
             }
         }
          Button {
@@ -46,7 +47,12 @@ Pane {
         title: "Please choose a file"
         folder: shortcuts.home
         onAccepted: {
-            console.log("You chose: " + fileDialog.fileUrls)
+            console.log("You chose: " + fileDialog.fileUrl)
+            var temp = ""+fileDialog.fileUrl;
+//            temp.lastIndexOf("/");
+//            console.log(temp.slice(temp.lastIndexOf("/")+1, temp.length))
+            root.fileUrl = temp.slice(temp.lastIndexOf("/")+1, temp.length)
+             BackEnd.readFile(fileDialog.fileUrl);
         }
         onRejected: {
             console.log("Canceled")

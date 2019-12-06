@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
     Backend backEnd;
     backEnd.setSensorsList(&sensorsList);
     QQmlApplicationEngine engine;
-//    engine.rootContext()->setContextProperty(QStringLiteral("SensorsList"), &sensorsList);
+    engine.rootContext()->setContextProperty(QStringLiteral("SensorsList"), &sensorsList);
     engine.rootContext()->setContextProperty(QStringLiteral("BackEnd"), &backEnd);
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 //    // for connecting qml slot to c++ signal

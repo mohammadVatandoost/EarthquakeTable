@@ -7,5 +7,8 @@
         <file>MotorSpeed.qml</file>
         <file>Move.qml</file>
         <file>SetSensorFloor.qml</file>
+        <file>Building.qml</file>
+        <file>Floor.qml</file>
+        <file>SensorComboBox.qml</file>
     </qresource>
 </RCC>

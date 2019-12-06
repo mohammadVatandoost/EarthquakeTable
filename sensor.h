@@ -7,7 +7,7 @@
 #include <QPointF>
 #include "myutitlity.h"
 
-#define saveToFile  1000
+#define saveToFile  10000
 
 using namespace std;
 

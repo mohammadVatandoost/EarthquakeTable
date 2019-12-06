@@ -5,10 +5,15 @@
 
 using namespace std;
 
+#define MAX_SEG_DATA	10
+#define MAX_FILE_DATA	10000
+
 #define SensorRxPkt 0
 #define MotorSpeedRxPkt 1
 #define ConfigTxPkt 2
 #define TorqueRxPkt 3
+#define	FileTxPkt		4
+#define AckRxPkt		5
 
 #define SensorDisconnected 255
 
@@ -39,7 +44,7 @@ struct ConfigTx {
     uint8_t packetCode = ConfigTxPkt;
     uint8_t mode;
     uint8_t move = Stop;
-    uint8_t loopTime;
+    uint8_t loopTime = 0;
 };
 
 struct TorqueRx {
@@ -49,6 +54,16 @@ struct TorqueRx {
 
 struct GeneralData {
     int torque;
+};
+
+struct DataSegment{
+    uint16_t packetCode = FileTxPkt;
+    uint16_t 	packetId;
+    int16_t 	data[MAX_SEG_DATA];
+};
+
+struct AckRx{
+    uint16_t packetId;
 };
 
 

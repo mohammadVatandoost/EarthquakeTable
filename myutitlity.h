@@ -6,6 +6,8 @@
 #include <QPointF>
 #include <QVector>
 #include <QDate>
+#include <chrono>
+#include <thread>
 #include "csv.h"
 
 using namespace std;
@@ -57,6 +59,10 @@ public:
                 c.find('8') != std::string::npos ||
                 c.find('9') != std::string::npos
             );
+    }
+
+    void delay_ms(int time) {
+        this_thread::sleep_for(chrono::milliseconds(time));
     }
 };
 

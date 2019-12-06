@@ -122,7 +122,53 @@ void Backend::getTorquePkt(QByteArray data)
     }
 }
 
+void Backend::getSegmentAckPkt(QByteArray data)
+{
+    if(data.size() == sizeof(struct AckRx)) {
+     AckRx *m = reinterpret_cast<AckRx*>(data.data());
+     cout<< "Get AckRxPkt paket:"<< m->packetId <<endl;
+     sendSimulationData(m->packetId);
+    } else {
+        cout<< "getTorquePkt "<< data.size() << " must be "<<sizeof(struct TorqueRx);
+    }
+}
+
 void Backend::sendConfig(ConfigTx temp)
+{
+    uint32_t sum = 0;
+    char* dataBytes = static_cast<char*>(static_cast<void*>(&temp));
+    for(int i=0; i<sizeof(struct ConfigTx); i++) {
+        sum = sum + ((uint8_t)dataBytes[i]);
+    }
+    QString packet = "*@" ;
+    QByteArray tx_data; tx_data.append(packet);
+    serial->write(tx_data);
+    serial->write(dataBytes, sizeof(struct ConfigTx));
+    uint8_t checkSum= (uint8_t)sum%256;//reinterpret_cast<uint8_t>(sum%256);
+    cout<< " checksum: "<< unsigned(checkSum&0xff)<<endl;
+    QByteArray checkSumByte;
+    checkSumByte.append(checkSum);
+    serial->write(checkSumByte);
+}
+
+void Backend::runSimulation()
+{
+    ConfigTx temp;
+    temp.mode = RUN;
+    temp.loopTime = 20;
+    sendConfig(temp);
+}
+
+void Backend::sendSimulationData(int packetId)
+{
+    cout<< "sendSimulationData : "<< packetId << ", " << dataSegments.size() <<endl;
+  for(int i=packetId; i<dataSegments.size();i++) {
+      sendDataSegment(dataSegments[i]);
+  }
+  counterForSending = 0;
+}
+
+void Backend::sendDataSegment(DataSegment temp)
 {
     uint32_t sum = 0;
     char* dataBytes = static_cast<char*>(static_cast<void*>(&temp));
@@ -137,19 +183,6 @@ void Backend::sendConfig(ConfigTx temp)
     QByteArray checkSumByte;
     checkSumByte.append(checkSum);
     serial->write(checkSumByte);
-}
-
-void Backend::runSimulation()
-{
-    ConfigTx temp;
-    temp.mode = RUN;
-    temp.loopTime = 20;
-    sendConfig(temp);
-}
-
-void Backend::sendSimulationData()
-{
-
 }
 
 void Backend::recieveSerialPort()
@@ -217,6 +250,10 @@ void Backend::timerSlot()
             serial->close();
         }
     } else {
+        if(counterForSending < 3) {
+           counterForSending++;
+        }
+
 //        counter++;
 //        if(counter %3 == 0) {
 //           colibrate();
@@ -225,7 +262,9 @@ void Backend::timerSlot()
 //        } else if(counter %3 == 2) {
 //           runSimulation();
 //        }
-
+        ConfigTx temp;
+        temp.mode = 40;
+        sendConfig(temp);
 
 
     }
@@ -324,6 +363,40 @@ void Backend::sendFileData()
                 }
             }
           file.close();
+
+          if(dataList.size()>0) {
+              ConfigTx temp;
+              temp.mode = SendData;
+              sendConfig(temp);
+              dataSegments.clear();
+//              myUtitlity.delay_ms(1);
+              cout<< "send" << dataList.size() << endl;
+//              int i=0;
+//              int packetId = 0;
+//              while (i<dataList.size()) {
+//                  DataSegment dataSegment;
+//                  dataSegment.packetId = packetId;
+//                  for(int j=0; j< MAX_SEG_DATA; j++) {
+//                      if(i<dataList.size()) {
+//                          dataSegment.data[j] = dataList[i];
+//                          i++;
+//                      } else {
+//                          dataSegment.data[j] = 0;
+//                      }
+//                  }
+//                  dataSegments.append(dataSegment);
+//                  packetId++;
+////                  myUtitlity.delay_ms(1);
+//              }
+//              cout<< "dataSegment" << dataSegments.size() << endl;
+//              sendSimulationData(0);
+//              if(t1) {
+
+//              } else {
+//                  t1 = new std::thread(sendSimulationData, 0);
+//                  t1->detach();
+//              }
+          }
 //          qDebug()<< "file size:"<< dataList.size();
 //          for(int i=0;i<dataList.size(); i++) {
 //              qDebug()<< i << ": "<< dataList[i];

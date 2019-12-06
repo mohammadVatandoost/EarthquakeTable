@@ -49,9 +49,10 @@ public:
     void getSensorPkt(QByteArray data);
     void getMotorSpeedPkt(QByteArray data);
     void getTorquePkt(QByteArray data);
+    void getSegmentAckPkt(QByteArray data);
     void sendConfig(ConfigTx temp);
     void runSimulation();
-    void sendSimulationData();
+
     int counter = 0;
 
 //    QVector<double> testBug;
@@ -60,6 +61,13 @@ public:
 
     //for storing data
     JsonStoring jsonStoring;
+
+    // for sending file
+    int counterForSending = 0;
+    QVector<DataSegment> dataSegments;
+    void sendDataSegment(DataSegment temp) ;
+    void sendSimulationData(int packetId);
+    std::thread *t1;
 signals:
 
 public slots:

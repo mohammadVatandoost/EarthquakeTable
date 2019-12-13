@@ -6,6 +6,7 @@ import QtQuick.Layouts 1.3
 import QtQuick.Extras 1.4
 import QtQuick.Controls.Material 2.3
 import QtQuick.VirtualKeyboard 2.2
+import QtQuick.Dialogs 1.2
 
 Window {
     id: window
@@ -52,4 +53,55 @@ Window {
             id: chartsTab
         }
     }
+
+    Popup {
+            id: popup
+            padding: 10
+            width: 400
+            height: 200
+            x: Math.round((parent.width - width) / 2)
+            y: Math.round((parent.height - height) / 2)
+            modal: true
+            focus: true
+            closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+        ColumnLayout {
+            anchors.horizontalCenter: parent.horizontalCenter
+            implicitWidth: 400
+            implicitHeight: 200
+            spacing: 20
+            Label {
+              text: qsTr("Error")
+              color: "red"
+              font.pixelSize: 27
+              anchors.horizontalCenter: parent.horizontalCenter
+            }
+            Text {
+                anchors.horizontalCenter: parent.horizontalCenter
+                id: errorMessage
+                text: "Hello blue sky!"
+                font.pixelSize: 22
+            }
+            Button {
+                Layout.alignment: Qt.AlignHCenter
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: qsTr("Close")
+                highlighted: true
+                Material.background: Material.Red
+                onClicked: {popup.close();}
+            }
+        }
+    }
+
+    Timer {
+            interval: 1000; running: true; repeat: true
+            onTriggered: {
+                if(BackEnd.getErrorMessage() === "") {
+
+                } else {
+                 popup.open();
+                }
+
+
+            }
+     }
 }

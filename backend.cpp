@@ -28,19 +28,23 @@ Backend::Backend(QObject *parent) : QObject(parent)
     generalData = jsonStoring.getGeneralData();
 }
 
-void Backend::updateChart(QAbstractSeries *chartSeries, int sensorId)
+void Backend::updateChart(QAbstractSeries *chartSeries, int floorNum)
 {
-  if(sensorId < mList->sensorItems.size() && -1 < sensorId) {
-      if(axisXTimes[sensorId]) {
-          axisXTimes[sensorId]->setMin(QDateTime::fromMSecsSinceEpoch(QDateTime::currentDateTime().toMSecsSinceEpoch()-60000));
-          axisXTimes[sensorId]->setMax(QDateTime::currentDateTime());
+  if(generalData.floor[floorNum] < mList->sensorItems.size() && -1 < floorNum) {
+//      cout<< "updateChart floor: "<< floorNum << ", floor sensor:"<<generalData.floor[floorNum] <<endl;
+      if(axisXTimes[floorNum]) {
+//          cout<< "update axisXTimes"<<endl;
+          axisXTimes[floorNum]->setMin(QDateTime::fromMSecsSinceEpoch(QDateTime::currentDateTime().toMSecsSinceEpoch()-60000));
+          axisXTimes[floorNum]->setMax(QDateTime::currentDateTime());
       }
     if (chartSeries) {
         QXYSeries *xySeries = static_cast<QXYSeries *>(chartSeries);
 //        qDebug()<< "chart update:"<< chartSeries->name() << ", data size:" << xySeries->points().size() <<endl;
 //        QVector<QPointF> points = mList->sensorItems[sensorId].dataAccX;
-        xySeries->replace(mList->sensorItems[sensorId].dataAccX);
+        xySeries->replace(mList->sensorItems[generalData.floor[floorNum]].dataAccX);
     }
+  } else {
+      cout << "sensor id is not valid, floor:" << floorNum;
   }
 }
 
@@ -85,7 +89,7 @@ void Backend::getSensorPkt(QByteArray data)
     if(data.size() == sizeof(struct SensorRx)) {
 
      SensorRx *m = reinterpret_cast<SensorRx*>(data.data());
-//     cout<< "Get sensor paket:"<< m->sensorId <<endl;
+//     cout<< "Get sensor paket:"<< m->sensorId <<" : "<< m->x <<endl;
       if(mList->isNewId(m->sensorId)) {
             Sensor temp;
             temp.sensorNumber =  m->sensorId;
@@ -105,7 +109,7 @@ void Backend::getMotorSpeedPkt(QByteArray data)
 {
     if(data.size() == sizeof(struct MotorSpeedRx)) {
      MotorSpeedRx *m = reinterpret_cast<MotorSpeedRx*>(data.data());
-     cout<< "Get MotorSpeedRx paket:"<< m->frq <<endl;
+//     cout<< "Get MotorSpeedRx paket:"<< m->frq <<endl;
      motorSpeed = m->frq;
     } else {
         cout<< "getMotorSpeedPkt "<< data.size() << " must be "<<sizeof(struct MotorSpeedRx);
@@ -174,6 +178,13 @@ void Backend::sendSimulationData(int packetId)
       sendDataSegment(dataSegments[i]);
   }
   counterForSending = 0;
+}
+
+QString Backend::getErrorMessage()
+{
+    QString temp = errorMessage;
+    errorMessage = "";
+    return errorMessage;
 }
 
 void Backend::sendDataSegment(DataSegment temp)
@@ -375,8 +386,8 @@ QString Backend::getMotorSpeed()
 
 double Backend::getFloorData(int floorNum)
 {
-    if(floorNum < mList->sensorItems.size()) {
-        return  mList->sensorItems[floorNum].lastData;
+    if(generalData.floor[floorNum] < mList->sensorItems.size()) {
+        return  mList->sensorItems[generalData.floor[floorNum]].lastData;
     } else {
 //        cout<< "err getFloorData: sensor id not valid:"<<floorNum<<endl;
         return 255255;

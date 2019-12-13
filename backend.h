@@ -73,10 +73,14 @@ public:
     void sendSimulationData(int packetId);
     bool flagStartButton = false;
     std::thread *t1;
+
+    // for error report
+    QString errorMessage = "";
+    Q_INVOKABLE QString getErrorMessage();
 signals:
 
 public slots:
-    void updateChart(QAbstractSeries *chartSeries, int sensorId);
+    void updateChart(QAbstractSeries *chartSeries, int floorNum);
     void setAxisXTime(QDateTimeAxis *axis, int num);
 
 private:

@@ -9,6 +9,8 @@ import QtQuick.Controls.Material 2.3
 Page {
     id: root
     property var line1
+    property int  chartNum: 4
+    property int tabHeight: 80
     anchors.fill: parent
     ScrollView {
         id: scrollView
@@ -21,7 +23,7 @@ Page {
             ChartView {
                 id: chartView3
                 title: "Floor 3"
-                height: window.height/3
+                height: window.height-root.tabHeight
                 width: window.width
                 antialiasing: true
                 DateTimeAxis {
@@ -48,7 +50,7 @@ Page {
             ChartView {
                 id: chartView2
                 title: "Floor 2"
-                height: window.height/3
+                height: window.height-root.tabHeight
                 width: window.width
                 antialiasing: true
                 DateTimeAxis {
@@ -75,7 +77,7 @@ Page {
             ChartView {
                 id: chartView1
                 title: "Floor 1"
-                height: window.height/3
+                height: window.height-root.tabHeight
                 width: window.width
                 antialiasing: true
                 DateTimeAxis {
@@ -102,7 +104,7 @@ Page {
             ChartView {
                 id: chartView0
                 title: "Floor 0"
-                height: window.height/3
+                height: window.height-root.tabHeight
                 width: window.width
                 antialiasing: true
                 DateTimeAxis {
@@ -119,17 +121,17 @@ Page {
                     id: lineSeries0
                     axisX: axisXTime0
                     axisY: axisXData0
-                    name: "Ax"
+//                    name: "Ax"
                 }
                 Component.onCompleted:  {
                     BackEnd.setAxisXTime(axisXTime0, 0);
                 }
             }
 
-            Rectangle {
-                width: parent.width
-                height: 80
-            }
+//            Rectangle {
+//                width: parent.width
+//                height: 80
+//            }
 
         }
     }
@@ -140,29 +142,47 @@ Page {
         running: true
         repeat: true
         onTriggered: {
+            var tempNum = 0;
             if(BackEnd.getFloorData(0)=== 255255) {
                 chartView0.visible = false;
             } else {
+                chartView0.visible = true;
                BackEnd.updateChart(lineSeries0, 0);
+                tempNum++;
             }
-
             if(BackEnd.getFloorData(1)=== 255255) {
                 chartView1.visible = false;
             } else {
+                chartView1.visible = true;
                BackEnd.updateChart(lineSeries1, 1);
+                tempNum++;
             }
 
             if(BackEnd.getFloorData(2)=== 255255) {
                 chartView2.visible = false;
             } else {
+                chartView2.visible = true;
                  BackEnd.updateChart(lineSeries2, 2);
+                tempNum++;
             }
 
             if(BackEnd.getFloorData(3)=== 255255) {
                 chartView3.visible = false;
             } else {
+                chartView3.visible = true;
                BackEnd.updateChart(lineSeries3, 3);
+                tempNum++;
             }
+            if(tempNum == 0) {tempNum = 1 ;}
+//            root.chartNum = tempNum;
+            chartView0.implicitHeight = (window.height-root.tabHeight)/tempNum;
+            chartView1.implicitHeight = (window.height-root.tabHeight)/tempNum;
+            chartView2.implicitHeight = (window.height-root.tabHeight)/tempNum;
+            chartView3.implicitHeight = (window.height-root.tabHeight)/tempNum;
+            chartView0.implicitWidth = window.width;
+            chartView1.implicitWidth = window.width;
+            chartView2.implicitWidth = window.width;
+            chartView3.implicitWidth = window.width;
         }
     }
 }

@@ -10,5 +10,8 @@
         <file>Building.qml</file>
         <file>Floor.qml</file>
         <file>SensorComboBox.qml</file>
+        <file>Setting.qml</file>
+        <file>ColibrateList.qml</file>
+        <file>ColibrateItem.qml</file>
     </qresource>
 </RCC>

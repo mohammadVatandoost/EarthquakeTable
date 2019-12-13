@@ -54,6 +54,7 @@ struct TorqueRx {
 
 struct GeneralData {
     int torque;
+    string floor[4] = {"off", "off", "off", "off"};
 };
 
 struct DataSegment{

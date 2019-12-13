@@ -14,9 +14,14 @@ Pane {
 //    anchors.topMargin: 20
     anchors.horizontalCenter: parent.horizontalCenter
     property int sensorId: 0
+    property int floorNum: 0
     property double sensorValue: 11
     function setSensorId(temp) {
         sensorId = temp;
+    }
+
+    function setFloorNum(temp) {
+        floorNum = temp;
     }
 
     RowLayout {
@@ -26,7 +31,7 @@ Pane {
          width: parent.width*2/3
          Label {
            id: ax1Label
-           text: qsTr("Ax"+root.sensorId)
+           text: qsTr("Floor "+root.floorNum)
            topPadding: 10
            font.pixelSize: 22
            Layout.alignment: Qt.AlignHCenter
@@ -34,7 +39,6 @@ Pane {
          }
          Text {
             id: ax1
-//            anchors.top: ax1Label.bottom
             Layout.alignment: Qt.AlignHCenter
             text: qsTr(root.sensorValue)
             font.pixelSize: 25
@@ -45,7 +49,7 @@ Pane {
        SensorComboBox {
          Layout.alignment: Qt.AlignRight
          Component.onCompleted: {
-             setSensorId(root.sensorId);
+             setFloorNum(root.floorNum);
          }
        }
     }

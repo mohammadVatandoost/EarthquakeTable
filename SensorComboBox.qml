@@ -7,10 +7,10 @@ import QtQuick.Controls.Styles 1.4
 
 ComboBox {
     id: root
-    property int sensorId: 0
-    property var sensorTypes: [ "off", "Floor1", "Floor2", "Floor3"]
+    property int floorNum: 0
+    property var sensorTypes: [ "off", "Ax1", "Ax2", "Ax3", "Ax4"]
     function getIndex() {
-        var sensorType = SensorsList.getSensorInfo(root.sensorId);
+        var sensorType = BackEnd.getFloorInfo(root.sensorId);
         for(var i=0; i< sensorTypes.length; i++) {
             if(sensorTypes[i] === sensorType) {
                 return i;
@@ -18,11 +18,11 @@ ComboBox {
         }
         return 0;
     }
-    function setSensorId(temp) {
-        sensorId = temp;
+    function setFloorNum(temp) {
+        floorNum = temp;
     }
     width: 200
     model: sensorTypes
     currentIndex: getIndex()
-    onActivated: SensorsList.setSensorInfo(root.sensorId, sensorTypes[currentIndex])
+    onActivated: BackEnd.setFloorInfo(root.floorNum, sensorTypes[currentIndex])
 }

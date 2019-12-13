@@ -33,6 +33,9 @@ public:
     Q_INVOKABLE void readFile(QString fileDirectory);
     Q_INVOKABLE void setSensorInfo();
     Q_INVOKABLE QString getMotorSpeed();
+    Q_INVOKABLE double getFloorData(int floorNum);
+    Q_INVOKABLE void setFloorInfo(int floorNum, QString temp);
+    Q_INVOKABLE QString getFloorInfo(int floorNum);
     void sendFileData();
     QString fileAddress;
     QSerialPort *serial;

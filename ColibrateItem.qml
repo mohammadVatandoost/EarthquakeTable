@@ -9,40 +9,27 @@ import QtQuick.VirtualKeyboard 2.2
 
 Pane {
     id: root
-    implicitHeight: 200
+    implicitHeight: 100
     implicitWidth: parent.width
     Material.elevation: 5
     Layout.alignment: Qt.AlignHCenter
     property string motorSpeed: "0 rpm"
-
-        ColumnLayout {
+        RowLayout {
             width: parent.width
-            spacing: 25
-
             Label {
               id: label
-              Layout.alignment: Qt.AlignHCenter
-              text: "Motor speed"
-              font.pixelSize: 22
-              topPadding: 30
+              Layout.alignment: Qt.AlignLeft
+              anchors.left: parent.left
+              text: "Motor speed : "
+              font.pixelSize: 18
               anchors.horizontalCenter: parent.horizontalCenter
             }
             Text {
-                text: qsTr(root.motorSpeed)
-                font.pixelSize: 27
+                Layout.leftMargin: 140
+                text: qsTr(motorSpeend)
+                font.pixelSize: 22
                 anchors.horizontalCenter: parent.horizontalCenter
-                bottomPadding: 20
             }
 
         }
-
-    Timer {
-        id: refreshTimer
-        interval: 500
-        running: true
-        repeat: true
-        onTriggered: {
-          root.motorSpeed = BackEnd.getMotorSpeed();
-        }
-    }
 }

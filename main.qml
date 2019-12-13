@@ -12,13 +12,19 @@ Window {
     visible: true
     width: 840
     height: 680
-    title: qsTr("Hello World")
+    title: qsTr("Simulation Table")
 
     TabBar {
         id: bar
         width: parent.width
         TabButton {
             text: qsTr("Control")
+            onClicked: {
+                console.log("Control")
+            }
+        }
+        TabButton {
+            text: qsTr("Setting")
             onClicked: {
                 console.log("Control")
             }
@@ -38,6 +44,10 @@ Window {
         ControlPanel {
             id: controlTab
         }
+        Setting {
+            id: settingTab
+        }
+
         ChartComponent {
             id: chartsTab
         }

@@ -254,17 +254,17 @@ void Backend::timerSlot()
            counterForSending++;
         }
 
-//        counter++;
-//        if(counter %3 == 0) {
-//           colibrate();
-//        } else if(counter %3 == 1) {
-//            moveRight();
-//        } else if(counter %3 == 2) {
-//           runSimulation();
-//        }
-        ConfigTx temp;
-        temp.mode = 40;
-        sendConfig(temp);
+        counter++;
+        if(counter %3 == 0) {
+           colibrate();
+        } else if(counter %3 == 1) {
+            moveRight();
+        } else if(counter %3 == 2) {
+           runSimulation();
+        }
+//        ConfigTx temp;
+//        temp.mode = 40;
+//        sendConfig(temp);
 
 
     }
@@ -335,6 +335,30 @@ void Backend::setSensorInfo()
 QString Backend::getMotorSpeed()
 {
     return QString::number(motorSpeed) + " rpm";
+}
+
+double Backend::getFloorData(int floorNum)
+{
+    int sensorId = 10; // not valid data
+//    if(generalData.floor[floorNum].substr("0")) {
+
+//    }
+    if(sensorId < mList->sensorItems.size()) {
+        return  mList->sensorItems[sensorId].lastData;
+    } else {
+        cout<< "err getSensorData: sensor id not valid:"<<sensorId<<endl;
+        return 255255;
+    }
+}
+
+void Backend::setFloorInfo(int floorNum, QString temp)
+{
+    generalData.floor[floorNum] = temp.toStdString();
+}
+
+QString Backend::getFloorInfo(int floorNum)
+{
+    return QString::fromUtf8(generalData.floor[floorNum].c_str());
 }
 
 void Backend::sendFileData()

@@ -1,0 +1,4 @@
+#ifndef GENERALDATA_H
+#define GENERALDATA_H
+
+#endif // GENERALDATA_H

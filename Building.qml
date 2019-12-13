@@ -31,52 +31,53 @@ ColumnLayout {
               color: "black"
           }
           Floor {
-              id: floor0
+              id: floor3
               anchors.top: paddingTop.bottom
               Component.onCompleted: {
                   setSensorId(0);
+                  setFloorNum(3);
               }
           }
           Rectangle {
               id: padding1
-              anchors.top: floor0.bottom
-              height: 5
-              width: parent.width
-              color: "black"
-          }
-          Floor {
-              id: floor1
-              anchors.top: padding1.bottom
-              Component.onCompleted: {
-                  setSensorId(1);
-              }
-          }
-          Rectangle {
-              id: padding2
-              anchors.top: floor1.bottom
+              anchors.top: floor3.bottom
               height: 5
               width: parent.width
               color: "black"
           }
           Floor {
               id: floor2
-              anchors.top: padding2.bottom
+              anchors.top: padding1.bottom
               Component.onCompleted: {
-                  setSensorId(2);
+                  setFloorNum(2);
               }
           }
           Rectangle {
-              id: padding3
+              id: padding2
               anchors.top: floor2.bottom
               height: 5
               width: parent.width
               color: "black"
           }
           Floor {
-              id: floor3
+              id: floor1
+              anchors.top: padding2.bottom
+              Component.onCompleted: {
+                  setFloorNum(1);
+              }
+          }
+          Rectangle {
+              id: padding3
+              anchors.top: floor1.bottom
+              height: 5
+              width: parent.width
+              color: "black"
+          }
+          Floor {
+              id: floor0
               anchors.top: padding3.bottom
               Component.onCompleted: {
-                  setSensorId(3);
+                  setFloorNum(0);
               }
           }
        }
@@ -87,10 +88,10 @@ ColumnLayout {
            running: true
            repeat: true
            onTriggered: {
-//               floor0.sensorValue =  SensorsList.getSensorData(0);
-//               floor1.sensorValue =  SensorsList.getSensorData(1);
-//               floor2.sensorValue =  SensorsList.getSensorData(2);
-//               floor3.sensorValue =  SensorsList.getSensorData(3);
+               floor0.sensorValue =  SensorsList.getSensorData(0);
+               floor1.sensorValue =  SensorsList.getSensorData(1);
+               floor2.sensorValue =  SensorsList.getSensorData(2);
+               floor3.sensorValue =  SensorsList.getSensorData(3);
            }
        }
 //       SetSensorFloor {}

@@ -45,16 +45,6 @@ void SensorsList::setSensorInfo(int sensorId, QString temp)
     }
 }
 
-double SensorsList::getSensorData(int sensorId)
-{
-    if(sensorId < sensorItems.size()) {
-        return  sensorItems[sensorId].lastData;
-    } else {
-        cout<< "err getSensorData: sensor id not valid:"<<sensorId<<endl;
-        return 255255;
-    }
-}
-
 bool SensorsList::isNewId(uint8_t id)
 {
     if(id < sensorItems.size()) {

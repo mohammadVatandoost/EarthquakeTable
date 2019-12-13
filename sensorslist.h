@@ -19,7 +19,7 @@ public:
 
     Q_INVOKABLE QString getSensorInfo(int sensorId);
     Q_INVOKABLE void setSensorInfo(int sensorId, QString temp);
-    Q_INVOKABLE double getSensorData(int sensorId);
+
 signals:
 
 public slots:

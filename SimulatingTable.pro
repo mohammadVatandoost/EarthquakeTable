@@ -45,4 +45,5 @@ HEADERS += \
     csv.h \
     myutitlity.h \
     sensorslist.h \
-    jsonstoring.h
+    jsonstoring.h \
+    generaldata.h

@@ -18,15 +18,17 @@ Page {
         rightPadding: 10
         leftPadding: 10
 
+       ColibrateList {}
        ColumnLayout {
-                width: parent.width/2
-                spacing: 15
-               ChooseFile {}
-               MotorSpeed {}
+
+           Button {
+               Layout.alignment: Qt.AlignHCenter
+               anchors.horizontalCenter: parent.horizontalCenter
+               text: qsTr("Colibrate")
+               highlighted: true
+               Material.background: Material.Green
+               onClicked: {BackEnd.colibrate()}
+           }
        }
-       Building {}
-
    }
-
-
 }

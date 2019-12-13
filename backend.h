@@ -11,6 +11,7 @@
 #include <QtCharts/QDateTimeAxis>
 #include <iostream>
 #include <QDir>
+#include "generaldata.h"
 #include "packet.h"
 #include "sensorslist.h"
 #include "jsonstoring.h"
@@ -54,7 +55,7 @@ public:
     void getTorquePkt(QByteArray data);
     void getSegmentAckPkt(QByteArray data);
     void sendConfig(ConfigTx temp);
-    void runSimulation();
+    Q_INVOKABLE void runSimulation();
 
     int counter = 0;
 
@@ -70,6 +71,7 @@ public:
     QVector<DataSegment> dataSegments;
     void sendDataSegment(DataSegment temp) ;
     void sendSimulationData(int packetId);
+    bool flagStartButton = false;
     std::thread *t1;
 signals:
 

@@ -19,85 +19,8 @@ Page {
             id: column
             width: window.width
             ChartView {
-                title: "Ax1"
-                height: window.height/3
-                width: window.width
-                antialiasing: true
-                DateTimeAxis {
-                    id: axisXTime0
-                    format: "mm:ss"
-                    tickCount: 10
-                }
-                ValueAxis {
-                    id: axisXData0
-                    min: 0
-                    max: 1000
-                }
-                LineSeries {
-                    id: lineSeries0
-                    axisX: axisXTime0
-                    axisY: axisXData0
-                    name: "Sensor 1"
-                }
-                Component.onCompleted:  {
-                    BackEnd.setAxisXTime(axisXTime0, 0);
-                }
-            }
-
-            ChartView {
-                title: "Ax1"
-                height: window.height/3
-                width: window.width
-                antialiasing: true
-                DateTimeAxis {
-                    id: axisXTime1
-                    format: "mm:ss"
-                    tickCount: 10
-                }
-                ValueAxis {
-                    id: axisXData1
-                    min: 0
-                    max: 1000
-                }
-                LineSeries {
-                    id: lineSeries1
-                    axisX: axisXTime1
-                    axisY: axisXData1
-                    name: "Sensor 1"
-                }
-                Component.onCompleted:  {
-                    BackEnd.setAxisXTime(axisXTime1, 1);
-                }
-            }
-
-            ChartView {
-                title: "Ax2"
-                height: window.height/3
-                width: window.width
-                antialiasing: true
-                DateTimeAxis {
-                    id: axisXTime2
-                    format: "mm:ss"
-                    tickCount: 10
-                }
-                ValueAxis {
-                    id: axisXData2
-                    min: 0
-                    max: 1000
-                }
-                LineSeries {
-                    id: lineSeries2
-                    axisX: axisXTime2
-                    axisY: axisXData2
-                    name: "Sensor 3"
-                }
-                Component.onCompleted:  {
-                    BackEnd.setAxisXTime(axisXTime2, 2);
-                }
-            }
-
-            ChartView {
-                title: "Ax4"
+                id: chartView3
+                title: "Floor 3"
                 height: window.height/3
                 width: window.width
                 antialiasing: true
@@ -115,10 +38,91 @@ Page {
                     id: lineSeries3
                     axisX: axisXTime3
                     axisY: axisXData3
-                    name: "Sensor 4"
+                    name: "Ax"
                 }
                 Component.onCompleted:  {
                     BackEnd.setAxisXTime(axisXTime3, 3);
+                }
+            }
+
+            ChartView {
+                id: chartView2
+                title: "Floor 2"
+                height: window.height/3
+                width: window.width
+                antialiasing: true
+                DateTimeAxis {
+                    id: axisXTime2
+                    format: "mm:ss"
+                    tickCount: 10
+                }
+                ValueAxis {
+                    id: axisXData2
+                    min: 0
+                    max: 1000
+                }
+                LineSeries {
+                    id: lineSeries2
+                    axisX: axisXTime2
+                    axisY: axisXData2
+                    name: "Ax"
+                }
+                Component.onCompleted:  {
+                    BackEnd.setAxisXTime(axisXTime2, 2);
+                }
+            }
+
+            ChartView {
+                id: chartView1
+                title: "Floor 1"
+                height: window.height/3
+                width: window.width
+                antialiasing: true
+                DateTimeAxis {
+                    id: axisXTime1
+                    format: "mm:ss"
+                    tickCount: 10
+                }
+                ValueAxis {
+                    id: axisXData1
+                    min: 0
+                    max: 1000
+                }
+                LineSeries {
+                    id: lineSeries1
+                    axisX: axisXTime1
+                    axisY: axisXData1
+                    name: "Ax"
+                }
+                Component.onCompleted:  {
+                    BackEnd.setAxisXTime(axisXTime1, 1);
+                }
+            }
+
+            ChartView {
+                id: chartView0
+                title: "Floor 0"
+                height: window.height/3
+                width: window.width
+                antialiasing: true
+                DateTimeAxis {
+                    id: axisXTime0
+                    format: "mm:ss"
+                    tickCount: 10
+                }
+                ValueAxis {
+                    id: axisXData0
+                    min: 0
+                    max: 1000
+                }
+                LineSeries {
+                    id: lineSeries0
+                    axisX: axisXTime0
+                    axisY: axisXData0
+                    name: "Ax"
+                }
+                Component.onCompleted:  {
+                    BackEnd.setAxisXTime(axisXTime0, 0);
                 }
             }
 
@@ -136,10 +140,29 @@ Page {
         running: true
         repeat: true
         onTriggered: {
-            BackEnd.updateChart(lineSeries0, 0);
-            BackEnd.updateChart(lineSeries1, 1);
-            BackEnd.updateChart(lineSeries2, 2);
-            BackEnd.updateChart(lineSeries3, 3);
+            if(BackEnd.getFloorData(0)=== 255255) {
+                chartView0.visible = false;
+            } else {
+               BackEnd.updateChart(lineSeries0, 0);
+            }
+
+            if(BackEnd.getFloorData(1)=== 255255) {
+                chartView1.visible = false;
+            } else {
+               BackEnd.updateChart(lineSeries1, 1);
+            }
+
+            if(BackEnd.getFloorData(2)=== 255255) {
+                chartView2.visible = false;
+            } else {
+                 BackEnd.updateChart(lineSeries2, 2);
+            }
+
+            if(BackEnd.getFloorData(3)=== 255255) {
+                chartView3.visible = false;
+            } else {
+               BackEnd.updateChart(lineSeries3, 3);
+            }
         }
     }
 }

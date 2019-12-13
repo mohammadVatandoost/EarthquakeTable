@@ -71,6 +71,8 @@ void Backend::decodePacket(QByteArray data)
              getMotorSpeedPkt(data);
           } else if (packetCode == TorqueRxPkt) {
               getTorquePkt(data);
+          } else if (packetCode == AckRxPkt) {
+              getSegmentAckPkt(data);
           }
         } else {
             cout <<unsigned(((uint8_t)data[0])) << ": " << unsigned(static_cast<uint8_t>(data[data.size()-1])) << " checsum is wrong " << unsigned(((uint8_t)sum%256)&0xff)  << endl;
@@ -103,7 +105,7 @@ void Backend::getMotorSpeedPkt(QByteArray data)
 {
     if(data.size() == sizeof(struct MotorSpeedRx)) {
      MotorSpeedRx *m = reinterpret_cast<MotorSpeedRx*>(data.data());
-//     cout<< "Get MotorSpeedRx paket:"<< m->frq <<endl;
+     cout<< "Get MotorSpeedRx paket:"<< m->frq <<endl;
      motorSpeed = m->frq;
     } else {
         cout<< "getMotorSpeedPkt "<< data.size() << " must be "<<sizeof(struct MotorSpeedRx);
@@ -145,7 +147,7 @@ void Backend::sendConfig(ConfigTx temp)
     serial->write(tx_data);
     serial->write(dataBytes, sizeof(struct ConfigTx));
     uint8_t checkSum= (uint8_t)sum%256;//reinterpret_cast<uint8_t>(sum%256);
-    cout<< " checksum: "<< unsigned(checkSum&0xff)<<endl;
+//    cout<< " checksum: "<< unsigned(checkSum&0xff)<<endl;
     QByteArray checkSumByte;
     checkSumByte.append(checkSum);
     serial->write(checkSumByte);
@@ -153,10 +155,16 @@ void Backend::sendConfig(ConfigTx temp)
 
 void Backend::runSimulation()
 {
+  if(counterForSending < 3) {
+      flagStartButton = true;
+  } else if(dataSegments.size()>0) {
     ConfigTx temp;
     temp.mode = RUN;
     temp.loopTime = 20;
     sendConfig(temp);
+  } else {
+      cout<< "there is no file"<<endl;
+  }
 }
 
 void Backend::sendSimulationData(int packetId)
@@ -170,16 +178,22 @@ void Backend::sendSimulationData(int packetId)
 
 void Backend::sendDataSegment(DataSegment temp)
 {
-    uint32_t sum = 0;
+    uint32_t sum = FileTxPkt;
+    uint8_t packetCode = FileTxPkt;
     char* dataBytes = static_cast<char*>(static_cast<void*>(&temp));
-    for(int i=0; i<sizeof(struct ConfigTx); i++) {
+    for(int i=0; i<sizeof(struct DataSegment); i++) {
         sum = sum + ((uint8_t)dataBytes[i]);
     }
     QString packet = "*@" ;
-    QByteArray tx_data; tx_data.append(packet);
+    QByteArray tx_data;
+    tx_data.append(packet);
     serial->write(tx_data);
-    serial->write(dataBytes, sizeof(struct ConfigTx));
+    QByteArray packetCodeByte;
+    packetCodeByte.append(packetCode);
+    serial->write(packetCodeByte);
+    serial->write(dataBytes, sizeof(struct DataSegment));
     uint8_t checkSum= (uint8_t)sum%256;//reinterpret_cast<uint8_t>(sum%256);
+    cout<<sizeof(struct DataSegment) << " sendDataSegment checksum: "<< unsigned(checkSum&0xff)<<endl;
     QByteArray checkSumByte;
     checkSumByte.append(checkSum);
     serial->write(checkSumByte);
@@ -189,9 +203,11 @@ void Backend::recieveSerialPort()
 {
     QByteArray data;
     data = serial->readAll();
+
 //    QString temp3;temp3.append(data);
 //    qDebug()<< temp3;
     for(int i=0; i< data.size(); i++) {
+//        cout<< unsigned(data[i]&0xFF) << ",";
         if(data[i] == '*' && recieveState == 0) {
             recieveState = recieveState + 1;
             decodePacket(dataBuf);
@@ -216,8 +232,12 @@ void Backend::recieveSerialPort()
                 packetSize =  sizeof(struct TorqueRx);
                 dataBuf.append(data[i]);
                 recieveState = recieveState + 1;
+            } else if(packetCode == AckRxPkt) {
+                packetSize =  sizeof(struct AckRx);
+                dataBuf.append(data[i]);
+                recieveState = recieveState + 1;
             }  else {
-                cout<< " recieveSerialPort packet code is wrong: "<< packetCode<< endl;
+                cout<< " recieveSerialPort packet code is wrong: "<< unsigned(packetCode)<< endl;
                 packetSize = 0;
                 recieveState = 0;
                 dataBuf.clear();
@@ -252,16 +272,32 @@ void Backend::timerSlot()
     } else {
         if(counterForSending < 3) {
            counterForSending++;
+           if(counterForSending == 3) {
+               cout<< "go to run mode"<<endl;
+              if(flagStartButton) {
+                runSimulation();
+              }
+           }
         }
-
-        counter++;
-        if(counter %3 == 0) {
-           colibrate();
-        } else if(counter %3 == 1) {
-            moveRight();
-        } else if(counter %3 == 2) {
-           runSimulation();
-        }
+//        ConfigTx temp;
+//        temp.mode = SendData;
+//        sendConfig(temp);
+//        DataSegment temp100;
+//        temp100.packetId = 0;
+//        temp100.data[0] = 1;temp100.data[1] = 1;
+//        temp100.data[2] = 1;temp100.data[3] = 1;
+//        temp100.data[4] = 1;temp100.data[5] = 1;
+//        temp100.data[6] = 1;temp100.data[7] = 1;
+//        temp100.data[8] = 1;temp100.data[9] = 0;
+//        sendDataSegment(temp100);
+//        counter++;
+//        if(counter %3 == 0) {
+//           colibrate();
+//        } else if(counter %3 == 1) {
+//            moveRight();
+//        } else if(counter %3 == 2) {
+//           runSimulation();
+//        }
 //        ConfigTx temp;
 //        temp.mode = 40;
 //        sendConfig(temp);
@@ -339,26 +375,35 @@ QString Backend::getMotorSpeed()
 
 double Backend::getFloorData(int floorNum)
 {
-    int sensorId = 10; // not valid data
-//    if(generalData.floor[floorNum].substr("0")) {
-
-//    }
-    if(sensorId < mList->sensorItems.size()) {
-        return  mList->sensorItems[sensorId].lastData;
+    if(floorNum < mList->sensorItems.size()) {
+        return  mList->sensorItems[floorNum].lastData;
     } else {
-        cout<< "err getSensorData: sensor id not valid:"<<sensorId<<endl;
+//        cout<< "err getFloorData: sensor id not valid:"<<floorNum<<endl;
         return 255255;
     }
 }
 
 void Backend::setFloorInfo(int floorNum, QString temp)
 {
-    generalData.floor[floorNum] = temp.toStdString();
+    if(temp == "off") {
+        generalData.floor[floorNum] = offValue;
+    } else {
+        temp.replace("Ax", "");
+        generalData.floor[floorNum] = temp.toInt()-1;
+    }
+    cout<< "setFloorInfo "<< floorNum << " : "<< generalData.floor[floorNum]<<endl;
 }
 
 QString Backend::getFloorInfo(int floorNum)
 {
-    return QString::fromUtf8(generalData.floor[floorNum].c_str());
+    if(generalData.floor[floorNum] == offValue) {
+        cout<< "getFloorInfo "<< floorNum << " : "<< "off";
+        return "off";
+    } else {
+        QString temp = "Ax" + QString::number(generalData.floor[floorNum]+1);
+        cout<< "getFloorInfo "<< floorNum << " : "<< temp.toStdString()<<endl;
+        return temp;
+    }
 }
 
 void Backend::sendFileData()
@@ -393,38 +438,28 @@ void Backend::sendFileData()
               temp.mode = SendData;
               sendConfig(temp);
               dataSegments.clear();
-//              myUtitlity.delay_ms(1);
+              myUtitlity.delay_ms(1);
               cout<< "send" << dataList.size() << endl;
-//              int i=0;
-//              int packetId = 0;
-//              while (i<dataList.size()) {
-//                  DataSegment dataSegment;
-//                  dataSegment.packetId = packetId;
-//                  for(int j=0; j< MAX_SEG_DATA; j++) {
-//                      if(i<dataList.size()) {
-//                          dataSegment.data[j] = dataList[i];
-//                          i++;
-//                      } else {
-//                          dataSegment.data[j] = 0;
-//                      }
-//                  }
-//                  dataSegments.append(dataSegment);
-//                  packetId++;
-////                  myUtitlity.delay_ms(1);
-//              }
-//              cout<< "dataSegment" << dataSegments.size() << endl;
-//              sendSimulationData(0);
-//              if(t1) {
-
-//              } else {
-//                  t1 = new std::thread(sendSimulationData, 0);
-//                  t1->detach();
-//              }
+              int i=0;
+              int packetId = 0;
+              while (i<dataList.size()) {
+                  DataSegment dataSegment;
+                  dataSegment.packetId = packetId;
+                  for(int j=0; j< MAX_SEG_DATA; j++) {
+                      if(i<dataList.size()) {
+                          dataSegment.data[j] = dataList[i];
+                          i++;
+                      } else {
+                          dataSegment.data[j] = 0;
+                      }
+                  }
+                  dataSegments.append(dataSegment);
+                  packetId++;
+              }
+              cout<< "dataSegments:" << dataSegments.size() << endl;
+              sendSimulationData(0);
           }
-//          qDebug()<< "file size:"<< dataList.size();
-//          for(int i=0;i<dataList.size(); i++) {
-//              qDebug()<< i << ": "<< dataList[i];
-//          }
+
         }
     } else {
         message = "invalid file: does not contains .txt";

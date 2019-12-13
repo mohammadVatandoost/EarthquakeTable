@@ -6,6 +6,7 @@
 #include <QJsonDocument>
 #include <QFile>
 #include <QTextStream>
+#include "generaldata.h"
 #include "packet.h"
 
 #define GeneralDataFile "GenralData.txt"

@@ -13,5 +13,6 @@
         <file>Setting.qml</file>
         <file>ColibrateList.qml</file>
         <file>ColibrateItem.qml</file>
+        <file>Colibrate.qml</file>
     </qresource>
 </RCC>

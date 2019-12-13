@@ -23,6 +23,15 @@ Pane {
     function setFloorNum(temp) {
         floorNum = temp;
     }
+    function setSensorValue(temp) {
+       if(temp === 255255) {
+           ax1.text = "-";
+       } else if(temp === 32767) {
+           ax1.text = "DC";
+       } else {
+           ax1.text = temp;
+       }
+    }
 
     RowLayout {
 //       anchors.topMargin: 20
@@ -40,7 +49,7 @@ Pane {
          Text {
             id: ax1
             Layout.alignment: Qt.AlignHCenter
-            text: qsTr(root.sensorValue)
+            text: qsTr("-")
             font.pixelSize: 25
             bottomPadding: 10
             anchors.horizontalCenter: parent.horizontalCenter

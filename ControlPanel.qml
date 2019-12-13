@@ -20,7 +20,7 @@ Page {
 
        ColumnLayout {
                 width: parent.width/2
-                spacing: 15
+                spacing: 25
                ChooseFile {}
                MotorSpeed {}
        }

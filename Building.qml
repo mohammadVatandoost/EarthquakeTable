@@ -88,10 +88,10 @@ ColumnLayout {
            running: true
            repeat: true
            onTriggered: {
-               floor0.sensorValue =  SensorsList.getSensorData(0);
-               floor1.sensorValue =  SensorsList.getSensorData(1);
-               floor2.sensorValue =  SensorsList.getSensorData(2);
-               floor3.sensorValue =  SensorsList.getSensorData(3);
+               floor0.setSensorValue(BackEnd.getFloorData(0));
+               floor1.setSensorValue(BackEnd.getFloorData(1));
+               floor2.setSensorValue(BackEnd.getFloorData(2));
+               floor3.setSensorValue(BackEnd.getFloorData(3));
            }
        }
 //       SetSensorFloor {}

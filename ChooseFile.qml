@@ -9,14 +9,14 @@ import QtQuick.Dialogs 1.0
 
 Pane {
     id: root
-    implicitHeight: 100
+    implicitHeight: 180
     implicitWidth: parent.width
     Material.elevation: 5
     Layout.alignment: Qt.AlignHCenter
     property string fileUrl: ""
     ColumnLayout {
         width: parent.width
-        spacing: 5
+        spacing: 15
         RowLayout {
             width: parent.width
             Label {
@@ -34,10 +34,16 @@ Pane {
          Button {
                 Layout.alignment: Qt.AlignHCenter
                 text: qsTr("Choose File")
-//                anchors.horizontalCenter: parent.horizontalCenter
                 highlighted: true
                 Material.background: Material.Green
                 onClicked: {fileDialog.open();}
+         }
+         Button {
+                Layout.alignment: Qt.AlignHCenter
+                text: qsTr("Start")
+                highlighted: true
+                Material.background: Material.Green
+                onClicked: {BackEnd.runSimulation();}
          }
 
     }

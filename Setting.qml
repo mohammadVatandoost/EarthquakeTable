@@ -18,17 +18,14 @@ Page {
         rightPadding: 10
         leftPadding: 10
 
-       ColibrateList {}
        ColumnLayout {
+          width: parent.width/2
+       }
 
-           Button {
-               Layout.alignment: Qt.AlignHCenter
-               anchors.horizontalCenter: parent.horizontalCenter
-               text: qsTr("Colibrate")
-               highlighted: true
-               Material.background: Material.Green
-               onClicked: {BackEnd.colibrate()}
-           }
+       ColumnLayout {
+           width: parent.width/2
+           Colibrate {}
+           Move {}
        }
    }
 }

@@ -94,6 +94,8 @@ void Backend::getSensorPkt(QByteArray data)
             Sensor temp;
             temp.sensorNumber =  m->sensorId;
             temp.lastData = m->x;
+            temp.max = m->x;
+            temp.min = m->x;
             mList->addSensor(temp);
 //            testBug.append(m->x);
       } else {
@@ -283,6 +285,12 @@ void Backend::timerSlot()
     } else {
         if(counterForSending < 3) {
            counterForSending++;
+           if(counterForSending == 2) {
+               ConfigTx tempConfig;
+               tempConfig.mode =CONFIG;
+               tempConfig.loopTime = 10;
+               sendConfig(tempConfig);
+           }
            if(counterForSending == 3) {
                cout<< "go to run mode"<<endl;
               if(flagStartButton) {
@@ -391,6 +399,26 @@ double Backend::getFloorData(int floorNum)
     } else {
 //        cout<< "err getFloorData: sensor id not valid:"<<floorNum<<endl;
         return 255255;
+    }
+}
+
+int Backend::getMaxValue(int floorNum)
+{
+    if(generalData.floor[floorNum] < mList->sensorItems.size()) {
+        return  mList->sensorItems[generalData.floor[floorNum]].max+5;
+    } else {
+//        cout<< "err getFloorData: sensor id not valid:"<<floorNum<<endl;
+        return 1000;
+    }
+}
+
+int Backend::getMinValue(int floorNum)
+{
+    if(generalData.floor[floorNum] < mList->sensorItems.size()) {
+        return  mList->sensorItems[generalData.floor[floorNum]].min-5;
+    } else {
+//        cout<< "err getFloorData: sensor id not valid:"<<floorNum<<endl;
+        return -1000;
     }
 }
 

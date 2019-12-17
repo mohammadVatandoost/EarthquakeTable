@@ -35,6 +35,8 @@ public:
     Q_INVOKABLE void setSensorInfo();
     Q_INVOKABLE QString getMotorSpeed();
     Q_INVOKABLE double getFloorData(int floorNum);
+    Q_INVOKABLE int getMaxValue(int floorNum);
+    Q_INVOKABLE int getMinValue(int floorNum);
     Q_INVOKABLE void setFloorInfo(int floorNum, QString temp);
     Q_INVOKABLE QString getFloorInfo(int floorNum);
     void sendFileData();

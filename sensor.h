@@ -24,10 +24,16 @@ struct Sensor {
     QString sensorInfo = "off";
     double lastData = 10.5;
     QVector<QPointF> dataAccX;
-
+    int max = 1000;
+    int min = 1000;
 
     void addData(double time, double value) {
         QPointF temp(time,value);
+        if(max < value) {
+            max = value;
+        } else if(min > value) {
+            min = value;
+        }
 //        qDebug()<< time << " : "<< value;
         dataAccX.append(temp);
         if(dataAccX.size() > saveToFile*2) {

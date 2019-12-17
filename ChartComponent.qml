@@ -147,6 +147,8 @@ Page {
                 chartView0.visible = false;
             } else {
                 chartView0.visible = true;
+                axisXData0.max = BackEnd.getMaxValue(0);
+                axisXData0.min = BackEnd.getMinValue(0);
                BackEnd.updateChart(lineSeries0, 0);
                 tempNum++;
             }
@@ -154,6 +156,8 @@ Page {
                 chartView1.visible = false;
             } else {
                 chartView1.visible = true;
+                axisXData1.max = BackEnd.getMaxValue(1);
+                axisXData1.min = BackEnd.getMinValue(1);
                BackEnd.updateChart(lineSeries1, 1);
                 tempNum++;
             }
@@ -162,6 +166,8 @@ Page {
                 chartView2.visible = false;
             } else {
                 chartView2.visible = true;
+                axisXData2.max = BackEnd.getMaxValue(2);
+                axisXData2.min = BackEnd.getMinValue(2);
                  BackEnd.updateChart(lineSeries2, 2);
                 tempNum++;
             }
@@ -170,6 +176,8 @@ Page {
                 chartView3.visible = false;
             } else {
                 chartView3.visible = true;
+                axisXData3.max = BackEnd.getMaxValue(3);
+                axisXData3.min = BackEnd.getMinValue(3);
                BackEnd.updateChart(lineSeries3, 3);
                 tempNum++;
             }

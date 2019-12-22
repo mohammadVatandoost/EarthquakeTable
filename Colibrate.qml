@@ -8,18 +8,37 @@ import QtQuick.VirtualKeyboard 2.2
 
 
 Pane {
-    implicitHeight: 100
-    implicitWidth: parent.width
+    implicitHeight: 170
+    implicitWidth: parent.width*0.95
     Material.elevation: 5
+    Layout.topMargin: 21
+    Layout.rightMargin: 21
     Layout.alignment: Qt.AlignHCenter
     ColumnLayout {
         width: parent.width
         spacing: 5
         Label {
           Layout.alignment: Qt.AlignHCenter
-          text: "Colibration Name"
+          text: "Structure Name"
           font.pixelSize: 22
           anchors.horizontalCenter: parent.horizontalCenter
+        }
+        TextEdit {
+            id: textEdit
+            Layout.topMargin: 10
+            Layout.bottomMargin: 10
+            width: 200
+            height: 50
+            font.pointSize: 22
+            inputMethodHints: Qt.ImhDigitsOnly
+            property string placeholderText: "Name"
+            onActiveFocusChanged: BackEnd.openKeyboard()
+            Text {
+                text: textEdit.placeholderText
+                color: "#aaa"
+                font.pointSize: 25
+                visible: !textEdit.text && !textEdit.activeFocus // <----------- ;-)
+            }
         }
         Button {
             Layout.alignment: Qt.AlignHCenter

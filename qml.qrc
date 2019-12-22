@@ -14,5 +14,8 @@
         <file>ColibrateList.qml</file>
         <file>ColibrateItem.qml</file>
         <file>Colibrate.qml</file>
+        <file>Start.qml</file>
+        <file>OripLine.qml</file>
+        <file>GroundMotionList.qml</file>
     </qresource>
 </RCC>

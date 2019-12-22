@@ -26,6 +26,7 @@ Page {
                 height: window.height-root.tabHeight
                 width: window.width
                 antialiasing: true
+
                 DateTimeAxis {
                     id: axisXTime3
                     format: "mm:ss"
@@ -138,7 +139,7 @@ Page {
 
     Timer {
         id: refreshTimer
-        interval: 500//30 // 60 Hz
+        interval: 100//30 // 60 Hz
         running: true
         repeat: true
         onTriggered: {

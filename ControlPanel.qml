@@ -21,7 +21,7 @@ Page {
        ColumnLayout {
                 width: parent.width/2
                 spacing: 25
-               ChooseFile {}
+               Start {}
                MotorSpeed {}
        }
        Building {}

@@ -41,7 +41,7 @@ void Backend::updateChart(QAbstractSeries *chartSeries, int floorNum)
         QXYSeries *xySeries = static_cast<QXYSeries *>(chartSeries);
 //        qDebug()<< "chart update:"<< chartSeries->name() << ", data size:" << xySeries->points().size() <<endl;
 //        QVector<QPointF> points = mList->sensorItems[sensorId].dataAccX;
-        xySeries->replace(mList->sensorItems[generalData.floor[floorNum]].dataAccX);
+        xySeries->replace(mList->sensorItems[generalData.floor[floorNum]].dataAccXChart);
     }
   } else {
       cout << "sensor id is not valid, floor:" << floorNum;
@@ -443,6 +443,17 @@ QString Backend::getFloorInfo(int floorNum)
         cout<< "getFloorInfo "<< floorNum << " : "<< temp.toStdString()<<endl;
         return temp;
     }
+}
+
+void Backend::setTimeStep(QString temp)
+{
+    temp.replace("ms", "");
+    timeStep = temp.toInt();
+}
+
+void Backend::saveGroundMotion(QString temp)
+{
+
 }
 
 void Backend::sendFileData()

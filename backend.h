@@ -39,6 +39,8 @@ public:
     Q_INVOKABLE int getMinValue(int floorNum);
     Q_INVOKABLE void setFloorInfo(int floorNum, QString temp);
     Q_INVOKABLE QString getFloorInfo(int floorNum);
+    Q_INVOKABLE void setTimeStep(QString temp);
+    Q_INVOKABLE void saveGroundMotion(QString temp);
     void sendFileData();
     QString fileAddress;
     QSerialPort *serial;
@@ -74,7 +76,7 @@ public:
     void sendDataSegment(DataSegment temp) ;
     void sendSimulationData(int packetId);
     bool flagStartButton = false;
-    std::thread *t1;
+    int timeStep = 10;
 
     // for error report
     QString errorMessage = "";

@@ -4,7 +4,8 @@ import QtQuick.Layouts 1.3
 import QtQuick.Extras 1.4
 import QtQuick.Controls.Material 2.3
 import QtQuick.Controls.Styles 1.4
-import QtQuick.VirtualKeyboard 2.2
+import QtQuick.Shapes 1.10
+//import QtQuick.VirtualKeyboard 2.2
 
 ColumnLayout {
     width: parent.width/2
@@ -16,6 +17,7 @@ ColumnLayout {
         font.pixelSize: 27
     }
        Rectangle {
+           id:building
           width: 0.8*parent.width
           height: 430
           border.color: "black"
@@ -80,6 +82,32 @@ ColumnLayout {
                   setFloorNum(0);
               }
           }
+       }
+//       Label {
+//           Layout.alignment: Qt.AlignHCenter
+//           text: "Structure"
+//           topPadding: 10
+//           bottomPadding: 10
+//           font.pixelSize: 27
+//       }
+       Row { // The "Row" type lays out its child items in a horizontal line
+           anchors.top: building.bottom
+           Layout.alignment: Qt.AlignHCenter
+           width: parent.width/2
+           spacing: 20 // Places 20px of space between items
+
+           OripLine{}
+           OripLine{}
+           OripLine{}
+           OripLine{}
+           OripLine{}
+           OripLine{}
+           OripLine{}
+           OripLine{}
+           OripLine{}
+           OripLine{}
+           OripLine{}
+           OripLine{}
        }
 
        Timer {

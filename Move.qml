@@ -9,8 +9,10 @@ import QtQuick.VirtualKeyboard 2.2
 
 Pane {
     implicitHeight: 100
-    implicitWidth: parent.width
+    implicitWidth: parent.width*0.95
     Material.elevation: 5
+    Layout.topMargin: 10
+    Layout.rightMargin: 21
     Layout.alignment: Qt.AlignHCenter
     ColumnLayout {
         width: parent.width

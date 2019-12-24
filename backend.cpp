@@ -34,10 +34,12 @@ void Backend::updateChart(QAbstractSeries *chartSeries, int floorNum)
 //      cout<< "updateChart floor: "<< floorNum << ", floor sensor:"<<generalData.floor[floorNum] <<endl;
       if(axisXTimes[floorNum]) {
 //          cout<< "update axisXTimes"<<endl;
+          axisXTimes[floorNum]->setLabelsVisible(false);
           axisXTimes[floorNum]->setMin(QDateTime::fromMSecsSinceEpoch(QDateTime::currentDateTime().toMSecsSinceEpoch()-60000));
           axisXTimes[floorNum]->setMax(QDateTime::currentDateTime());
       }
     if (chartSeries) {
+        chartSeries->chart()->legend()->hide();
         QXYSeries *xySeries = static_cast<QXYSeries *>(chartSeries);
 //        qDebug()<< "chart update:"<< chartSeries->name() << ", data size:" << xySeries->points().size() <<endl;
 //        QVector<QPointF> points = mList->sensorItems[sensorId].dataAccX;
@@ -46,6 +48,15 @@ void Backend::updateChart(QAbstractSeries *chartSeries, int floorNum)
   } else {
       cout << "sensor id is not valid, floor:" << floorNum;
   }
+}
+
+void Backend::visibleTimeAxis(int floorNum)
+{
+    if(generalData.floor[floorNum] < mList->sensorItems.size() && -1 < floorNum) {
+        if(axisXTimes[floorNum]) {
+          axisXTimes[floorNum]->setLabelsVisible(true);
+        }
+    }
 }
 
 void Backend::setAxisXTime(QDateTimeAxis *axis, int num) {
@@ -123,7 +134,8 @@ void Backend::getTorquePkt(QByteArray data)
     if(data.size() == sizeof(struct TorqueRx)) {
      TorqueRx *m = reinterpret_cast<TorqueRx*>(data.data());
      cout<< "Get TorqueRx paket:"<< m->torque <<endl;
-     generalData.torque = m->torque;
+//     generalData.torque = m->torque;
+     addToColibrate(m->torque);
      jsonStoring.storeGeneralData(generalData);
     } else {
         cout<< "getTorquePkt "<< data.size() << " must be "<<sizeof(struct TorqueRx);
@@ -350,12 +362,21 @@ void Backend::setSensorsList(SensorsList *sensorsList)
     mList = sensorsList;
 }
 
-void Backend::colibrate()
+void Backend::colibrate(QString name)
 {
   ConfigTx temp;
   temp.mode = CALIBRATION;
   temp.loopTime = 20;
   sendConfig(temp);
+  colibrateName = name;
+}
+
+void Backend::addToColibrate(int colibrateValue)
+{
+    ColibrateItem colibItem;
+    colibItem.colibrate = colibrateValue;
+    colibItem.name = colibrateName;
+    generalData.colibrateItems.push_back(colibItem);
 }
 
 void Backend::moveRight()
@@ -378,8 +399,18 @@ void Backend::moveLeft()
 
 void Backend::readFile(QString fileDirectory)
 {
-    fileAddress = fileDirectory;
-    sendFileData();
+
+    QString message;
+    if(fileDirectory.contains(".txt")) {
+        fileAddress = fileDirectory;
+        fileAddress.replace("file://", "");
+        qDebug()<< fileAddress;
+    } else {
+        message = "invalid file: does not contains .txt";
+        qDebug() << message;
+    }
+
+//    sendFileData();
 }
 
 void Backend::setSensorInfo()
@@ -453,7 +484,12 @@ void Backend::setTimeStep(QString temp)
 
 void Backend::saveGroundMotion(QString temp)
 {
-
+    GroundMotion tempGM;
+    tempGM.timeStep =  timeStep;
+    tempGM.name = temp;
+    tempGM.fileDirectory = fileAddress;
+    generalData.groundMotion.push_back(tempGM);
+    jsonStoring.storeGeneralData(generalData);
 }
 
 void Backend::sendFileData()
@@ -461,9 +497,6 @@ void Backend::sendFileData()
     qDebug()<< "sendFileData";
     QString message;
     QVector<uint16_t> dataList;
-    if(fileAddress.contains(".txt")) {
-        fileAddress.replace("file://", "");
-        qDebug()<< fileAddress;
         QFile file(fileAddress);
         if ( !file.open(QFile::ReadOnly | QFile::Text) ) {
             message = "File not exists" ;
@@ -511,8 +544,5 @@ void Backend::sendFileData()
           }
 
         }
-    } else {
-        message = "invalid file: does not contains .txt";
-        qDebug() << message;
-    }
+
 }

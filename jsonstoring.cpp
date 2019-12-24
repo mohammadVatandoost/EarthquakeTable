@@ -9,6 +9,25 @@ void JsonStoring::storeGeneralData(GeneralData generalData)
 {
      QJsonObject qJsonObject;
      qJsonObject.insert("torque", generalData.torque);
+     // ground motion
+     QJsonArray array;
+     for(int i=0; i<generalData.groundMotion.size(); i++) {
+         QJsonObject temp;
+         temp.insert("name", generalData.groundMotion[i].name);
+         temp.insert("fileDirectory", generalData.groundMotion[i].fileDirectory);
+         temp.insert("timeStep", generalData.groundMotion[i].timeStep);
+         array.push_front(temp);
+     }
+     qJsonObject.insert("groundMotions", array);
+     // colibrate
+     QJsonArray array2;
+     for(int i=0; i<generalData.colibrateItems.size(); i++) {
+         QJsonObject temp;
+         temp.insert("name", generalData.colibrateItems[i].name);
+         temp.insert("colibrate", generalData.colibrateItems[i].colibrate);
+         array2.push_front(temp);
+     }
+     qJsonObject.insert("colibrateItems", array2);
      QString data = jsonToString(qJsonObject);
      storeToFile(data, GeneralDataFile);
 }
@@ -23,6 +42,8 @@ GeneralData JsonStoring::getGeneralData()
    }
    QJsonDocument qJsonDocument = QJsonDocument::fromJson(jsonString.toUtf8());
    QJsonObject qJsonObject = qJsonDocument.object();
+//   QJsonArray array = qJsonObject.find("groundMotions").;
+   // get colibrate item
    temp.torque = static_cast<int>(qJsonObject.value("torque").toString().toInt()) ;
    return  temp;
 }

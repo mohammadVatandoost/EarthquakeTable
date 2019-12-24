@@ -9,6 +9,7 @@
 #include <QtCharts/QAbstractSeries>
 #include <QTime>
 #include <QtCharts/QDateTimeAxis>
+#include <QtCharts>
 #include <iostream>
 #include <QDir>
 #include "generaldata.h"
@@ -28,7 +29,6 @@ class Backend : public QObject
 public:
     explicit Backend(QObject *parent = nullptr);
     Q_INVOKABLE void setSensorsList(SensorsList *sensorsList);
-    Q_INVOKABLE void colibrate();
     Q_INVOKABLE void moveRight();
     Q_INVOKABLE void moveLeft();
     Q_INVOKABLE void readFile(QString fileDirectory);
@@ -60,7 +60,6 @@ public:
     void getSegmentAckPkt(QByteArray data);
     void sendConfig(ConfigTx temp);
     Q_INVOKABLE void runSimulation();
-
     int counter = 0;
 
 //    QVector<double> testBug;
@@ -81,10 +80,17 @@ public:
     // for error report
     QString errorMessage = "";
     Q_INVOKABLE QString getErrorMessage();
+    Q_INVOKABLE void visibleTimeAxis(int floorNum);
+
+    // for colibrate
+    QString colibrateName;
+    Q_INVOKABLE void colibrate(QString name);
+    void addToColibrate(int colibrateValue);
 signals:
 
 public slots:
     void updateChart(QAbstractSeries *chartSeries, int floorNum);
+
     void setAxisXTime(QDateTimeAxis *axis, int num);
 
 private:

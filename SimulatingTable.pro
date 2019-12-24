@@ -23,7 +23,9 @@ SOURCES += \
     backend.cpp \
     csv.cpp \
     sensorslist.cpp \
-    jsonstoring.cpp
+    jsonstoring.cpp \
+    groundmotionlist.cpp \
+    groundmotionmodel.cpp
 
 RESOURCES += qml.qrc
 
@@ -46,4 +48,6 @@ HEADERS += \
     myutitlity.h \
     sensorslist.h \
     jsonstoring.h \
-    generaldata.h
+    generaldata.h \
+    groundmotionlist.h \
+    groundmotionmodel.h

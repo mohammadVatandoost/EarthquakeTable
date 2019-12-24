@@ -20,13 +20,14 @@ Page {
         ColumnLayout {
             id: column
             width: window.width
+            spacing: 0
             ChartView {
                 id: chartView3
-                title: "Floor 3"
-                height: window.height-root.tabHeight
+                anchors {  margins: -15 }
+                margins { right: 10; bottom: 0; left: 10; top: 0 }
+                height: window.height
                 width: window.width
                 antialiasing: true
-
                 DateTimeAxis {
                     id: axisXTime3
                     format: "mm:ss"
@@ -36,12 +37,12 @@ Page {
                     id: axisXData3
                     min: 0
                     max: 1000
+                    titleText: "Floor 3"
                 }
                 LineSeries {
                     id: lineSeries3
                     axisX: axisXTime3
                     axisY: axisXData3
-                    name: "Ax"
                 }
                 Component.onCompleted:  {
                     BackEnd.setAxisXTime(axisXTime3, 3);
@@ -50,10 +51,11 @@ Page {
 
             ChartView {
                 id: chartView2
-                title: "Floor 2"
-                height: window.height-root.tabHeight
+                height: window.height
                 width: window.width
                 antialiasing: true
+                anchors {  margins: -15 }
+                margins { right: 10; bottom: 0; left: 10; top: 0 }
                 DateTimeAxis {
                     id: axisXTime2
                     format: "mm:ss"
@@ -63,6 +65,7 @@ Page {
                     id: axisXData2
                     min: 0
                     max: 1000
+                    titleText: "Floor 2"
                 }
                 LineSeries {
                     id: lineSeries2
@@ -77,10 +80,12 @@ Page {
 
             ChartView {
                 id: chartView1
-                title: "Floor 1"
-                height: window.height-root.tabHeight
+//                title: "Floor 1"
+                height: window.height
                 width: window.width
                 antialiasing: true
+                anchors {  margins: -15 }
+                margins { right: 10; bottom: 0; left: 10; top: 0 }
                 DateTimeAxis {
                     id: axisXTime1
                     format: "mm:ss"
@@ -90,6 +95,7 @@ Page {
                     id: axisXData1
                     min: 0
                     max: 1000
+                    titleText: "Floor 1"
                 }
                 LineSeries {
                     id: lineSeries1
@@ -104,10 +110,12 @@ Page {
 
             ChartView {
                 id: chartView0
-                title: "Floor 0"
-                height: window.height-root.tabHeight
+//                title: "Floor 0"
+                height: window.height
                 width: window.width
                 antialiasing: true
+                anchors {  margins: -15 }
+                margins { right: 10; bottom: 0; left: 10; top: 0 }
                 DateTimeAxis {
                     id: axisXTime0
                     format: "mm:ss"
@@ -117,6 +125,7 @@ Page {
                     id: axisXData0
                     min: 0
                     max: 1000
+                    titleText: "Floor 0"
                 }
                 LineSeries {
                     id: lineSeries0
@@ -129,11 +138,6 @@ Page {
                 }
             }
 
-//            Rectangle {
-//                width: parent.width
-//                height: 80
-//            }
-
         }
     }
 
@@ -143,15 +147,29 @@ Page {
         running: true
         repeat: true
         onTriggered: {
+//            console.log(chartView3);
+//            chartView3.chart.legend().hide();
             var tempNum = 0;
-            if(BackEnd.getFloorData(0)=== 255255) {
-                chartView0.visible = false;
+            var lastChart = 5;
+            if(BackEnd.getFloorData(3)=== 255255) {
+                chartView3.visible = false;
             } else {
-                chartView0.visible = true;
-                axisXData0.max = BackEnd.getMaxValue(0);
-                axisXData0.min = BackEnd.getMinValue(0);
-               BackEnd.updateChart(lineSeries0, 0);
+                chartView3.visible = true;
+                axisXData3.max = BackEnd.getMaxValue(3);
+                axisXData3.min = BackEnd.getMinValue(3);
+               BackEnd.updateChart(lineSeries3, 3);
                 tempNum++;
+                lastChart = 3;
+            }
+            if(BackEnd.getFloorData(2)=== 255255) {
+                chartView2.visible = false;
+            } else {
+                chartView2.visible = true;
+                axisXData2.max = BackEnd.getMaxValue(2);
+                axisXData2.min = BackEnd.getMinValue(2);
+                 BackEnd.updateChart(lineSeries2, 2);
+                tempNum++;
+                lastChart = 2;
             }
             if(BackEnd.getFloorData(1)=== 255255) {
                 chartView1.visible = false;
@@ -161,37 +179,36 @@ Page {
                 axisXData1.min = BackEnd.getMinValue(1);
                BackEnd.updateChart(lineSeries1, 1);
                 tempNum++;
+                lastChart = 1;
+            }
+            if(BackEnd.getFloorData(0)=== 255255) {
+                chartView0.visible = false;
+            } else {
+                chartView0.visible = true;
+                axisXData0.max = BackEnd.getMaxValue(0);
+                axisXData0.min = BackEnd.getMinValue(0);
+               BackEnd.updateChart(lineSeries0, 0);
+                tempNum++;
+                lastChart = 0;
+            }
+            if(lastChart <5) {
+                BackEnd.visibleTimeAxis(lastChart);
             }
 
-            if(BackEnd.getFloorData(2)=== 255255) {
-                chartView2.visible = false;
-            } else {
-                chartView2.visible = true;
-                axisXData2.max = BackEnd.getMaxValue(2);
-                axisXData2.min = BackEnd.getMinValue(2);
-                 BackEnd.updateChart(lineSeries2, 2);
-                tempNum++;
-            }
-
-            if(BackEnd.getFloorData(3)=== 255255) {
-                chartView3.visible = false;
-            } else {
-                chartView3.visible = true;
-                axisXData3.max = BackEnd.getMaxValue(3);
-                axisXData3.min = BackEnd.getMinValue(3);
-               BackEnd.updateChart(lineSeries3, 3);
-                tempNum++;
-            }
             if(tempNum == 0) {tempNum = 1 ;}
 //            root.chartNum = tempNum;
-            chartView0.implicitHeight = (window.height-root.tabHeight)/tempNum;
-            chartView1.implicitHeight = (window.height-root.tabHeight)/tempNum;
-            chartView2.implicitHeight = (window.height-root.tabHeight)/tempNum;
-            chartView3.implicitHeight = (window.height-root.tabHeight)/tempNum;
+            chartView0.implicitHeight = ((window.height-root.tabHeight)/tempNum)+10;
+            chartView1.implicitHeight = ((window.height-root.tabHeight)/tempNum)+10;
+            chartView2.implicitHeight = ((window.height-root.tabHeight)/tempNum)+10;
+            chartView3.implicitHeight = ((window.height-root.tabHeight)/tempNum)+10;
             chartView0.implicitWidth = window.width;
             chartView1.implicitWidth = window.width;
             chartView2.implicitWidth = window.width;
             chartView3.implicitWidth = window.width;
+//            console.log("window height");
+//            console.log(window.height);
+//            console.log(root.tabHeight);
+//            console.log((window.height-root.tabHeight)/tempNum);
         }
     }
 }

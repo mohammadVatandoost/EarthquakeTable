@@ -27,8 +27,9 @@ Page {
        ColumnLayout {
            width: parent.width/2
            spacing: 15
-           Colibrate {}
            Move {}
+           Colibrate {}
+           ColibrateList {}
        }
    }
 }

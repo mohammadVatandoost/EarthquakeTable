@@ -10,7 +10,7 @@ class GroundMotionList : public QObject
     Q_OBJECT
 public:
     explicit GroundMotionList(QObject *parent = nullptr);
-    bool setGroundMotionItem(int index,GroundMotion &sensor);
+    bool setGroundMotionItem(int index, GroundMotion &gm);
     QVector<GroundMotion> items();
     QVector<GroundMotion> groundMotionItems;
 signals:

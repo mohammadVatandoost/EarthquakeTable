@@ -25,7 +25,9 @@ SOURCES += \
     sensorslist.cpp \
     jsonstoring.cpp \
     groundmotionlist.cpp \
-    groundmotionmodel.cpp
+    groundmotionmodel.cpp \
+    colibrateitemlist.cpp \
+    colibrateitemmodel.cpp
 
 RESOURCES += qml.qrc
 
@@ -50,4 +52,6 @@ HEADERS += \
     jsonstoring.h \
     generaldata.h \
     groundmotionlist.h \
-    groundmotionmodel.h
+    groundmotionmodel.h \
+    colibrateitemlist.h \
+    colibrateitemmodel.h

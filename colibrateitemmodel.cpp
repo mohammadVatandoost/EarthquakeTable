@@ -1,13 +1,13 @@
-#include "groundmotionmodel.h"
-#include "groundmotionlist.h"
+#include "colibrateitemmodel.h"
+#include "colibrateitemlist.h"
 
-GroundMotionModel::GroundMotionModel()
+
+ColibrateItemModel::ColibrateItemModel()
 {
 
 }
 
-
-int GroundMotionModel::rowCount(const QModelIndex &parent) const
+int ColibrateItemModel::rowCount(const QModelIndex &parent) const
 {
     // For list models only the root node (an invalid parent) should return the list's size. For all
     // other (valid) parents, rowCount() should return 0 so that it does not become a tree model.
@@ -18,41 +18,37 @@ int GroundMotionModel::rowCount(const QModelIndex &parent) const
     return mList->items().size();
 }
 
-QVariant GroundMotionModel::data(const QModelIndex &index, int role) const
+QVariant ColibrateItemModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid())
         return QVariant();
 
     // FIXME: Implement me!
-    const GroundMotion item = mList->items().at(index.row());
+    const ColibrateItem item = mList->items().at(index.row());
     switch (role) {
      case name:
         return QVariant(item.name);
-     case timeStep:
-        return QVariant(item.timeStep);
-    case fileDirectory:
-       return QVariant(item.fileDirectory);
+     case colibrate:
+        return QVariant(item.colibrate);
     }
 
     return QVariant();
 }
 
-bool GroundMotionModel::setData(const QModelIndex &index, const QVariant &value, int role)
+bool ColibrateItemModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     if(!mList)
         return false;
 
-    GroundMotion item = mList->items().at(index.row());
+    ColibrateItem item = mList->items().at(index.row());
     switch (role) {
      case name:
         item.name = value.toString();
-     case timeStep:
-       item.timeStep = value.toInt();
-     case fileDirectory:
-       item.fileDirectory = value.toString();
+     case colibrate:
+       item.colibrate = value.toInt();
     }
 
-    if(mList->setGroundMotionItem(index.row(), item)) {
+    if(mList->setColibrateItem(index.row(), item)) {
         emit dataChanged(index, index, QVector<int>() << role);
         return true;
     }
@@ -64,16 +60,15 @@ bool GroundMotionModel::setData(const QModelIndex &index, const QVariant &value,
     return false;
 }
 
-QHash<int, QByteArray> GroundMotionModel::roleNames() const
+QHash<int, QByteArray> ColibrateItemModel::roleNames() const
 {
   QHash<int, QByteArray> names;
   names[name] = "name";
-  names[timeStep] = "timeStep" ;
-  names[fileDirectory] = "fileDirectory" ;
+  names[colibrate] = "colibrate" ;
   return names;
 }
 
-Qt::ItemFlags GroundMotionModel::flags(const QModelIndex &index) const
+Qt::ItemFlags ColibrateItemModel::flags(const QModelIndex &index) const
 {
     if (!index.isValid())
         return Qt::NoItemFlags;
@@ -81,12 +76,12 @@ Qt::ItemFlags GroundMotionModel::flags(const QModelIndex &index) const
     return Qt::ItemIsEditable;
 }
 
-GroundMotionList *GroundMotionModel::list() const
+ColibrateItemList *ColibrateItemModel::list() const
 {
     return mList;
 }
 
-void GroundMotionModel::setList(GroundMotionList *list)
+void ColibrateItemModel::setList(ColibrateItemList *list)
 {
     beginResetModel();
     if(mList)
@@ -95,17 +90,17 @@ void GroundMotionModel::setList(GroundMotionList *list)
     mList = list;
 
     if(mList) {
-        connect(mList, &GroundMotionList::preItemAppended, this, [this]() {
+        connect(mList, &ColibrateItemList::preItemAppended, this, [this]() {
             const int index = mList->items().size();
             beginInsertRows(QModelIndex(), index, index);
         });
-        connect(mList, &GroundMotionList::postItemAppended, this, [this]() {
+        connect(mList, &ColibrateItemList::postItemAppended, this, [this]() {
           endInsertRows();
         });
-        connect(mList, &GroundMotionList::preItemRemoved, this, [this](int index) {
+        connect(mList, &ColibrateItemList::preItemRemoved, this, [this](int index) {
           beginRemoveRows(QModelIndex(), index, index);
         });
-        connect(mList, &GroundMotionList::postItemRemoved, this, [this]() {
+        connect(mList, &ColibrateItemList::postItemRemoved, this, [this]() {
           endRemoveRows();
         });
 //        connect(mList, &SensorsList::notifyInfoDataChanged, this, [this](int index) {

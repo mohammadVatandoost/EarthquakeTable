@@ -362,6 +362,18 @@ void Backend::setSensorsList(SensorsList *sensorsList)
     mList = sensorsList;
 }
 
+void Backend::setGroundMotionList(GroundMotionList *tempList)
+{
+    qDebug()<< "setGroundMotionList";
+    gList = tempList;
+}
+
+void Backend::setColibrateItemList(ColibrateItemList *tempList)
+{
+    qDebug()<< "setColibrateItemList";
+    cList = tempList;
+}
+
 void Backend::colibrate(QString name)
 {
   ConfigTx temp;

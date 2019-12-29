@@ -16,6 +16,8 @@
 #include "packet.h"
 #include "sensorslist.h"
 #include "jsonstoring.h"
+#include "groundmotionlist.h"
+#include "colibrateitemlist.h"
 
 #define chartsNumber 4
 
@@ -28,7 +30,11 @@ class Backend : public QObject
     Q_OBJECT
 public:
     explicit Backend(QObject *parent = nullptr);
+    // set model lists
     Q_INVOKABLE void setSensorsList(SensorsList *sensorsList);
+    Q_INVOKABLE void setGroundMotionList(GroundMotionList *tempList);
+    Q_INVOKABLE void setColibrateItemList(ColibrateItemList *tempList);
+
     Q_INVOKABLE void moveRight();
     Q_INVOKABLE void moveLeft();
     Q_INVOKABLE void readFile(QString fileDirectory);
@@ -95,6 +101,8 @@ public slots:
 
 private:
     SensorsList *mList;
+    GroundMotionList *gList;
+    ColibrateItemList *cList;
 private slots:
     void recieveSerialPort();
     void timerSlot();

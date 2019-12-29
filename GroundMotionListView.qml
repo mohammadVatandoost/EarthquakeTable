@@ -4,27 +4,25 @@ import QtQuick.Layouts 1.3
 import QtQuick.Extras 1.4
 import QtQuick.Controls.Material 2.3
 import QtQuick.Controls.Styles 1.4
-import ColibrateItemModel 1.0
+import GroundMotionModel 1.0
 
 ListView {
     width: parent.width*0.95;
     height: 300
     Layout.alignment: Qt.AlignHCenter
-
-    model: ColibrateItemModel {
-             list: ColibrateItemList
+    model: GroundMotionModel {
+             list: GroundMotionList
     }
 
     delegate: ColibrateItem {
         Component.onCompleted: {
-                    setName(model.name)
-                    setColibrate(model.colibrate)
+            setName(model.name)
+            setStepTime(model.timeStep)
         }
     }
+
     ScrollBar.vertical: ScrollBar {}
 }
-
-
 
 //Pane {
 //    id: root
@@ -45,19 +43,19 @@ ListView {
 //            clip: true
 //            id: listView
 //            spacing: 10
-//            model: ColibrateItemModel {
-//                list: ColibrateItemList
+//            model: GroundMotionModel {
+//                list: GroundMotionList
 //            }
 
-//            delegate: ColibrateItem {
+//            delegate: GroundMotionItem {
 //                Component.onCompleted: {
-//                    console.log("ColibrateItem *******************")
-////                    setName(model.name)
-////                    setColibrate(model.colibrate)
+//                    console.log("GroundMotionItem *******************")
+//                    setName(model.name)
+//                    setStepTime(model.timeStep)
 //                }
 //            }
 
-//            ScrollBar.vertical: ScrollBar {}
+////            ScrollBar.vertical: ScrollBar {}
 //        }
 //    }
-//}
+////}

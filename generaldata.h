@@ -2,6 +2,7 @@
 #define GENERALDATA_H
 #include <iostream>
 #include <QString>
+#include <QVector>
 #include <vector>
 
 #define offValue  100
@@ -22,8 +23,8 @@ struct ColibrateItem {
 struct GeneralData {
     int torque;
     int floor[4] = {offValue, offValue, offValue, offValue};
-    vector<GroundMotion> groundMotion;
-    vector<ColibrateItem> colibrateItems;
+    QVector<GroundMotion> groundMotion;
+    QVector<ColibrateItem> colibrateItems;
 };
 
 

@@ -4,24 +4,23 @@ import QtQuick.Layouts 1.3
 import QtQuick.Extras 1.4
 import QtQuick.Controls.Material 2.3
 import QtQuick.Controls.Styles 1.4
-import QtQuick.VirtualKeyboard 2.2
 
 
 Pane {
-    implicitHeight: 100
+    implicitHeight: 114
     implicitWidth: parent.width*0.95
     Material.elevation: 5
-    Layout.topMargin: 10
+    Layout.topMargin: 21
     Layout.rightMargin: 21
     Layout.alignment: Qt.AlignHCenter
     ColumnLayout {
         width: parent.width
-        spacing: 5
+        spacing: 10
         Label {
           Layout.alignment: Qt.AlignHCenter
           text: "Positioning Something"
           font.pixelSize: 22
-          anchors.horizontalCenter: parent.horizontalCenter
+//          anchors.horizontalCenter: parent.horizontalCenter
         }
         RowLayout {
             Layout.alignment: Qt.AlignHCenter

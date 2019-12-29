@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QVector>
+#include <QDebug>
 #include "generaldata.h"
 
 class GroundMotionList : public QObject
@@ -10,9 +11,10 @@ class GroundMotionList : public QObject
     Q_OBJECT
 public:
     explicit GroundMotionList(QObject *parent = nullptr);
-    bool setGroundMotionItem(int index, GroundMotion &gm);
+    bool setGroundMotion(int index, GroundMotion &gm);
     QVector<GroundMotion> items();
     QVector<GroundMotion> groundMotionItems;
+    Q_INVOKABLE void removeItem(QString name);
 signals:
    void preItemAppended();
    void postItemAppended();

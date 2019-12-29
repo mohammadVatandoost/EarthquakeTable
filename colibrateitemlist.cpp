@@ -2,7 +2,10 @@
 
 ColibrateItemList::ColibrateItemList(QObject *parent) : QObject(parent)
 {
-
+   ColibrateItem temp;
+   temp.name = "test1";
+   temp.colibrate = 100 ;
+   ColibrateItems.append(temp);
 }
 
 bool ColibrateItemList::setColibrateItem(int index, ColibrateItem &gm)
@@ -17,6 +20,18 @@ bool ColibrateItemList::setColibrateItem(int index, ColibrateItem &gm)
 QVector<ColibrateItem> ColibrateItemList::items()
 {
     return ColibrateItems;
+}
+
+void ColibrateItemList::removeItem(QString name)
+{
+    for(int i=0; i<ColibrateItems.size(); i++) {
+        if(ColibrateItems[i].name == name) {
+            ColibrateItems.remove(i);
+            emit notifyInfoDataChanged();
+            return;
+        }
+    }
+    qDebug() << "remove item does not find:"<<name ;
 }
 
 void ColibrateItemList::appendItem(ColibrateItem temp)

@@ -4,7 +4,6 @@ import QtQuick.Layouts 1.3
 import QtQuick.Extras 1.4
 import QtQuick.Controls.Material 2.3
 import QtQuick.Controls.Styles 1.4
-import QtQuick.VirtualKeyboard 2.2
 
 Pane {
     id: root

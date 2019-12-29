@@ -16,6 +16,7 @@
         <file>Colibrate.qml</file>
         <file>Start.qml</file>
         <file>OripLine.qml</file>
-        <file>GroundMotionList.qml</file>
+        <file>GroundMotionListView.qml</file>
+        <file>GroundMotionItem.qml</file>
     </qresource>
 </RCC>

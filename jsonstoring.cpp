@@ -40,9 +40,28 @@ GeneralData JsonStoring::getGeneralData()
        cout<< "JsonStoring::getBoardData() does not exist"<<endl;
        return  temp;
    }
+   qDebug()<< "getGeneralData() :"<<  jsonString;
    QJsonDocument qJsonDocument = QJsonDocument::fromJson(jsonString.toUtf8());
    QJsonObject qJsonObject = qJsonDocument.object();
-//   QJsonArray array = qJsonObject.find("groundMotions").;
+   // get ground motions
+   QJsonArray jsonArray = qJsonObject["groundMotions"].toArray();
+   foreach (const QJsonValue & value, jsonArray) {
+       QJsonObject obj = value.toObject();
+       GroundMotion gm;
+       gm.name = obj.value("name").toString();
+       gm.fileDirectory = obj.value("fileDirectory").toString();
+       gm.timeStep = obj.value("timeStep").toString().toInt();
+       temp.groundMotion.push_back(gm);
+   }
+   // get colibrate item
+   jsonArray = qJsonObject["colibrateItems"].toArray();
+   foreach (const QJsonValue & value, jsonArray) {
+       QJsonObject obj = value.toObject();
+       ColibrateItem ci;
+       ci.name = obj.value("name").toString();
+       ci.colibrate = obj.value("colibrate").toString().toInt();
+       temp.colibrateItems.push_back(ci);
+   }
    // get colibrate item
    temp.torque = static_cast<int>(qJsonObject.value("torque").toString().toInt()) ;
    return  temp;

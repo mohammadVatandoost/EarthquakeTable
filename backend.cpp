@@ -26,6 +26,7 @@ Backend::Backend(QObject *parent) : QObject(parent)
     connect(timer, SIGNAL(timeout()), this, SLOT(timerSlot()));
     timer->start(1000);
     generalData = jsonStoring.getGeneralData();
+
 }
 
 void Backend::updateChart(QAbstractSeries *chartSeries, int floorNum)
@@ -353,7 +354,6 @@ void Backend::timerSlot()
 ////       cout<<endl;
 //   }
 
-//   emit notifyInfoDataChanged();
 }
 
 void Backend::setSensorsList(SensorsList *sensorsList)
@@ -366,12 +366,14 @@ void Backend::setGroundMotionList(GroundMotionList *tempList)
 {
     qDebug()<< "setGroundMotionList";
     gList = tempList;
+//    gList->groundMotionItems.swap(generalData.groundMotion);
 }
 
 void Backend::setColibrateItemList(ColibrateItemList *tempList)
 {
     qDebug()<< "setColibrateItemList";
     cList = tempList;
+//    cList->ColibrateItems.swap(generalData.colibrateItems);
 }
 
 void Backend::colibrate(QString name)

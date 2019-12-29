@@ -103,6 +103,10 @@ void ColibrateItemModel::setList(ColibrateItemList *list)
         connect(mList, &ColibrateItemList::postItemRemoved, this, [this]() {
           endRemoveRows();
         });
+        connect(mList, &ColibrateItemList::notifyInfoDataChanged, this, [this]() {
+          beginResetModel();
+          endResetModel();
+        });
 //        connect(mList, &SensorsList::notifyInfoDataChanged, this, [this](int index) {
 //          dataChanged(index, index, QVector<int>() << role);
 //        });

@@ -7,6 +7,7 @@
 #include <QJsonDocument>
 #include <QFile>
 #include <QTextStream>
+#include <QDebug>
 #include "generaldata.h"
 #include "packet.h"
 

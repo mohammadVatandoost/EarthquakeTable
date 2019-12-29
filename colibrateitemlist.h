@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QVector>
+#include <QDebug>
 #include "generaldata.h"
 
 class ColibrateItemList : public QObject
@@ -13,6 +14,7 @@ public:
     bool setColibrateItem(int index, ColibrateItem &ci);
     QVector<ColibrateItem> items();
     QVector<ColibrateItem> ColibrateItems;
+    Q_INVOKABLE void removeItem(QString name);
 signals:
    void preItemAppended();
    void postItemAppended();

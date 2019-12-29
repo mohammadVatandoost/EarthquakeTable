@@ -14,6 +14,9 @@ int GroundMotionModel::rowCount(const QModelIndex &parent) const
     if (parent.isValid() || !mList)
         return 0;
 
+//    return 0;
+//     qDebug()<< " GroundMotionModel::rowCount ";
+//    qDebug()<< " GroundMotionModel::rowCount : "<< mList->groundMotionItems.size();
     // FIXME: Implement me!
     return mList->items().size();
 }
@@ -42,6 +45,9 @@ bool GroundMotionModel::setData(const QModelIndex &index, const QVariant &value,
     if(!mList)
         return false;
 
+    // This is very important to prevent items to be garbage collected in JS!!!
+//    QDeclarativeEngine::setObjectOwnership(item, QDeclarativeEngine::CppOwnersh
+
     GroundMotion item = mList->items().at(index.row());
     switch (role) {
      case name:
@@ -52,7 +58,7 @@ bool GroundMotionModel::setData(const QModelIndex &index, const QVariant &value,
        item.fileDirectory = value.toString();
     }
 
-    if(mList->setGroundMotionItem(index.row(), item)) {
+    if(mList->setGroundMotion(index.row(), item)) {
         emit dataChanged(index, index, QVector<int>() << role);
         return true;
     }
@@ -88,9 +94,15 @@ GroundMotionList *GroundMotionModel::list() const
 
 void GroundMotionModel::setList(GroundMotionList *list)
 {
+
+//    qDebug()<<"********set List";
+//    qDebug() << "list->groundMotionItems.size() :" << list->groundMotionItems.size();
     beginResetModel();
-    if(mList)
-        mList->disconnect(this);
+//    if(mList) {
+//        qDebug() << "list->mList.size() :" << mList->groundMotionItems.size();
+//        mList->disconnect(this);
+//    }
+
 
     mList = list;
 
@@ -107,6 +119,10 @@ void GroundMotionModel::setList(GroundMotionList *list)
         });
         connect(mList, &GroundMotionList::postItemRemoved, this, [this]() {
           endRemoveRows();
+        });
+        connect(mList, &GroundMotionList::notifyInfoDataChanged, this, [this]() {
+          beginResetModel();
+          endResetModel();
         });
 //        connect(mList, &SensorsList::notifyInfoDataChanged, this, [this](int index) {
 //          dataChanged(index, index, QVector<int>() << role);

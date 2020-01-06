@@ -55,3 +55,8 @@ HEADERS += \
     groundmotionmodel.h \
     colibrateitemlist.h \
     colibrateitemmodel.h
+
+DISTFILES += \
+    images/lock-outline.png \
+    MaterialDesignIcon.qml \
+    images/lock.png

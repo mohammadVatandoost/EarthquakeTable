@@ -39,6 +39,7 @@ Pane {
                  checked: false
                  text: qsTr("I have set initial position.")
          }
+
          Button {
                 Layout.alignment: Qt.AlignHCenter
                 text: qsTr("Start")

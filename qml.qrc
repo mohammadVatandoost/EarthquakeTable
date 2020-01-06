@@ -18,5 +18,6 @@
         <file>OripLine.qml</file>
         <file>GroundMotionListView.qml</file>
         <file>GroundMotionItem.qml</file>
+        <file>TextInputWithBorder.qml</file>
     </qresource>
 </RCC>

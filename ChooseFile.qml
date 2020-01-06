@@ -14,6 +14,7 @@ Pane {
     Layout.alignment: Qt.AlignHCenter
     Layout.topMargin: 21
     property string fileUrl: ""
+    property bool auth: false
     ColumnLayout {
         width: parent.width
         spacing: 15
@@ -57,6 +58,7 @@ Pane {
                 highlighted: true
                 Material.background: Material.Blue
                 onClicked: {fileDialog.open();}
+                enabled: root.auth
          }
          ComboBox {
              id: comboTime
@@ -74,6 +76,7 @@ Pane {
                 highlighted: true
                 Material.background: Material.Green
                 onClicked: {BackEnd.saveGroundMotion(textEdit.text);}
+                enabled: root.auth
          }
          Label {
            Layout.alignment: Qt.AlignHCenter

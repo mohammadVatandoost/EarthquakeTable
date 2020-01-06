@@ -21,7 +21,7 @@ Page {
           width: parent.width/2
           spacing: 15
           ChooseFile {}
-          GroundMotionListView {}
+//          GroundMotionListView {}
        }
 
        ColumnLayout {
@@ -29,7 +29,7 @@ Page {
            spacing: 15
            Move {}
            Colibrate {}
-           ColibrateList {}
+//           ColibrateList {}
        }
    }
 }

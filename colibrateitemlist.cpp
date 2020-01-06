@@ -2,10 +2,10 @@
 
 ColibrateItemList::ColibrateItemList(QObject *parent) : QObject(parent)
 {
-   ColibrateItem temp;
-   temp.name = "test1";
-   temp.colibrate = 100 ;
-   ColibrateItems.append(temp);
+//   ColibrateItem temp;
+//   temp.name = "test1";
+//   temp.colibrate = 100 ;
+//   ColibrateItems.append(temp);
 }
 
 bool ColibrateItemList::setColibrateItem(int index, ColibrateItem &gm)

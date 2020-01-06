@@ -50,7 +50,7 @@ GeneralData JsonStoring::getGeneralData()
        GroundMotion gm;
        gm.name = obj.value("name").toString();
        gm.fileDirectory = obj.value("fileDirectory").toString();
-       gm.timeStep = obj.value("timeStep").toString().toInt();
+       gm.timeStep = obj.value("timeStep").toInt();
        temp.groundMotion.push_back(gm);
    }
    // get colibrate item

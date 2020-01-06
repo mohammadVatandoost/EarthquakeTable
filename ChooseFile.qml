@@ -8,7 +8,7 @@ import QtQuick.Dialogs 1.0
 
 Pane {
     id: root
-    implicitHeight: 300
+    implicitHeight: 600
     implicitWidth: parent.width*0.95
     Material.elevation: 5
     Layout.alignment: Qt.AlignHCenter
@@ -24,7 +24,7 @@ Pane {
               Layout.alignment: Qt.AlignLeft
               anchors.left: parent.left
               text: "Ground Motion"
-              font.pixelSize: 18
+              font.pixelSize: 22
             }
             TextEdit {
                 id: textEdit
@@ -34,9 +34,9 @@ Pane {
                 width: 250
                 height: 50
                 font.pointSize: 22
-                inputMethodHints: Qt.ImhDigitsOnly
+//                inputMethodHints: Qt.ImhDigitsOnly
                 property string placeholderText: "Name"
-                onActiveFocusChanged: BackEnd.openKeyboard()
+//                onActiveFocusChanged: BackEnd.openKeyboard()
                 Text {
                     text: textEdit.placeholderText
                     color: "#aaa"
@@ -75,7 +75,12 @@ Pane {
                 Material.background: Material.Green
                 onClicked: {BackEnd.saveGroundMotion(textEdit.text);}
          }
-
+         Label {
+           Layout.alignment: Qt.AlignHCenter
+           text: "Ground Motion List"
+           font.pixelSize: 22
+         }
+         GroundMotionListView {}
     }
 
     FileDialog {

@@ -174,16 +174,11 @@ void Backend::sendConfig(ConfigTx temp)
 
 void Backend::runSimulation()
 {
-  if(counterForSending < 3) {
-      flagStartButton = true;
-  } else if(dataSegments.size()>0) {
+    cout<< "run simulation"<<endl;
     ConfigTx temp;
     temp.mode = RUN;
     temp.loopTime = 20;
     sendConfig(temp);
-  } else {
-      cout<< "there is no file"<<endl;
-  }
 }
 
 void Backend::sendSimulationData(int packetId)
@@ -306,9 +301,7 @@ void Backend::timerSlot()
            }
            if(counterForSending == 3) {
                cout<< "go to run mode"<<endl;
-              if(flagStartButton) {
                 runSimulation();
-              }
            }
         }
 //        ConfigTx temp;
@@ -366,14 +359,18 @@ void Backend::setGroundMotionList(GroundMotionList *tempList)
 {
     qDebug()<< "setGroundMotionList";
     gList = tempList;
-//    gList->groundMotionItems.swap(generalData.groundMotion);
+//    cout<< "generalData.groundMotion.size:"<<generalData.groundMotion.size()<<endl;
+
+//    gList->groundMotionItems.swap(generalData.groundMotion); //swap move the items
+    gList->groundMotionItems = generalData.groundMotion;
+//    cout<< "generalData.groundMotion.size:"<<generalData.groundMotion.size()<<endl;
 }
 
 void Backend::setColibrateItemList(ColibrateItemList *tempList)
 {
     qDebug()<< "setColibrateItemList";
     cList = tempList;
-//    cList->ColibrateItems.swap(generalData.colibrateItems);
+    cList->ColibrateItems = generalData.colibrateItems;
 }
 
 void Backend::colibrate(QString name)
@@ -391,6 +388,39 @@ void Backend::addToColibrate(int colibrateValue)
     colibItem.colibrate = colibrateValue;
     colibItem.name = colibrateName;
     generalData.colibrateItems.push_back(colibItem);
+}
+
+void Backend::removeColibrateItem(QString temp)
+{
+//    cout<< "removeGroundMotion:"<<temp.toStdString()<< ", " <<generalData.groundMotion.size()<<  endl;
+    for(int i=0; i<generalData.colibrateItems.size(); i++) {
+//        cout<< i << " : "<< generalData.colibrateItems[i].name.toStdString()<<endl;
+        if(generalData.colibrateItems[i].name == temp) {
+            generalData.colibrateItems.remove(i);
+            jsonStoring.storeGeneralData(generalData);
+            cList->removeItem(temp);
+            return;
+        }
+    }
+    cout<< "removeColibrateItem not founded:"<< temp.toStdString()<<endl;
+}
+
+QStringList Backend::getColibratesNames()
+{
+    QStringList temp;
+    for(int i=0; i<generalData.colibrateItems.size(); i++) {
+        temp.append(generalData.colibrateItems[i].name);
+    }
+    return  temp;
+}
+
+void Backend::setSelectedColibrate(int temp)
+{
+    if( (-1 < temp) && (temp<generalData.groundMotion.size()) ) {
+       calibrate = generalData.colibrateItems[temp].colibrate;
+    } else {
+        cout<< "setSelectedColibrate index is not valid:"<< temp<<endl;
+    }
 }
 
 void Backend::moveRight()
@@ -434,7 +464,7 @@ void Backend::setSensorInfo()
 
 QString Backend::getMotorSpeed()
 {
-    return QString::number(motorSpeed) + " rpm";
+    return QString::number(motorSpeed/10) + " rpm";
 }
 
 double Backend::getFloorData(int floorNum)
@@ -498,12 +528,63 @@ void Backend::setTimeStep(QString temp)
 
 void Backend::saveGroundMotion(QString temp)
 {
+//    cout<< "********** saveGroundMotion:"<< temp.toStdString()<< ", "<<fileAddress.toStdString()<<endl;
     GroundMotion tempGM;
+    QString fileName = temp;
+    fileName.replace(":","");fileName.replace(".","");
+
+//    cout<< "******* file copy:" << fileAddress.toStdString() << ", "<< "./Data/"+fileName.toStdString()+".txt"<<endl;
+    QFile::copy(fileAddress, "./Data/"+fileName+".txt");
     tempGM.timeStep =  timeStep;
     tempGM.name = temp;
-    tempGM.fileDirectory = fileAddress;
+    tempGM.fileDirectory = "./Data/"+fileName+".txt";
     generalData.groundMotion.push_back(tempGM);
+    gList->appendItem(tempGM);
     jsonStoring.storeGeneralData(generalData);
+}
+
+void Backend::removeGroundMotion(QString temp)
+{
+//    cout<< "removeGroundMotion:"<<temp.toStdString()<< ", " <<generalData.groundMotion.size()<<  endl;
+    for(int i=0; i<generalData.groundMotion.size(); i++) {
+        cout<< i << " : "<< generalData.groundMotion[i].name.toStdString()<<endl;
+        if(generalData.groundMotion[i].name == temp) {
+            generalData.groundMotion.remove(i);
+            jsonStoring.storeGeneralData(generalData);
+            gList->removeItem(temp);
+            return;
+        }
+    }
+    cout<< "removeGroundMotion not founded:"<<temp.toStdString()<< endl;
+}
+
+QList<QString> Backend::getGroundMotions()
+{
+    QList<QString> temp;
+    for(int i=0; i<generalData.groundMotion.size(); i++) {
+        temp.append(generalData.groundMotion[i].name);
+    }
+    return  temp;
+}
+
+QStringList Backend::getGroundMotionNames()
+{
+    QStringList temp;
+    for(int i=0; i<generalData.groundMotion.size(); i++) {
+        temp.append(generalData.groundMotion[i].name);
+    }
+//    temp.append("testFelan");
+    return  temp;
+}
+
+void Backend::setSelectedGroundMotion(int temp)
+{
+    if( (-1 < temp) && (temp<generalData.groundMotion.size()) ) {
+       fileAddress = generalData.groundMotion[temp].fileDirectory;
+    } else {
+        cout<< "setSelectedGroundMotion index is not valid:"<< temp<<endl;
+    }
+
 }
 
 void Backend::sendFileData()

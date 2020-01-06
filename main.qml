@@ -6,6 +6,7 @@ import QtQuick.Layouts 1.3
 import QtQuick.Extras 1.4
 import QtQuick.Controls.Material 2.3
 import QtQuick.Dialogs 1.2
+import QtQuick.FreeVirtualKeyboard 1.0
 
 Window {
     id: window
@@ -50,6 +51,34 @@ Window {
 
         ChartComponent {
             id: chartsTab
+        }
+    }
+
+    InputPanel {
+        id: inputPanel
+        z: 1000
+        y: window.height
+        anchors.left: parent.left
+        anchors.right: parent.right
+        states: State {
+            name: "visible"
+            when: Qt.inputMethod.visible
+            PropertyChanges {
+                target: inputPanel
+                y: window.height - inputPanel.height
+            }
+        }
+        transitions: Transition {
+            from: ""
+            to: "visible"
+            reversible: true
+            ParallelAnimation {
+                NumberAnimation {
+                    properties: "y"
+                    duration: 150
+                    easing.type: Easing.InOutQuad
+                }
+            }
         }
     }
 

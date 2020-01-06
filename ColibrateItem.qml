@@ -40,7 +40,7 @@ RowLayout {
            text: qsTr("Delete")
            highlighted: true
            Material.background: Material.Red
-           onClicked: {ColibrateItemList.removeItem(name);}
+           onClicked: {BackEnd.removeColibrateItem(name);}
     }
 
 }

@@ -18,6 +18,7 @@
 #include "jsonstoring.h"
 #include "groundmotionlist.h"
 #include "colibrateitemlist.h"
+#include <QStringListModel>
 
 #define chartsNumber 4
 
@@ -45,10 +46,17 @@ public:
     Q_INVOKABLE int getMinValue(int floorNum);
     Q_INVOKABLE void setFloorInfo(int floorNum, QString temp);
     Q_INVOKABLE QString getFloorInfo(int floorNum);
+    // for ground motion
     Q_INVOKABLE void setTimeStep(QString temp);
     Q_INVOKABLE void saveGroundMotion(QString temp);
-    void sendFileData();
+    Q_INVOKABLE void removeGroundMotion(QString temp);
+    Q_INVOKABLE QList<QString> getGroundMotions();
+    Q_INVOKABLE QStringList getGroundMotionNames();
+    Q_INVOKABLE void setSelectedGroundMotion(int temp);
+    Q_INVOKABLE void sendFileData();
     QString fileAddress;
+
+
     QSerialPort *serial;
     QString come_port;
     QTimer *timer;
@@ -92,6 +100,10 @@ public:
     QString colibrateName;
     Q_INVOKABLE void colibrate(QString name);
     void addToColibrate(int colibrateValue);
+    Q_INVOKABLE void removeColibrateItem(QString temp);
+    Q_INVOKABLE QStringList getColibratesNames();
+    Q_INVOKABLE void setSelectedColibrate(int temp);
+    int calibrate = 1;
 signals:
 
 public slots:

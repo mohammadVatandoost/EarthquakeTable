@@ -2,10 +2,10 @@
 
 GroundMotionList::GroundMotionList(QObject *parent) : QObject(parent)
 {
-    GroundMotion temp;
-    temp.name = "test1";
-    temp.timeStep = 10;
-    groundMotionItems.append(temp);
+//    GroundMotion temp;
+//    temp.name = "test1";
+//    temp.timeStep = 10;
+//    groundMotionItems.append(temp);
 }
 
 bool GroundMotionList::setGroundMotion(int index, GroundMotion &gm)

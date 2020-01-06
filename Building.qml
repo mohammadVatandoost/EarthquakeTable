@@ -16,6 +16,14 @@ ColumnLayout {
         bottomPadding: 10
         font.pixelSize: 27
     }
+    ComboBox {
+        id: comboTime
+        Layout.alignment: Qt.AlignHCenter
+        width: 200
+        model: BackEnd.getColibratesNames()
+        currentIndex: 0
+        onActivated: BackEnd.setSelectedColibrate(index)
+    }
        Rectangle {
            id:building
           width: 0.8*parent.width

@@ -7,7 +7,7 @@ import QtQuick.Controls.Styles 1.4
 
 
 Pane {
-    implicitHeight: 170
+    implicitHeight: 470
     implicitWidth: parent.width*0.95
     Material.elevation: 5
     Layout.topMargin: 0
@@ -20,7 +20,6 @@ Pane {
           Layout.alignment: Qt.AlignHCenter
           text: "Structure Name"
           font.pixelSize: 22
-//          anchors.horizontalCenter: parent.horizontalCenter
         }
         TextEdit {
             id: textEdit
@@ -29,7 +28,7 @@ Pane {
             width: 200
             height: 50
             font.pointSize: 22
-            inputMethodHints: Qt.ImhDigitsOnly
+//            inputMethodHints: Qt.ImhDigitsOnly
             property string placeholderText: "Name"
             onActiveFocusChanged: BackEnd.openKeyboard()
             Text {
@@ -47,6 +46,12 @@ Pane {
             Material.background: Material.Green
             onClicked: {BackEnd.colibrate()}
         }
+        Label {
+          Layout.alignment: Qt.AlignHCenter
+          text: "Structures List"
+          font.pixelSize: 22
+        }
+        ColibrateList {}
 
     }
 }

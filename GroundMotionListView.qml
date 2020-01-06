@@ -6,6 +6,16 @@ import QtQuick.Controls.Material 2.3
 import QtQuick.Controls.Styles 1.4
 import GroundMotionModel 1.0
 
+//Pane {
+//    implicitHeight: 300
+//    implicitWidth: parent.width*0.95
+//    Material.elevation: 5
+//    Layout.topMargin: 0
+//    Layout.rightMargin: 21
+//    Layout.alignment: Qt.AlignHCenter
+//    ColumnLayout {
+//        width: parent.width
+//        spacing: 5
 ListView {
     width: parent.width*0.95;
     height: 300
@@ -14,15 +24,19 @@ ListView {
              list: GroundMotionList
     }
 
-    delegate: ColibrateItem {
+    delegate: GroundMotionItem {
         Component.onCompleted: {
-            setName(model.name)
-            setStepTime(model.timeStep)
+            setName(model.name);
+            setStepTime(model.timeStep);
+            console.log("GroundMotionItem :");
+            console.log(model.timeStep);
         }
     }
 
     ScrollBar.vertical: ScrollBar {}
 }
+//}
+//}
 
 //Pane {
 //    id: root

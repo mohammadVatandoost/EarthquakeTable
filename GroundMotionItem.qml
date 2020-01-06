@@ -11,7 +11,9 @@ RowLayout {
     property string name: ""
     property int stepTime: 10
     function setName(temp) {name = temp;}
-    function setStepTime(temp) {stepTime = temp;}
+    function setStepTime(temp) {
+        stepTime = temp;
+    }
     Label {
       id: label
 //      Layout.alignment: Qt.AlignLeft
@@ -31,7 +33,7 @@ RowLayout {
            text: qsTr("Delete")
            highlighted: true
            Material.background: Material.Red
-           onClicked: {GroundMotionLists.removeItem(name);}
+           onClicked: {BackEnd.removeGroundMotion(name);}
     }
 
 }

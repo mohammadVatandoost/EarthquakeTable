@@ -28,6 +28,7 @@ Pane {
 //             currentIndex: 1
              model: BackEnd.getGroundMotionNames()
              currentIndex: 0
+             onActivated: BackEnd.setSelectedGroundMotion(index)
 //             delegate: ItemDelegate {
 //                text: index + 1
 //             }

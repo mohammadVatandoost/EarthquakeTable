@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
 //    // for connecting qml slot to c++ signal
 //    QObject *topLevel = engine.rootObjects().value(0);
 //    QQuickWindow *window = qobject_cast<QQuickWindow *>(topLevel);
-
+//    window->showFullScreen();
     // connect our QML signal to our C++ slot
 //    QObject::connect(&backEnd, SIGNAL(notifyInfoDataChanged()),
 //                            window, SLOT(refreshData()));

@@ -47,7 +47,7 @@ Pane {
             text: qsTr("Colibrate")
             highlighted: true
             Material.background: Material.Green
-            onClicked: {BackEnd.colibrate()}
+            onClicked: {BackEnd.colibrate(textEdit.text)}
             enabled: root.auth
         }
         Label {

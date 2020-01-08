@@ -26,6 +26,12 @@ Backend::Backend(QObject *parent) : QObject(parent)
     connect(timer, SIGNAL(timeout()), this, SLOT(timerSlot()));
     timer->start(1000);
     generalData = jsonStoring.getGeneralData();
+    if(generalData.groundMotion.size()>0) {
+        fileAddress = generalData.groundMotion[0].fileDirectory;
+    }
+    if(generalData.colibrateItems.size()>0) {
+       calibrate = generalData.colibrateItems[0].colibrate;
+    }
 
 }
 
@@ -186,6 +192,7 @@ void Backend::sendSimulationData(int packetId)
     cout<< "sendSimulationData : "<< packetId << ", " << dataSegments.size() <<endl;
   for(int i=packetId; i<dataSegments.size();i++) {
       sendDataSegment(dataSegments[i]);
+
   }
   counterForSending = 0;
 }
@@ -204,7 +211,9 @@ void Backend::sendDataSegment(DataSegment temp)
     char* dataBytes = static_cast<char*>(static_cast<void*>(&temp));
     for(int i=0; i<sizeof(struct DataSegment); i++) {
         sum = sum + ((uint8_t)dataBytes[i]);
+        cout<< unsigned(dataBytes[i]&0xff) << ", ";
     }
+    cout<<endl;
     QString packet = "*@" ;
     QByteArray tx_data;
     tx_data.append(packet);
@@ -384,10 +393,12 @@ void Backend::colibrate(QString name)
 
 void Backend::addToColibrate(int colibrateValue)
 {
+//    cout<< "addToColibrate:"<<colibrateValue <<endl;
     ColibrateItem colibItem;
     colibItem.colibrate = colibrateValue;
     colibItem.name = colibrateName;
     generalData.colibrateItems.push_back(colibItem);
+    cList->appendItem(colibItem);
 }
 
 void Backend::removeColibrateItem(QString temp)
@@ -464,7 +475,8 @@ void Backend::setSensorInfo()
 
 QString Backend::getMotorSpeed()
 {
-    return QString::number(motorSpeed/10) + " rpm";
+//    qDebug()<<"getMotorSpeed :"<<motorSpeed;
+    return QString::number((float)(((float)motorSpeed)/10)) + " Hz";
 }
 
 double Backend::getFloorData(int floorNum)
@@ -589,7 +601,7 @@ void Backend::setSelectedGroundMotion(int temp)
 
 void Backend::sendFileData()
 {
-    qDebug()<< "sendFileData";
+    qDebug()<< "sendFileData:"<<fileAddress;
     QString message;
     QVector<uint16_t> dataList;
         QFile file(fileAddress);
@@ -605,7 +617,7 @@ void Backend::sendFileData()
                     if( myUtitlity.checkStringContainsNum(item.toUtf8().toStdString()) ) {
                             item.replace(" ", "");
 //                            qDebug()<< item;
-                            dataList.append(static_cast<uint16_t>(item.toDouble()*10000));
+                            dataList.append(static_cast<uint16_t>(item.toDouble()*10000*calibrate));
                     }
                 }
             }

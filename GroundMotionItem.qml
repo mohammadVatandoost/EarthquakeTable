@@ -10,10 +10,12 @@ RowLayout {
     width: parent.width
     property string name: ""
     property int stepTime: 10
+    property bool auth: false
     function setName(temp) {name = temp;}
     function setStepTime(temp) {
         stepTime = temp;
     }
+    function setAuth(temp) {root.auth = temp;}
     Label {
       id: label
 //      Layout.alignment: Qt.AlignLeft
@@ -34,6 +36,7 @@ RowLayout {
            highlighted: true
            Material.background: Material.Red
            onClicked: {BackEnd.removeGroundMotion(name);}
+           enabled: root.auth
     }
 
 }

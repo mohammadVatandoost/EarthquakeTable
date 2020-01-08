@@ -34,6 +34,11 @@ void ColibrateItemList::removeItem(QString name)
     qDebug() << "remove item does not find:"<<name ;
 }
 
+void ColibrateItemList::reRenderModel()
+{
+    emit notifyInfoDataChanged();
+}
+
 void ColibrateItemList::appendItem(ColibrateItem temp)
 {
     emit preItemAppended();

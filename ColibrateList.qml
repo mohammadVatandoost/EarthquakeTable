@@ -10,15 +10,17 @@ ListView {
     width: parent.width*0.95;
     height: 300
     Layout.alignment: Qt.AlignHCenter
-
+    property bool auth: false
+    function setAuth(temp) {root.auth = temp;}
     model: ColibrateItemModel {
              list: ColibrateItemList
     }
 
     delegate: ColibrateItem {
         Component.onCompleted: {
-                    setName(model.name)
-                    setColibrate(model.colibrate)
+            setName(model.name);
+            setColibrate(model.colibrate);
+            setAuth(root.auth);
         }
     }
     ScrollBar.vertical: ScrollBar {}

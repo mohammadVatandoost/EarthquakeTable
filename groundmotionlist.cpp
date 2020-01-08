@@ -34,6 +34,11 @@ void GroundMotionList::removeItem(QString name)
     qDebug() << "remove item does not find:"<<name ;
 }
 
+void GroundMotionList::reRenderModel()
+{
+    emit notifyInfoDataChanged();
+}
+
 void GroundMotionList::appendItem(GroundMotion temp)
 {
     emit preItemAppended();

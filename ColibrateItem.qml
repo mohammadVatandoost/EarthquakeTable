@@ -19,8 +19,11 @@ RowLayout {
     width: parent.width
     property string name: "asdsad"
     property int colibrate: 10
+    property bool auth: false
     function setName(temp) {name = temp;}
     function setColibrate(temp) {colibrate = temp;}
+    function setAuth(temp) {root.auth = temp;}
+
     Label {
       id: label
 //      Layout.alignment: Qt.AlignLeft
@@ -41,6 +44,7 @@ RowLayout {
            highlighted: true
            Material.background: Material.Red
            onClicked: {BackEnd.removeColibrateItem(name);}
+           enabled: root.auth
     }
 
 }

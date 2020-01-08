@@ -15,6 +15,7 @@ Pane {
     Layout.topMargin: 21
     property string fileUrl: ""
     property bool auth: false
+    function setAuth(temp) {root.auth = temp;}
     ColumnLayout {
         width: parent.width
         spacing: 15

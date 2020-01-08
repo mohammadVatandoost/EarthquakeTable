@@ -15,6 +15,7 @@ public:
     QVector<GroundMotion> items();
     QVector<GroundMotion> groundMotionItems;
     Q_INVOKABLE void removeItem(QString name);
+    Q_INVOKABLE void reRenderModel();
 signals:
    void preItemAppended();
    void postItemAppended();

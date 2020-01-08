@@ -15,6 +15,7 @@ public:
     QVector<ColibrateItem> items();
     QVector<ColibrateItem> ColibrateItems;
     Q_INVOKABLE void removeItem(QString name);
+    Q_INVOKABLE void reRenderModel();
 signals:
    void preItemAppended();
    void postItemAppended();

@@ -7,12 +7,15 @@ import QtQuick.Controls.Styles 1.4
 
 
 Pane {
+    id: root
     implicitHeight: 470
     implicitWidth: parent.width*0.95
     Material.elevation: 5
     Layout.topMargin: 0
     Layout.rightMargin: 21
     Layout.alignment: Qt.AlignHCenter
+    property bool auth: false
+    function setAuth(temp) {root.auth = temp;}
     ColumnLayout {
         width: parent.width
         spacing: 5
@@ -45,6 +48,7 @@ Pane {
             highlighted: true
             Material.background: Material.Green
             onClicked: {BackEnd.colibrate()}
+            enabled: root.auth
         }
         Label {
           Layout.alignment: Qt.AlignHCenter

@@ -20,7 +20,12 @@ Page {
        ColumnLayout {
           width: parent.width/2
           spacing: 15
-          ChooseFile {}
+          ChooseFile {
+             id: fileSelect
+             Component.onCompleted: {
+                 setAuth(false);
+             }
+          }
 //          GroundMotionListView {}
        }
 
@@ -28,7 +33,12 @@ Page {
            width: parent.width/2
            spacing: 15
            Move {}
-           Colibrate {}
+           Colibrate {
+               id: calibrate
+               Component.onCompleted: {
+                   setAuth(false);
+               }
+           }
 //           ColibrateList {}
        }
    }
@@ -110,6 +120,10 @@ Page {
                           Material.background: Material.Green
                           onClicked: {
                               if(textEdit.text === "1234") {
+                                  fileSelect.setAuth(true);
+                                  calibrate.setAuth(true);
+                                  ColibrateItemList.reRenderModel();
+                                  GroundMotionList.reRenderModel();
                                   popup.close();
                               } else {
                                  message.text = "Password is wrong"

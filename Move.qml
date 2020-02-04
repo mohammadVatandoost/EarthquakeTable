@@ -18,27 +18,52 @@ Pane {
         spacing: 10
         Label {
           Layout.alignment: Qt.AlignHCenter
-          text: "Positioning Something"
+          text: "Initial Positioning"
           font.pixelSize: 22
 //          anchors.horizontalCenter: parent.horizontalCenter
         }
         RowLayout {
             Layout.alignment: Qt.AlignHCenter
             Button {
+                property bool changeState: false
                 Layout.alignment: Qt.AlignHCenter
 //                       anchors.horizontalCenter: parent.horizontalCenter
                 text: qsTr("left")
                 highlighted: true
                 Material.background: Material.Blue
-                onClicked: {BackEnd.moveRight()}
+//                onClicked: {BackEnd.moveRight()}
+//                onPressed: {console.log("onPressed");}
+                onPressedChanged: {
+                   if(changeState) {
+                       BackEnd.stopMoving();
+                       changeState = false;
+                   } else {
+                       BackEnd.moveLeft();
+                       changeState = true;
+                   }
+
+                }
+//                onPressXChanged: {console.log("onPressXChanged");}
+//                onPressYChanged: {console.log("onPressYChanged");}
             }
             Button {
                 Layout.alignment: Qt.AlignHCenter
+                property bool changeState: false
 //                       anchors.horizontalCenter: parent.horizontalCenter
                 text: qsTr("right")
                 highlighted: true
                 Material.background: Material.Blue
-                onClicked: {BackEnd.moveLeft()}
+//                onClicked: {BackEnd.moveLeft()}
+                onPressedChanged: {
+                   if(changeState) {
+                       BackEnd.stopMoving();
+                       changeState = false;
+                   } else {
+                       BackEnd.moveRight();
+                       changeState = true;
+                   }
+
+                }
             }
         }
     }

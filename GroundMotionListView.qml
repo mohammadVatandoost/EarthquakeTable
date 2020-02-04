@@ -18,7 +18,7 @@ import GroundMotionModel 1.0
 //        spacing: 5
 ListView {
     width: parent.width*0.95;
-    height: 300
+    height: 250
     Layout.alignment: Qt.AlignHCenter
     property bool auth: false
     function setAuth(temp) {root.auth = temp;}

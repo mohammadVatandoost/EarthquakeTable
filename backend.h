@@ -36,6 +36,7 @@ public:
     Q_INVOKABLE void setGroundMotionList(GroundMotionList *tempList);
     Q_INVOKABLE void setColibrateItemList(ColibrateItemList *tempList);
 
+    Q_INVOKABLE void stopMoving();
     Q_INVOKABLE void moveRight();
     Q_INVOKABLE void moveLeft();
     Q_INVOKABLE void readFile(QString fileDirectory);
@@ -84,7 +85,7 @@ public:
     JsonStoring jsonStoring;
 
     // for sending file
-    int counterForSending = 0;
+    int counterForSending = 10;
     QVector<DataSegment> dataSegments;
     void sendDataSegment(DataSegment temp) ;
     void sendSimulationData(int packetId);

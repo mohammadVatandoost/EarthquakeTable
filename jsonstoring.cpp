@@ -59,7 +59,7 @@ GeneralData JsonStoring::getGeneralData()
        QJsonObject obj = value.toObject();
        ColibrateItem ci;
        ci.name = obj.value("name").toString();
-       ci.colibrate = obj.value("colibrate").toString().toInt();
+       ci.colibrate = obj.value("colibrate").toInt();
        temp.colibrateItems.push_back(ci);
    }
    // get colibrate item

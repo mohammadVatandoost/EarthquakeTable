@@ -289,20 +289,20 @@ void Backend::timerSlot()
         Q_FOREACH(QSerialPortInfo port, QSerialPortInfo::availablePorts()) {
                    serial->setPortName(port.portName());
                    qDebug() << " portName : " << port.portName();
-        }
-//         serial->close();
-        if(serial->open(QIODevice::ReadWrite)) {
-//           serial->flush();
-          connectState = true; qDebug() << " conndected : ";
-          connect(serial, SIGNAL(readyRead()), this, SLOT(recieveSerialPort()));
-        } else {
-            connectState = false; qDebug() << "Not conndected : ";
-            serial->close();
+                   if(serial->open(QIODevice::ReadWrite)) {
+                     connectState = true; qDebug() << " conndected : ";
+                     connect(serial, SIGNAL(readyRead()), this, SLOT(recieveSerialPort()));
+                     break;
+                   } else {
+                       connectState = false; qDebug() << "Not conndected : ";
+                       serial->close();
+                   }
         }
     } else {
         if(counterForSending < 3) {
            counterForSending++;
            if(counterForSending == 2) {
+               cout<< "go to config mode"<<endl;
                ConfigTx tempConfig;
                tempConfig.mode =CONFIG;
                tempConfig.loopTime = 10;
@@ -382,6 +382,15 @@ void Backend::setColibrateItemList(ColibrateItemList *tempList)
     cList->ColibrateItems = generalData.colibrateItems;
 }
 
+void Backend::stopMoving()
+{
+    ConfigTx temp;
+    temp.mode = CONFIG;
+    temp.move = Stop;
+    temp.loopTime = 20;
+    sendConfig(temp);
+}
+
 void Backend::colibrate(QString name)
 {
   ConfigTx temp;
@@ -394,6 +403,11 @@ void Backend::colibrate(QString name)
 void Backend::addToColibrate(int colibrateValue)
 {
 //    cout<< "addToColibrate:"<<colibrateValue <<endl;
+    for(int i=0; i<cList->ColibrateItems.size(); i++) {
+        if( (cList->ColibrateItems[i].name == colibrateName) && (cList->ColibrateItems[i].colibrate == colibrateValue)) {
+            return;
+        }
+    }
     ColibrateItem colibItem;
     colibItem.colibrate = colibrateValue;
     colibItem.name = colibrateName;
@@ -593,6 +607,7 @@ void Backend::setSelectedGroundMotion(int temp)
 {
     if( (-1 < temp) && (temp<generalData.groundMotion.size()) ) {
        fileAddress = generalData.groundMotion[temp].fileDirectory;
+       timeStep = generalData.groundMotion[temp].timeStep;
     } else {
         cout<< "setSelectedGroundMotion index is not valid:"<< temp<<endl;
     }
@@ -617,7 +632,8 @@ void Backend::sendFileData()
                     if( myUtitlity.checkStringContainsNum(item.toUtf8().toStdString()) ) {
                             item.replace(" ", "");
 //                            qDebug()<< item;
-                            dataList.append(static_cast<uint16_t>(item.toDouble()*10000*calibrate));
+//                            dataList.append(static_cast<uint16_t>(item.toDouble()*10000*calibrate));
+                            dataList.append(static_cast<uint16_t>(item.toDouble()*9.81*1000));
                     }
                 }
             }
@@ -626,6 +642,7 @@ void Backend::sendFileData()
           if(dataList.size()>0) {
               ConfigTx temp;
               temp.mode = SendData;
+              temp.loopTime = timeStep;
               sendConfig(temp);
               dataSegments.clear();
               myUtitlity.delay_ms(1);

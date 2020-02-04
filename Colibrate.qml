@@ -8,7 +8,7 @@ import QtQuick.Controls.Styles 1.4
 
 Pane {
     id: root
-    implicitHeight: 470
+    implicitHeight: 500
     implicitWidth: parent.width*0.95
     Material.elevation: 5
     Layout.topMargin: 0

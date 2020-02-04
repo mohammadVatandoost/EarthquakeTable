@@ -8,7 +8,7 @@ import QtQuick.Dialogs 1.0
 
 Pane {
     id: root
-    implicitHeight: 600
+    implicitHeight: 630
     implicitWidth: parent.width*0.95
     Material.elevation: 5
     Layout.alignment: Qt.AlignHCenter

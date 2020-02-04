@@ -183,7 +183,7 @@ void Backend::runSimulation()
     cout<< "run simulation"<<endl;
     ConfigTx temp;
     temp.mode = RUN;
-    temp.loopTime = timeStep;
+    temp.loopTime = 20;
     sendConfig(temp);
 }
 
@@ -305,7 +305,7 @@ void Backend::timerSlot()
                cout<< "go to config mode"<<endl;
                ConfigTx tempConfig;
                tempConfig.mode =CONFIG;
-               tempConfig.loopTime = timeStep;
+               tempConfig.loopTime = 10;
                sendConfig(tempConfig);
            }
            if(counterForSending == 3) {
@@ -490,9 +490,6 @@ void Backend::setSensorInfo()
 QString Backend::getMotorSpeed()
 {
 //    qDebug()<<"getMotorSpeed :"<<motorSpeed;
-    if( abs( (((float)motorSpeed))) > 60000) {
-        return "-";
-    }
     return QString::number((float)(((float)motorSpeed)/10)) + " Hz";
 }
 
@@ -646,7 +643,6 @@ void Backend::sendFileData()
               ConfigTx temp;
               temp.mode = SendData;
               temp.loopTime = timeStep;
-              cout<< "loopTime :"<< timeStep << ", "<< temp.loopTime<<endl;
               sendConfig(temp);
               dataSegments.clear();
               myUtitlity.delay_ms(1);

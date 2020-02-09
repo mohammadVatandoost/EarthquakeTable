@@ -12,16 +12,16 @@ void SensorsList::addSensor(Sensor newSensor)
 
 void SensorsList::setSensorData(SensorRx *data)
 {
-  if(data->sensorId < sensorItems.size()) {
-   sensorItems[data->sensorId].lastData = data->x;
-   if(data->x != 32767) {
-       double tempDateTime = QDateTime::currentMSecsSinceEpoch();
-       sensorItems[data->sensorId].addData(tempDateTime, data->x);
-   }
+    if(data->sensorId < sensorItems.size()) {
+       sensorItems[data->sensorId].lastData = data->y*3.9;
+       if(data->x != 32767) {
+           double tempDateTime = QDateTime::currentMSecsSinceEpoch();
+           sensorItems[data->sensorId].addData(tempDateTime, data->y*3.9);
+       }
 
-  } else {
-      cout<< "err setSensorData: sensor id not valid:"<<data->sensorId<<endl;
-  }
+      } else {
+          cout<< "err setSensorData: sensor id not valid:"<<data->sensorId<<endl;
+      }
 }
 
 QString SensorsList::getSensorInfo(int sensorId)

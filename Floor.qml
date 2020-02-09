@@ -28,7 +28,7 @@ Pane {
        } else if(temp === 32767) {
            ax1.text = "DC";
        } else {
-           ax1.text = temp;
+           ax1.text = temp.toFixed(2);
        }
     }
 

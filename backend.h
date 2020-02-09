@@ -54,7 +54,7 @@ public:
     Q_INVOKABLE QList<QString> getGroundMotions();
     Q_INVOKABLE QStringList getGroundMotionNames();
     Q_INVOKABLE void setSelectedGroundMotion(int temp);
-    Q_INVOKABLE void sendFileData();
+    Q_INVOKABLE void sendFileData(int index);
     QString fileAddress;
 
 

@@ -46,7 +46,7 @@ Pane {
                 text: qsTr("Start")
                 highlighted: true
                 Material.background: Material.Green
-                onClicked: {BackEnd.sendFileData();}
+                onClicked: {BackEnd.sendFileData(comboTime.currentIndex);}
                 enabled: checkBox.checked
          }
 

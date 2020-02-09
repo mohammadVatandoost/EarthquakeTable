@@ -106,23 +106,23 @@ void Backend::getSensorPkt(QByteArray data)
 {
     if(data.size() == sizeof(struct SensorRx)) {
 
-     SensorRx *m = reinterpret_cast<SensorRx*>(data.data());
-//     cout<< "Get sensor paket:"<< m->sensorId <<" : "<< m->x <<endl;
-      if(mList->isNewId(m->sensorId)) {
-            Sensor temp;
-            temp.sensorNumber =  m->sensorId;
-            temp.lastData = m->x;
-            temp.max = m->x;
-            temp.min = m->x;
-            mList->addSensor(temp);
-//            testBug.append(m->x);
-      } else {
-             mList->setSensorData(m);
-      }
+         SensorRx *m = reinterpret_cast<SensorRx*>(data.data());
+    //     cout<< "Get sensor paket:"<< m->sensorId <<" : "<< m->x <<endl;
+          if(mList->isNewId(m->sensorId)) {
+                Sensor temp;
+                temp.sensorNumber =  m->sensorId;
+                temp.lastData = m->y*3.9;
+                temp.max = m->y*3.9;
+                temp.min = m->y*3.9;
+                mList->addSensor(temp);
+    //            testBug.append(m->x);
+          } else {
+                 mList->setSensorData(m);
+          }
 
-    } else {
-        cout<< "getSensorPkt "<< data.size() << " must be "<<sizeof(struct SensorRx);
-    }
+        } else {
+            cout<< "getSensorPkt "<< data.size() << " must be "<<sizeof(struct SensorRx);
+        }
 }
 
 void Backend::getMotorSpeedPkt(QByteArray data)
@@ -194,7 +194,7 @@ void Backend::sendSimulationData(int packetId)
       sendDataSegment(dataSegments[i]);
 
   }
-  counterForSending = 0;
+  counterForSending = 1;
 }
 
 QString Backend::getErrorMessage()
@@ -300,19 +300,22 @@ void Backend::timerSlot()
         }
     } else {
         if(counterForSending < 3) {
-           counterForSending++;
-           if(counterForSending == 2) {
-               cout<< "go to config mode"<<endl;
-               ConfigTx tempConfig;
-               tempConfig.mode =CONFIG;
-               tempConfig.loopTime = timeStep;
-               sendConfig(tempConfig);
-           }
-           if(counterForSending == 3) {
-               cout<< "go to run mode"<<endl;
-                runSimulation();
-           }
-        }
+                   counterForSending++;
+                   if(counterForSending == 1) {
+                       sendSimulationData(0);
+                   }
+                   if(counterForSending == 2) {
+                       cout<< "go to config mode"<<endl;
+                       ConfigTx tempConfig;
+                       tempConfig.mode =CONFIG;
+                       tempConfig.loopTime = timeStep;
+                       sendConfig(tempConfig);
+                   }
+                   if(counterForSending == 3) {
+                       cout<< "go to run mode"<<endl;
+                        runSimulation();
+                   }
+                }
 //        ConfigTx temp;
 //        temp.mode = SendData;
 //        sendConfig(temp);
@@ -617,9 +620,12 @@ void Backend::setSelectedGroundMotion(int temp)
 
 }
 
-void Backend::sendFileData()
+void Backend::sendFileData(int index)
 {
+    qDebug()<< "sendFileData index:"<<index;
+    setSelectedGroundMotion(index);
     qDebug()<< "sendFileData:"<<fileAddress;
+     qDebug()<< QDir::currentPath();
     QString message;
     QVector<uint16_t> dataList;
         QFile file(fileAddress);
@@ -668,7 +674,8 @@ void Backend::sendFileData()
                   packetId++;
               }
               cout<< "dataSegments:" << dataSegments.size() << endl;
-              sendSimulationData(0);
+//              sendSimulationData(0);
+              counterForSending = 0;
           }
 
         }

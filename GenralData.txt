@@ -1,0 +1,1 @@
+{"colibrateItems":[],"groundMotions":[{"fileDirectory":"./Data/noscale.txt","name":"noscale","timeStep":10},{"fileDirectory":"./Data/sdfs.txt","name":"sdfs","timeStep":10},{"fileDirectory":"./Data/test.txt","name":"test","timeStep":15},{"fileDirectory":"./Data/test.txt","name":"test","timeStep":15},{"fileDirectory":"./Data/sddff.txt","name":"sddff","timeStep":10}],"torque":0}

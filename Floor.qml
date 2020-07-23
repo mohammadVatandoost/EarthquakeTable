@@ -43,7 +43,7 @@ Pane {
            topPadding: 10
            font.pixelSize: 22
            Layout.alignment: Qt.AlignHCenter
-           anchors.horizontalCenter: parent.horizontalCenter
+//           anchors.horizontalCenter: parent.horizontalCenter
          }
          Text {
             id: ax1
@@ -51,7 +51,7 @@ Pane {
             text: qsTr("-")
             font.pixelSize: 25
             bottomPadding: 10
-            anchors.horizontalCenter: parent.horizontalCenter
+//            anchors.horizontalCenter: parent.horizontalCenter
          }
        }
        SensorComboBox {

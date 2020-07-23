@@ -13,7 +13,7 @@ Pane {
     Material.elevation: 5
     Layout.alignment: Qt.AlignHCenter
     Layout.topMargin: 21
-    property string fileUrl: ""
+    property string fileName: ""
     property bool auth: false
     function setAuth(temp) {root.auth = temp;}
     ColumnLayout {
@@ -24,7 +24,7 @@ Pane {
             Label {
               id: label
               Layout.alignment: Qt.AlignLeft
-              anchors.left: parent.left
+//              anchors.left: parent.left
               text: "Ground Motion"
               font.pixelSize: 22
             }
@@ -49,8 +49,8 @@ Pane {
             Text {
                 Layout.leftMargin: 80
                 font.pixelSize: 22
-                text: qsTr(fileUrl)
-                visible: fileUrl == "" ? false : true
+                text: qsTr(root.fileName)
+                visible: root.fileName == "" ? false : true
             }
 //        }
          Button {
@@ -58,7 +58,15 @@ Pane {
                 text: qsTr("Choose File")
                 highlighted: true
                 Material.background: Material.Blue
-                onClicked: {fileDialog.open();}
+                onClicked: {
+                    if(FileItemsModel.isUSBDrive()) {
+                        FileItemsModel.refreshDirectory();
+                        fileDialogPopup.open();
+                    } else {
+                        notify.message = "No USB Drive Connected";
+                        notify.trigerTime();
+                    }
+                }
                 enabled: root.auth
          }
          ComboBox {
@@ -76,7 +84,11 @@ Pane {
                 text: qsTr("Save")
                 highlighted: true
                 Material.background: Material.Green
-                onClicked: {BackEnd.saveGroundMotion(textEdit.text);}
+                onClicked: {
+                   if( BackEnd.saveGroundMotion(textEdit.text) === 1 ) {
+                       popup.open();
+                   }else {console.log("******Dile is wrong");}
+                }
                 enabled: root.auth
          }
          Label {
@@ -93,15 +105,107 @@ Pane {
         folder: shortcuts.home
         onAccepted: {
             console.log("You chose: " + fileDialog.fileUrl)
-            var temp = ""+fileDialog.fileUrl;
+//            var temp = ""+fileDialog.fileUrl;
 //            temp.lastIndexOf("/");
 //            console.log(temp.slice(temp.lastIndexOf("/")+1, temp.length))
-            root.fileUrl = temp.slice(temp.lastIndexOf("/")+1, temp.length)
+            root.fileName = temp.slice(temp.lastIndexOf("/")+1, temp.length)
              BackEnd.readFile(fileDialog.fileUrl);
         }
         onRejected: {
             console.log("Canceled")
         }
 //        Component.onCompleted: visible = true
+    }
+
+    Popup {
+            id: popup
+            padding: 0
+            width: 400
+            height: 200
+            x: Math.round((parent.width - width) / 2)
+            y: 30
+            z: 10
+            focus: true
+            closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+//            closePolicy: Popup.CloseOnEscape
+
+
+            ColumnLayout {
+                anchors.fill: parent
+
+                Label {
+                    id: message
+                    text: qsTr("Width for running your File is too long")
+                    font.pixelSize: 18
+                    font.bold: true
+                    Layout.topMargin: 20
+                    Layout.bottomMargin: 20
+                    Layout.alignment: Qt.AlignHCenter
+                }
+            }
+    }
+
+    Popup {
+            id: fileDialogPopup
+            padding: 0
+            width: 600
+            height: 400
+            x: Math.round((parent.width - width) / 2)
+            y: 30
+            z: 10
+            focus: true
+            closePolicy: Popup.CloseOnEscape
+            ColumnLayout {
+                anchors.fill: parent
+                ListView {
+                    width: 500;
+                    height: 250
+                    Layout.alignment: Qt.AlignHCenter
+                    property bool auth: false
+                    function setAuth(temp) {root.auth = temp;}
+                    model: FileItemsModel
+                    delegate: FileItem {
+                        name: model.Name
+                        isDirectory: model.isDirectory
+                        path: model.Path
+                        onSelected: {
+//                            root.slideNum = JobModel.setTemporaryJob("file://"+filePath);
+//                            name_form.inputText = JobModel.getFileName();
+//                            sliderVolumePosition.enabled = true;
+//                            previewImg.source = JobModel.getFrameImage(1);
+//                            BackEnd.readFile(fileDialog.fileUrl);
+                            root.fileName = name;
+                            BackEnd.readFile(path);
+                            fileDialogPopup.close();
+                        }
+                    }
+                    ScrollBar.vertical: ScrollBar {}
+                }
+                RowLayout {
+                    width: parent.width
+                    Layout.alignment: Qt.AlignHCenter
+                    spacing: 25
+                    Button {
+                        Layout.alignment: Qt.AlignHCenter
+                        text: qsTr("Close")
+                        highlighted: true
+                        Material.background: Material.Red
+                        onClicked: {
+                            fileDialogPopup.close();
+                        }
+                    }
+                    Button {
+                        Layout.alignment: Qt.AlignHCenter
+                        text: qsTr("Back")
+                        highlighted: true
+                        Material.background: Material.Blue
+                        onClicked: {
+                             FileItemsModel.backDirectory();
+                        }
+                    }
+                }
+
+
+            }
     }
 }

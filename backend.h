@@ -17,7 +17,7 @@
 #include "sensorslist.h"
 #include "jsonstoring.h"
 #include "groundmotionlist.h"
-#include "colibrateitemlist.h"
+#include "colibrateitemmodel.h"
 #include <QStringListModel>
 
 #define chartsNumber 4
@@ -34,7 +34,7 @@ public:
     // set model lists
     Q_INVOKABLE void setSensorsList(SensorsList *sensorsList);
     Q_INVOKABLE void setGroundMotionList(GroundMotionList *tempList);
-    Q_INVOKABLE void setColibrateItemList(ColibrateItemList *tempList);
+    Q_INVOKABLE void setColibrateItemModel(ColibrateItemModel *tempList);
 
     Q_INVOKABLE void stopMoving();
     Q_INVOKABLE void moveRight();
@@ -49,7 +49,7 @@ public:
     Q_INVOKABLE QString getFloorInfo(int floorNum);
     // for ground motion
     Q_INVOKABLE void setTimeStep(QString temp);
-    Q_INVOKABLE void saveGroundMotion(QString temp);
+    Q_INVOKABLE int saveGroundMotion(QString temp);
     Q_INVOKABLE void removeGroundMotion(QString temp);
     Q_INVOKABLE QList<QString> getGroundMotions();
     Q_INVOKABLE QStringList getGroundMotionNames();
@@ -57,6 +57,8 @@ public:
     Q_INVOKABLE void sendFileData(int index);
     QString fileAddress;
 
+    Q_INVOKABLE void changePassword(QString temp);
+    Q_INVOKABLE bool verifyPassword(QString temp);
 
     QSerialPort *serial;
     QString come_port;
@@ -99,23 +101,34 @@ public:
 
     // for colibrate
     QString colibrateName;
-    Q_INVOKABLE void colibrate(QString name);
+    int maxDistance;
+    int maxAccelarator;
+    Q_INVOKABLE void colibrate(QString name, int maxDis, int maxAcc);
     void addToColibrate(int colibrateValue);
     Q_INVOKABLE void removeColibrateItem(QString temp);
     Q_INVOKABLE QStringList getColibratesNames();
     Q_INVOKABLE void setSelectedColibrate(int temp);
     int calibrate = 1;
+    int pdg, pda;
+
+    // filter
+    Q_INVOKABLE bool setFilter(double f1, double f2);
+
+    // message
+    QQueue<QString> messages;
+    Q_INVOKABLE QString getMessage();
 signals:
 
 public slots:
     void updateChart(QAbstractSeries *chartSeries, int floorNum);
 
     void setAxisXTime(QDateTimeAxis *axis, int num);
+    void selectedFile(QString path);
 
 private:
     SensorsList *mList;
     GroundMotionList *gList;
-    ColibrateItemList *cList;
+    ColibrateItemModel *cModel;
 private slots:
     void recieveSerialPort();
     void timerSlot();

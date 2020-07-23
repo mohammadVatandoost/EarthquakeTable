@@ -8,7 +8,7 @@ import GroundMotionModel 1.0
 
 Pane {
     id: root
-    implicitHeight: 180
+    implicitHeight: 280
     implicitWidth: parent.width
     Material.elevation: 5
     Layout.alignment: Qt.AlignHCenter
@@ -38,15 +38,68 @@ Pane {
          CheckBox {
                  id: checkBox
                  checked: false
-                 text: qsTr("I have set initial position.")
+                 text: qsTr("I have centered the device.")
          }
+
+         RowLayout {
+             width: parent.width
+             Layout.alignment: Qt.AlignHCenter
+             spacing: 5
+             Text {
+                 font.pointSize: 18
+                 text: qsTr("Frequency 1 :")
+             }
+             TextField {
+                 id: frequncy1
+                 Layout.topMargin: 10
+                 Layout.bottomMargin: 10
+                 Layout.rightMargin: 40
+                 width: 100
+                 height: 50
+                 font.pointSize: 18
+                 text: "0"
+             }
+             Text {
+                 font.pointSize: 18
+                 text: qsTr("Frequency 2 :")
+             }
+             TextField {
+                 id: frequncy2
+                 Layout.topMargin: 10
+                 Layout.bottomMargin: 10
+                 width: 100
+                 height: 50
+                 font.pointSize: 18
+                 text: "200"
+             }
+         }
+//         RowLayout {
+//             width: parent.width
+//             Text {
+//                 text: qsTr("Frequency 2 :")
+//             }
+//             TextEdit {
+//                 id: frequncy2
+//                 Layout.topMargin: 10
+//                 Layout.bottomMargin: 10
+//                 width: 200
+//                 height: 50
+//                 font.pointSize: 22
+//                 text: "200"
+//             }
+//         }
 
          Button {
                 Layout.alignment: Qt.AlignHCenter
                 text: qsTr("Start")
                 highlighted: true
                 Material.background: Material.Green
-                onClicked: {BackEnd.sendFileData(comboTime.currentIndex);}
+                onClicked: {
+                    if(BackEnd.setFilter(parseFloat(frequncy1.text), parseFloat(frequncy2.text)) ) {
+//                        BackEnd.sendFileData(comboTime.currentIndex);
+                        checkBox.checked = false;
+                    }
+                }
                 enabled: checkBox.checked
          }
 

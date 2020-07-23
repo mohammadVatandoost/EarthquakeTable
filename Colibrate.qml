@@ -31,9 +31,8 @@ Pane {
             width: 200
             height: 50
             font.pointSize: 22
-//            inputMethodHints: Qt.ImhDigitsOnly
             property string placeholderText: "Name"
-            onActiveFocusChanged: BackEnd.openKeyboard()
+//            onActiveFocusChanged: BackEnd.openKeyboard()
             Text {
                 text: textEdit.placeholderText
                 color: "#aaa"
@@ -41,13 +40,59 @@ Pane {
                 visible: !textEdit.text && !textEdit.activeFocus // <----------- ;-)
             }
         }
+        RowLayout {
+            width: 400
+            spacing: 25
+            Layout.alignment: Qt.AlignHCenter
+            Item {
+                width: 150
+                height: 50
+                TextEdit {
+                    id: maxDis
+                    Layout.topMargin: 10
+                    Layout.bottomMargin: 10
+                    width: 150
+                    height: 50
+                    font.pointSize: 22
+                    property string placeholderText: "PGD(cm)"
+        //            onActiveFocusChanged: BackEnd.openKeyboard()
+                    Text {
+                        text: maxDis.placeholderText
+                        color: "#aaa"
+                        font.pointSize: 25
+                        visible: !maxDis.text && !maxDis.activeFocus // <----------- ;-)
+                    }
+                }
+            }
+            Item {
+                width: 150
+                height: 50
+                TextEdit {
+                    id: maxAcc
+                    Layout.topMargin: 10
+                    Layout.bottomMargin: 10
+                    width: 150
+                    height: 50
+                    font.pointSize: 22
+                    property string placeholderText: "PGA(mg)"
+                    Text {
+                        text: maxAcc.placeholderText
+                        color: "#aaa"
+                        font.pointSize: 25
+                        visible: !maxAcc.text && !maxAcc.activeFocus // <----------- ;-)
+                    }
+                }
+            }
+        }
+
+
         Button {
             Layout.alignment: Qt.AlignHCenter
 //            anchors.horizontalCenter: parent.horizontalCenter
             text: qsTr("Colibrate")
             highlighted: true
             Material.background: Material.Green
-            onClicked: {BackEnd.colibrate(textEdit.text)}
+            onClicked: {BackEnd.colibrate(textEdit.text, parseInt(maxDis.text), parseInt(maxAcc.text))}
             enabled: root.auth
         }
         Label {

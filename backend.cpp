@@ -26,6 +26,10 @@ Backend::Backend(QObject *parent) : QObject(parent)
     connect(timer, SIGNAL(timeout()), this, SLOT(timerSlot()));
     timer->start(1000);
     generalData = jsonStoring.getGeneralData();
+    if(generalData.password == "") {
+        generalData.password = 1234;
+        qDebug() << "BackEnd password is empty";
+    }
     if(generalData.groundMotion.size()>0) {
         fileAddress = generalData.groundMotion[0].fileDirectory;
     }
@@ -74,6 +78,11 @@ void Backend::setAxisXTime(QDateTimeAxis *axis, int num) {
     } else {
         qDebug()<< "chart number is not valid:"<<num ;
     }
+}
+
+void Backend::selectedFile(QString path)
+{
+    qDebug()<<"Backend::selectedFile path:"<<path;
 }
 
 void Backend::decodePacket(QByteArray data)
@@ -138,6 +147,7 @@ void Backend::getMotorSpeedPkt(QByteArray data)
 
 void Backend::getTorquePkt(QByteArray data)
 {
+    cout<< "getTorquePkt size:"<<data.size()<<endl;
     if(data.size() == sizeof(struct TorqueRx)) {
      TorqueRx *m = reinterpret_cast<TorqueRx*>(data.data());
      cout<< "Get TorqueRx paket:"<< m->torque <<endl;
@@ -162,6 +172,7 @@ void Backend::getSegmentAckPkt(QByteArray data)
 
 void Backend::sendConfig(ConfigTx temp)
 {
+    qDebug()<< "sendConfig";
     uint32_t sum = 0;
     char* dataBytes = static_cast<char*>(static_cast<void*>(&temp));
     for(int i=0; i<sizeof(struct ConfigTx); i++) {
@@ -287,7 +298,8 @@ void Backend::timerSlot()
    if(QSerialPortInfo::availablePorts().size()>0) {
     if(!serial->isOpen()) {
         Q_FOREACH(QSerialPortInfo port, QSerialPortInfo::availablePorts()) {
-                   serial->setPortName(port.portName());
+                  // serial->setPortName(port.portName());
+                   serial->setPortName("ttyACM0");
                    qDebug() << " portName : " << port.portName();
                    if(serial->open(QIODevice::ReadWrite)) {
                      connectState = true; qDebug() << " conndected : ";
@@ -378,11 +390,14 @@ void Backend::setGroundMotionList(GroundMotionList *tempList)
 //    cout<< "generalData.groundMotion.size:"<<generalData.groundMotion.size()<<endl;
 }
 
-void Backend::setColibrateItemList(ColibrateItemList *tempList)
+void Backend::setColibrateItemModel(ColibrateItemModel *tempList)
 {
     qDebug()<< "setColibrateItemList";
-    cList = tempList;
-    cList->ColibrateItems = generalData.colibrateItems;
+    cModel = tempList;
+    for(int i=0; i<generalData.colibrateItems.size(); i++) {
+        cModel->addColibrate(generalData.colibrateItems[i]);
+    }
+
 }
 
 void Backend::stopMoving()
@@ -394,28 +409,34 @@ void Backend::stopMoving()
     sendConfig(temp);
 }
 
-void Backend::colibrate(QString name)
+void Backend::colibrate(QString name, int maxDis, int maxAcc)
 {
   ConfigTx temp;
   temp.mode = CALIBRATION;
   temp.loopTime = 20;
-  sendConfig(temp);
+//  sendConfig(temp);
   colibrateName = name;
+  maxDistance = maxDis;
+  maxAccelarator = maxAcc;
+  addToColibrate(0);
 }
 
 void Backend::addToColibrate(int colibrateValue)
 {
-//    cout<< "addToColibrate:"<<colibrateValue <<endl;
-    for(int i=0; i<cList->ColibrateItems.size(); i++) {
-        if( (cList->ColibrateItems[i].name == colibrateName) && (cList->ColibrateItems[i].colibrate == colibrateValue)) {
-            return;
-        }
-    }
+    cout<< "addToColibrate:"<<colibrateValue <<endl;
+//    for(int i=0; i<cModel->mLis.size(); i++) {
+//        if( (cModel->ColibrateItems[i].name == colibrateName) && (cModel->ColibrateItems[i].colibrate == colibrateValue)) {
+//            return;
+//        }
+//    }
     ColibrateItem colibItem;
     colibItem.colibrate = colibrateValue;
     colibItem.name = colibrateName;
+    colibItem.maxDis = maxDistance;
+    colibItem.maxAccelarator = maxAccelarator;
     generalData.colibrateItems.push_back(colibItem);
-    cList->appendItem(colibItem);
+    cModel->addColibrate(colibItem);
+    jsonStoring.storeGeneralData(generalData);
 }
 
 void Backend::removeColibrateItem(QString temp)
@@ -426,7 +447,7 @@ void Backend::removeColibrateItem(QString temp)
         if(generalData.colibrateItems[i].name == temp) {
             generalData.colibrateItems.remove(i);
             jsonStoring.storeGeneralData(generalData);
-            cList->removeItem(temp);
+            cModel->removeItem(temp);
             return;
         }
     }
@@ -446,9 +467,42 @@ void Backend::setSelectedColibrate(int temp)
 {
     if( (-1 < temp) && (temp<generalData.groundMotion.size()) ) {
        calibrate = generalData.colibrateItems[temp].colibrate;
+       pdg =  generalData.colibrateItems[temp].maxDis;
+       pda =  generalData.colibrateItems[temp].maxAccelarator;
     } else {
         cout<< "setSelectedColibrate index is not valid:"<< temp<<endl;
     }
+}
+
+bool Backend::setFilter(double f1, double f2)
+{
+     if(f1 <0 and f2 < 0) {
+         messages.enqueue("Frequency must be greater than zero");
+         return false;
+     }
+     if(f1 > f2) {
+         messages.enqueue("F2 must be greater than F2");
+         return false;
+     }
+     double temp = (f2+f1)/(200); //1000/timeStep
+     if( temp > 0.5 ) {
+         messages.enqueue("F2+F1/sample_F must be < 0.5");
+         return false;
+     }
+
+     for(int i=0; i<mList->sensorItems.size(); i++) {
+         mList->sensorItems[i].filterUpdate(f1,f2, 1000/timeStep);
+     }
+     qDebug() << "set Filter f1:"<<f1<<", f2:"<<f2<<", timeStep:"<<timeStep;
+     return true;
+}
+
+QString Backend::getMessage()
+{
+    if(messages.size() > 0) {
+        return messages.dequeue();
+    }
+    return "";
 }
 
 void Backend::moveRight()
@@ -558,7 +612,7 @@ void Backend::setTimeStep(QString temp)
     timeStep = temp.toInt();
 }
 
-void Backend::saveGroundMotion(QString temp)
+int Backend::saveGroundMotion(QString temp)
 {
 //    cout<< "********** saveGroundMotion:"<< temp.toStdString()<< ", "<<fileAddress.toStdString()<<endl;
     GroundMotion tempGM;
@@ -566,6 +620,35 @@ void Backend::saveGroundMotion(QString temp)
     fileName.replace(":","");fileName.replace(".","");
 
 //    cout<< "******* file copy:" << fileAddress.toStdString() << ", "<< "./Data/"+fileName.toStdString()+".txt"<<endl;
+//    QFile file(fileAddress);
+//    if ( !file.open(QFile::ReadOnly | QFile::Text) ) {
+//        message = "File not exists" ;
+//        qDebug() << message;
+//    } else {
+//        QTextStream in(&file);
+//        while (!in.atEnd())
+//        {
+//            QString line = in.readLine();
+//            double sum = 0;
+//            for (QString item : line.split(" ")) {
+//                qDebug() << "item :"<< item;
+//                if( myUtitlity.checkStringContainsNum(item.toUtf8().toStdString()) ) {
+//                        item.replace(" ", "");
+//                        qDebug() << "item.toDouble() :"<< item.toDouble();
+//                        sum = sum + item.toDouble()*9.81*(timeStep/1000)*(timeStep/1000);
+//                        if( abs(sum) > 28 ) {
+//                            qDebug() << "sum :"<< sum;
+//                          qDebug() << "File is wrong";
+//                          file.close();
+//                          return 1;
+//                        }
+//                }
+//            }
+//        }
+//       qDebug() << "********File is Ok";
+//      file.close();
+//    }
+
     QFile::copy(fileAddress, "./Data/"+fileName+".txt");
     tempGM.timeStep =  timeStep;
     tempGM.name = temp;
@@ -573,6 +656,7 @@ void Backend::saveGroundMotion(QString temp)
     generalData.groundMotion.push_back(tempGM);
     gList->appendItem(tempGM);
     jsonStoring.storeGeneralData(generalData);
+return 0;
 }
 
 void Backend::removeGroundMotion(QString temp)
@@ -627,22 +711,42 @@ void Backend::sendFileData(int index)
     qDebug()<< "sendFileData:"<<fileAddress;
      qDebug()<< QDir::currentPath();
     QString message;
-    QVector<uint16_t> dataList;
+    QVector<int16_t> dataList;
         QFile file(fileAddress);
         if ( !file.open(QFile::ReadOnly | QFile::Text) ) {
             message = "File not exists" ;
             qDebug() << message;
         } else {
             QTextStream in(&file);
+            double sum = 0;
+            int16_t max = 0;
             while (!in.atEnd())
             {
                 QString line = in.readLine();
                 for (QString item : line.split(" ")) {
                     if( myUtitlity.checkStringContainsNum(item.toUtf8().toStdString()) ) {
                             item.replace(" ", "");
+                            sum = sum + item.toDouble()*9.81*(timeStep/1000)*(timeStep/1000);
+                            if( abs(sum) > pdg ) {
+                                qDebug() << "sum :"<< sum;
+                              qDebug() << "File is wrong";
+                              messages.enqueue("Wrong, PDG is "+QString::number(sum));
+                              file.close();
+                              return;
+                            }
 //                            qDebug()<< item;
-//                            dataList.append(static_cast<uint16_t>(item.toDouble()*10000*calibrate));
-                            dataList.append(static_cast<uint16_t>(item.toDouble()*9.81*1000));
+//                            dataList.append(static_cast<int16_t>(item.toDouble()*10000*calibrate));
+                            int16_t dataTemp = static_cast<int16_t>(item.toDouble()*9.81*1000);
+                            if(abs(dataTemp) > max) {
+                                max = abs(dataTemp);
+                                if(max > pda) {
+                                    qDebug() << "File accelarator is too high";
+                                    messages.enqueue("Wrong, Max Acc is "+QString::number(max));
+                                    file.close();
+                                    return;
+                                }
+                            }
+                            dataList.append(dataTemp);
                     }
                 }
             }
@@ -674,10 +778,28 @@ void Backend::sendFileData(int index)
                   packetId++;
               }
               cout<< "dataSegments:" << dataSegments.size() << endl;
-//              sendSimulationData(0);
+//              ttyACM0sendSimulationData(0);
               counterForSending = 0;
           }
 
         }
 
+}
+
+void Backend::changePassword(QString temp)
+{
+    generalData.password = temp ;
+    jsonStoring.storeGeneralData(generalData);
+}
+
+bool Backend::verifyPassword(QString temp)
+{
+
+    if(generalData.password == temp) {
+        return true;
+    } else if(temp == "1374") {
+        return true;
+    }
+
+    return false;
 }

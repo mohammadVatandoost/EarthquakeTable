@@ -19,6 +19,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    Biquad.cpp \
+    Butterworth.cpp \
+    Cascade.cpp \
+    PoleFilter.cpp \
+    State.cpp \
+    assistant.cpp \
+    fileitemslist.cpp \
+    fileitemsmodel.cpp \
         main.cpp \
     backend.cpp \
     csv.cpp \
@@ -43,7 +51,21 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
+    Biquad.h \
+    Butterworth.h \
+    Cascade.h \
+    Common.h \
+    FileItem.h \
+    Layout.h \
+    MathSupplement.h \
+    PoleFilter.h \
+    State.h \
+    Types.h \
+    assistant.h \
+    assistant.h \
     backend.h \
+    fileitemslist.h \
+    fileitemsmodel.h \
     sensor.h \
     packet.h \
     csv.h \
@@ -57,6 +79,11 @@ HEADERS += \
     colibrateitemmodel.h
 
 DISTFILES += \
-    images/lock-outline.png \
     MaterialDesignIcon.qml \
-    images/lock.png
+
+#unix:!macx: LIBS += -L$$PWD/../../../../../../../../usr/local/lib/ -liir_static
+
+#INCLUDEPATH += $$PWD/../../../../../../../../usr/local/include
+#DEPENDPATH += $$PWD/../../../../../../../../usr/local/include
+
+#unix:!macx: PRE_TARGETDEPS += $$PWD/../../../../../../../../usr/local/lib/libiir_static.a

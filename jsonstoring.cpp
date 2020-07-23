@@ -9,6 +9,7 @@ void JsonStoring::storeGeneralData(GeneralData generalData)
 {
      QJsonObject qJsonObject;
      qJsonObject.insert("torque", generalData.torque);
+     qJsonObject.insert("password", generalData.password);
      // ground motion
      QJsonArray array;
      for(int i=0; i<generalData.groundMotion.size(); i++) {
@@ -25,6 +26,8 @@ void JsonStoring::storeGeneralData(GeneralData generalData)
          QJsonObject temp;
          temp.insert("name", generalData.colibrateItems[i].name);
          temp.insert("colibrate", generalData.colibrateItems[i].colibrate);
+         temp.insert("maxDis", generalData.colibrateItems[i].maxDis);
+         temp.insert("maxAccelarator", generalData.colibrateItems[i].maxAccelarator);
          array2.push_front(temp);
      }
      qJsonObject.insert("colibrateItems", array2);
@@ -60,10 +63,13 @@ GeneralData JsonStoring::getGeneralData()
        ColibrateItem ci;
        ci.name = obj.value("name").toString();
        ci.colibrate = obj.value("colibrate").toInt();
+       ci.maxDis = obj.value("maxDis").toInt();
+       ci.maxAccelarator = obj.value("maxAccelarator").toInt();
        temp.colibrateItems.push_back(ci);
    }
    // get colibrate item
    temp.torque = static_cast<int>(qJsonObject.value("torque").toString().toInt()) ;
+   temp.password = qJsonObject.value("password").toString();
    return  temp;
 }
 

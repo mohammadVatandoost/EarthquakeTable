@@ -11,8 +11,8 @@ import QtQuick.FreeVirtualKeyboard 1.0
 Window {
     id: window
     visible: true
-    width: 840
-    height: 680
+    width: 1280
+    height: 700
     title: qsTr("Simulation Table")
 
     TabBar {
@@ -82,6 +82,10 @@ Window {
         }
     }
 
+    InfoMessage {
+        id: notify
+    }
+
     Popup {
             id: popup
             padding: 10
@@ -132,4 +136,6 @@ Window {
 
             }
      }
+
+
 }

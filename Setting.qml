@@ -53,6 +53,20 @@ Page {
            x: window.width - 80
     }
 
+    Button {
+        id: changePassword
+           text: qsTr("change password")
+           highlighted: true
+           Material.background: Material.Green
+           onClicked: {
+               changePassPopup.open()
+           }
+           z: 1000
+           y: window.height - 100
+           x: window.width - 120 - width
+           visible: false
+    }
+
     Popup {
             id: popup
             padding: 0
@@ -80,7 +94,7 @@ Page {
                 }
                 TextInputWithBorder {
                     id: textEdit
-                    anchors.top: paddingTEmp.bottom
+//                    anchors.top: paddingTEmp.bottom
                     width: 1000
                     Layout.topMargin: 0
                     Layout.alignment: Qt.AlignHCenter
@@ -91,15 +105,6 @@ Page {
         //            enterKeyAction: EnterKeyAction.Next
                     onAccepted: upperCaseField.focus = true
                 }
-//                TextEdit {
-//                    id: configTextEdit
-//                    text: qsTr(popup.configValue)
-// //                   onActiveFocusChanged: BackEnd.openKeyboard()
-//                    height: 50
-//                    width: 200
-//                    font.pixelSize: 22
-//                    Layout.alignment: Qt.AlignHCenter
-//                }
 
                 Pane {
                     Layout.fillWidth: true
@@ -111,7 +116,89 @@ Page {
                           text: qsTr("Cancel")
                           highlighted: true
                           Material.background: Material.Red
-                          onClicked: popup.close()
+                          onClicked: {popup.close();}
+                          Layout.alignment: Qt.AlignHCenter
+                      }
+                      Button {
+
+                          text: qsTr("Submit")
+                          highlighted: true
+                          Material.background: Material.Green
+                          onClicked: {
+                              if(  BackEnd.verifyPassword(textEdit.text) ) {
+                                  fileSelect.setAuth(true);
+                                  calibrate.setAuth(true);
+//                                  ColibrateItemList.reRenderModel();
+                                  GroundMotionList.reRenderModel();
+                                  changePassword.visible = true;
+                                  popup.close();
+                              } else {
+                                 message.text = "Password is wrong"
+                                 message.color = "red"
+                              }
+
+
+                          }
+                          Layout.alignment: Qt.AlignHCenter
+                      }
+
+                  }
+
+                }
+
+            }
+     }
+
+    Popup {
+            id: changePassPopup
+            padding: 0
+            width: 400
+            height: 200
+            x: Math.round((parent.width - width) / 2)
+            y: 30
+            z: 10
+            focus: true
+ //           closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+            closePolicy: Popup.CloseOnEscape
+
+
+            ColumnLayout {
+                anchors.fill: parent
+
+                Label {
+                    id: message2
+                    text: qsTr("Please Enter new password")
+                    font.pixelSize: 20
+                    font.bold: true
+                    Layout.topMargin: 20
+                    Layout.bottomMargin: 20
+                    Layout.alignment: Qt.AlignHCenter
+                }
+                TextInputWithBorder {
+                    id: textEdit2
+//                    anchors.top: paddingTEmp.bottom
+                    width: 1000
+                    Layout.topMargin: 0
+                    Layout.alignment: Qt.AlignHCenter
+                    echoMode: TextInput.Password
+                    placeholderText: "     Password     "
+                    inputMethodHints: Qt.ImhDigitsOnly
+        //            inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhPreferLowercase | Qt.ImhSensitiveData | Qt.ImhNoPredictiveText
+        //            enterKeyAction: EnterKeyAction.Next
+                    onAccepted: upperCaseField.focus = true
+                }
+
+                Pane {
+                    Layout.fillWidth: true
+
+                   RowLayout {
+                      width: parent.width
+                      Layout.alignment: Qt.AlignJustify
+                      Button {
+                          text: qsTr("Cancel")
+                          highlighted: true
+                          Material.background: Material.Red
+                          onClicked: changePassPopup.close()
                           Layout.alignment: Qt.AlignHCenter
                       }
                       Button {
@@ -119,17 +206,8 @@ Page {
                           highlighted: true
                           Material.background: Material.Green
                           onClicked: {
-                              if(textEdit.text === "1234") {
-                                  fileSelect.setAuth(true);
-                                  calibrate.setAuth(true);
-                                  ColibrateItemList.reRenderModel();
-                                  GroundMotionList.reRenderModel();
-                                  popup.close();
-                              } else {
-                                 message.text = "Password is wrong"
-                                 message.color = "red"
-                              }
-
+                              BackEnd.changePassword(textEdit2.text);
+                              changePassPopup.close();
 
                           }
                           Layout.alignment: Qt.AlignHCenter

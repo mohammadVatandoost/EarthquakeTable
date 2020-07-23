@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.3
 import QtQuick.Extras 1.4
 import QtQuick.Controls.Material 2.3
 import QtQuick.Controls.Styles 1.4
-import ColibrateItemModel 1.0
+//import ColibrateItemModel 1.0
 
 ListView {
     width: parent.width*0.95;
@@ -12,16 +12,15 @@ ListView {
     Layout.alignment: Qt.AlignHCenter
     property bool auth: false
     function setAuth(temp) {root.auth = temp;}
-    model: ColibrateItemModel {
-             list: ColibrateItemList
-    }
+    model: ColibrateItemModel
 
     delegate: ColibrateItem {
-        Component.onCompleted: {
-            setName(model.name);
-            setColibrate(model.colibrate);
-            setAuth(root.auth);
-        }
+        name: model.Name
+        colibrate: model.colibrate
+        auth: root.auth
+        pda: model.pda
+        pga: model.pga
+
     }
     ScrollBar.vertical: ScrollBar {}
 }

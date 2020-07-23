@@ -9,8 +9,8 @@ Controls.TextField {
     selectedTextColor: color
     font.pixelSize: Qt.application.font.pixelSize * 2
 //    width: 1000
-    property int enterKeyAction: EnterKeyAction.None
-    readonly property bool enterKeyEnabled: enterKeyAction === EnterKeyAction.None || text.length > 0 || inputMethodComposing
+//    property int enterKeyAction: EnterKeyAction.None
+//    readonly property bool enterKeyEnabled: enterKeyAction === EnterKeyAction.None || text.length > 0 || inputMethodComposing
 
     background: Rectangle {
         color: "#FFFFFF"

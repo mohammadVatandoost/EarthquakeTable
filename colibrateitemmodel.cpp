@@ -2,9 +2,9 @@
 #include "colibrateitemlist.h"
 
 
-ColibrateItemModel::ColibrateItemModel()
+ColibrateItemModel::ColibrateItemModel(QObject *parent)
 {
-
+    mList = new ColibrateItemList();
 }
 
 int ColibrateItemModel::rowCount(const QModelIndex &parent) const
@@ -26,10 +26,14 @@ QVariant ColibrateItemModel::data(const QModelIndex &index, int role) const
     // FIXME: Implement me!
     const ColibrateItem item = mList->items().at(index.row());
     switch (role) {
-     case name:
+     case Name:
         return QVariant(item.name);
      case colibrate:
         return QVariant(item.colibrate);
+    case pda:
+       return QVariant(item.maxDis);
+    case pga:
+       return QVariant(item.maxAccelarator);
     }
 
     return QVariant();
@@ -42,10 +46,14 @@ bool ColibrateItemModel::setData(const QModelIndex &index, const QVariant &value
 
     ColibrateItem item = mList->items().at(index.row());
     switch (role) {
-     case name:
+     case Name:
         item.name = value.toString();
      case colibrate:
        item.colibrate = value.toInt();
+    case pda:
+       item.maxDis = value.toInt();
+    case pga:
+      item.maxAccelarator = value.toInt();
     }
 
     if(mList->setColibrateItem(index.row(), item)) {
@@ -63,8 +71,10 @@ bool ColibrateItemModel::setData(const QModelIndex &index, const QVariant &value
 QHash<int, QByteArray> ColibrateItemModel::roleNames() const
 {
   QHash<int, QByteArray> names;
-  names[name] = "name";
+  names[Name] = "Name";
   names[colibrate] = "colibrate" ;
+  names[pda] = "pda";
+  names[pga] = "pga" ;
   return names;
 }
 
@@ -113,6 +123,28 @@ void ColibrateItemModel::setList(ColibrateItemList *list)
     }
 
     endResetModel();
+}
+
+void ColibrateItemModel::makeNewConfig(QString name, int colibrate, int pda, int pga)
+{
+    ColibrateItem temp;
+    temp.name = name; temp.colibrate = colibrate;
+    temp.maxAccelarator = pda; temp.maxDis = pga;
+    beginResetModel();
+    mList->ColibrateItems.append(temp);
+    endResetModel();
+}
+
+void ColibrateItemModel::addColibrate(ColibrateItem calibrateItem)
+{
+    beginResetModel();
+    mList->ColibrateItems.append(calibrateItem);
+    endResetModel();
+}
+
+void ColibrateItemModel::removeItem(QString name)
+{
+    mList->removeItem(name);
 }
 
 

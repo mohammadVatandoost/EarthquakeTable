@@ -2,6 +2,7 @@
 #define COLIBRATEITEMMODEL_H
 
 #include <QAbstractListModel>
+#include "generaldata.h"
 
 class ColibrateItemList;
 
@@ -11,9 +12,9 @@ class ColibrateItemModel: public QAbstractListModel
     Q_OBJECT
     Q_PROPERTY(ColibrateItemList *list READ list WRITE setList )
 public:
-    ColibrateItemModel();
+    explicit ColibrateItemModel(QObject *parent = nullptr);
     enum {
-      name, colibrate
+      Name, colibrate, pda, pga
     };
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
@@ -30,8 +31,12 @@ public:
     // for sensorList Q_PROPERTY
     ColibrateItemList *list() const;
     void setList(ColibrateItemList *list);
-private:
     ColibrateItemList *mList;
+    Q_INVOKABLE void makeNewConfig(QString name, int colibrate, int pda, int pga);
+    void addColibrate(ColibrateItem calibrateItem);
+    void removeItem(QString name);
+private:
+
 };
 
 #endif // COLIBRATEITEMMODEL_H

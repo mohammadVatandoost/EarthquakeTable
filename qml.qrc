@@ -19,5 +19,12 @@
         <file>GroundMotionListView.qml</file>
         <file>GroundMotionItem.qml</file>
         <file>TextInputWithBorder.qml</file>
+        <file>InfoMessage.qml</file>
+        <file>FileItem.qml</file>
+        <file>images/file.png</file>
+        <file>images/folder.png</file>
+        <file>images/lock-outline.png</file>
+        <file>images/lock.png</file>
+        <file>DropDownModel.qml</file>
     </qresource>
 </RCC>

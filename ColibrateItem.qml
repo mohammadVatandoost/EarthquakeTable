@@ -19,27 +19,39 @@ RowLayout {
     width: parent.width
     property string name: "asdsad"
     property int colibrate: 10
+    property int pga: 0
+    property int pda: 0
     property bool auth: false
     function setName(temp) {name = temp;}
     function setColibrate(temp) {colibrate = temp;}
     function setAuth(temp) {root.auth = temp;}
 
-    Label {
-      id: label
-//      Layout.alignment: Qt.AlignLeft
-//      anchors.left: parent.left
-      text: qsTr(name)
-      font.pixelSize: 18
-//      anchors.horizontalCenter: parent.horizontalCenter
+    Item {
+        width: 100
+        Label {
+          id: label
+          text: qsTr(name)
+          font.pixelSize: 18
+        }
     }
-    Text {
-//        Layout.leftMargin: 140
-        text: qsTr(colibrate + "")
-        font.pixelSize: 22
-//        anchors.horizontalCenter: parent.horizontalCenter
+    Item {
+        width: 100
+        Text {
+            text: qsTr(pga + " mg")
+            font.pixelSize: 22
+        }
     }
+    Item {
+        width: 100
+        Text {
+            text: qsTr(pda + " cm")
+            font.pixelSize: 22
+        }
+    }
+
     Button {
            Layout.alignment: Qt.AlignRight
+           Layout.topMargin: parent.height/2
            text: qsTr("Delete")
            highlighted: true
            Material.background: Material.Red

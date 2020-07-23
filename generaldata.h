@@ -18,6 +18,8 @@ struct GroundMotion {
 struct ColibrateItem {
     QString name = "";
     int colibrate = 1;
+    int maxDis = 14;
+    int maxAccelarator = 5;
 };
 
 struct GeneralData {
@@ -25,6 +27,7 @@ struct GeneralData {
     int floor[4] = {offValue, offValue, offValue, offValue};
     QVector<GroundMotion> groundMotion;
     QVector<ColibrateItem> colibrateItems;
+    QString password = "1234";
 };
 
 

@@ -21,15 +21,16 @@ Pane {
             Label {
               id: label
               Layout.alignment: Qt.AlignHCenter
-              text: "Motor speed"
+              text: "Motor Frequency"
               font.pixelSize: 22
               topPadding: 30
-              anchors.horizontalCenter: parent.horizontalCenter
+//              anchors.horizontalCenter: parent.horizontalCenter
             }
             Text {
+                Layout.alignment: Qt.AlignHCenter
                 text: qsTr(root.motorSpeed)
                 font.pixelSize: 27
-                anchors.horizontalCenter: parent.horizontalCenter
+//                anchors.horizontalCenter: parent.horizontalCenter
                 bottomPadding: 20
             }
 

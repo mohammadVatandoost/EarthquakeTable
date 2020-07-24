@@ -96,7 +96,7 @@ Pane {
                 Material.background: Material.Green
                 onClicked: {
                     if(BackEnd.setFilter(parseFloat(frequncy1.text), parseFloat(frequncy2.text)) ) {
-//                        BackEnd.sendFileData(comboTime.currentIndex);
+                        BackEnd.sendFileData(comboTime.currentIndex);
                         checkBox.checked = false;
                     }
                 }

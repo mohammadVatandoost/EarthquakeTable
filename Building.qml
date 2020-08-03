@@ -24,7 +24,7 @@ ColumnLayout {
                 font.pixelSize: 27
             }
 //            ComboBox {
-//                id: comboTime
+//                id: comboTimesetSelectedColibrate
 //                Layout.alignment: Qt.AlignHCenter
 //                width: 200
 //                model: ColibrateItemModel//BackEnd.getColibratesNames()
@@ -36,7 +36,10 @@ ColumnLayout {
                 id: comboTime
                 model: ColibrateItemModel
                 textRole: "Name"
-                onActivated: BackEnd.setSelectedColibrate(index)
+                onActivated: BackEnd.setSelectedColibrate(currentIndex)
+                Component.onCompleted: {
+                    BackEnd.setSelectedColibrate(comboTime.currentIndex);
+                }
             }
         }
         ColumnLayout {
@@ -97,6 +100,7 @@ ColumnLayout {
           width: 0.8*parent.width
           height: 430
           border.color: "black"
+//          color: "white"
           border.width: 5
           Layout.alignment: Qt.AlignHCenter
           Material.elevation: 6
@@ -168,6 +172,7 @@ ColumnLayout {
 //       }
        Row { // The "Row" type lays out its child items in a horizontal line
 //           anchors.top: building.bottom
+           anchors.top: building.bottom
            Layout.alignment: Qt.AlignHCenter
            width: parent.width/2
            spacing: 20 // Places 20px of space between items

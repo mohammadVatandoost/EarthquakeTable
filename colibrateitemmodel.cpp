@@ -144,7 +144,9 @@ void ColibrateItemModel::addColibrate(ColibrateItem calibrateItem)
 
 void ColibrateItemModel::removeItem(QString name)
 {
+    beginResetModel();
     mList->removeItem(name);
+    endResetModel();
 }
 
 

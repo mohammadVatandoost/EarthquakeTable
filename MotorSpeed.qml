@@ -8,7 +8,7 @@ import QtQuick.Controls.Styles 1.4
 
 Pane {
     id: root
-    implicitHeight: 200
+    implicitHeight: 250
     implicitWidth: parent.width
     Material.elevation: 5
     Layout.alignment: Qt.AlignHCenter
@@ -32,6 +32,17 @@ Pane {
                 font.pixelSize: 27
 //                anchors.horizontalCenter: parent.horizontalCenter
                 bottomPadding: 20
+            }
+
+            Button {
+                   Layout.alignment: Qt.AlignHCenter
+                   text: qsTr("Store Sensor Data Manually")
+                   highlighted: true
+                   Material.background: Material.Green
+                   onClicked: {
+                       BackEnd.storeSensorData();
+                   }
+                   enabled: root.auth
             }
 
         }

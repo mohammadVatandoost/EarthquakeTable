@@ -148,15 +148,19 @@ void Backend::getMotorSpeedPkt(QByteArray data)
 void Backend::getTorquePkt(QByteArray data)
 {
     cout<< "getTorquePkt size:"<<data.size()<<endl;
-    if(data.size() == sizeof(struct TorqueRx)) {
-     TorqueRx *m = reinterpret_cast<TorqueRx*>(data.data());
-     cout<< "Get TorqueRx paket:"<< m->torque <<endl;
-//     generalData.torque = m->torque;
-     addToColibrate(m->torque);
-     jsonStoring.storeGeneralData(generalData);
-    } else {
-        cout<< "getTorquePkt "<< data.size() << " must be "<<sizeof(struct TorqueRx);
+    for(int i=0; i<mList->sensorItems.size(); i++) {
+      mList->sensorItems[i].storeData();
     }
+//    cout<< "getTorquePkt size:"<<data.size()<<endl;
+//    if(data.size() == sizeof(struct TorqueRx)) {
+//     TorqueRx *m = reinterpret_cast<TorqueRx*>(data.data());
+//     cout<< "Get TorqueRx paket:"<< m->torque <<endl;
+////     generalData.torque = m->torque;
+//     addToColibrate(m->torque);
+//     jsonStoring.storeGeneralData(generalData);
+//    } else {
+//        cout<< "getTorquePkt "<< data.size() << " must be "<<sizeof(struct TorqueRx);
+//    }
 }
 
 void Backend::getSegmentAckPkt(QByteArray data)
@@ -198,12 +202,19 @@ void Backend::runSimulation()
     sendConfig(temp);
 }
 
+void Backend::storeSensorData()
+{
+    cout<< "storeSensorData"<<endl;
+    for(int i=0; i<mList->sensorItems.size(); i++) {
+      mList->sensorItems[i].storeData();
+    }
+}
+
 void Backend::sendSimulationData(int packetId)
 {
     cout<< "sendSimulationData : "<< packetId << ", " << dataSegments.size() <<endl;
   for(int i=packetId; i<dataSegments.size();i++) {
       sendDataSegment(dataSegments[i]);
-
   }
   counterForSending = 1;
 }
@@ -465,10 +476,12 @@ QStringList Backend::getColibratesNames()
 
 void Backend::setSelectedColibrate(int temp)
 {
+
     if( (-1 < temp) && (temp<generalData.groundMotion.size()) ) {
        calibrate = generalData.colibrateItems[temp].colibrate;
        pdg =  generalData.colibrateItems[temp].maxDis;
        pda =  generalData.colibrateItems[temp].maxAccelarator;
+       qDebug() << "setSelectedColibrate :" << temp << ", pdg:"<<pdg<<", pda:"<<pda;
     } else {
         cout<< "setSelectedColibrate index is not valid:"<< temp<<endl;
     }
@@ -723,10 +736,15 @@ void Backend::sendFileData(int index)
             while (!in.atEnd())
             {
                 QString line = in.readLine();
+//                qDebug()<< "line:"<<line;
+                line.replace("\t", " ");
+//                qDebug()<< "line:"<<line;
                 for (QString item : line.split(" ")) {
+//                    qDebug()<< "item:"<<item;
                     if( myUtitlity.checkStringContainsNum(item.toUtf8().toStdString()) ) {
                             item.replace(" ", "");
-                            sum = sum + item.toDouble()*9.81*(timeStep/1000)*(timeStep/1000);
+                            qDebug()<< "item:"<<item;
+                            sum = sum + (item.toDouble()*9.81*(timeStep/1000)*(timeStep/1000));
                             if( abs(sum) > pdg ) {
                                 qDebug() << "sum :"<< sum;
                               qDebug() << "File is wrong";
@@ -736,17 +754,17 @@ void Backend::sendFileData(int index)
                             }
 //                            qDebug()<< item;
 //                            dataList.append(static_cast<int16_t>(item.toDouble()*10000*calibrate));
-                            int16_t dataTemp = static_cast<int16_t>(item.toDouble()*9.81*1000);
+                            int16_t dataTemp = static_cast<int16_t>(item.toDouble()*1000); // 9.81*1000
                             if(abs(dataTemp) > max) {
                                 max = abs(dataTemp);
                                 if(max > pda) {
-                                    qDebug() << "File accelarator is too high";
+                                    qDebug() << "File accelarator is too high max:" << max<< ", pda :"<<pda<<", item double:"<<item.toDouble();
                                     messages.enqueue("Wrong, Max Acc is "+QString::number(max));
                                     file.close();
                                     return;
                                 }
                             }
-                            dataList.append(dataTemp);
+                            dataList.append(dataTemp*9.81);
                     }
                 }
             }

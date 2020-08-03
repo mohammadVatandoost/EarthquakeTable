@@ -77,9 +77,10 @@ public:
     void getSegmentAckPkt(QByteArray data);
     void sendConfig(ConfigTx temp);
     Q_INVOKABLE void runSimulation();
+    Q_INVOKABLE void storeSensorData();
     int counter = 0;
 
-//    QVector<double> testBug;
+//    QVector<double> tTorqueRxPktestBug;
     // charts
     QDateTimeAxis* axisXTimes[chartsNumber];
 

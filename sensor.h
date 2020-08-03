@@ -9,6 +9,7 @@
 #include "myutitlity.h"
 #include "Butterworth.h"
 
+
 #define saveToFile  10000
 #define averageNum  10
 #define dataChartNum  600
@@ -93,6 +94,7 @@ struct Sensor {
             saveSensorDataToCSVFile(&dataAccX, sensorNumber, "Ax",  0, dataAccX.size()-1);
 //        }
     }
+
 };
 
 #endif // SENSOR_H

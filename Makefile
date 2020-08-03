@@ -17,7 +17,11 @@ CXX           = g++
 DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_NO_DEBUG -DQT_QUICKCONTROLS2_LIB -DQT_QUICK_LIB -DQT_CHARTS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_QML_LIB -DQT_NETWORK_LIB -DQT_SERIALPORT_LIB -DQT_SQL_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -O2 -Wall -W -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -O2 -std=gnu++11 -Wall -W -D_REENTRANT -fPIC $(DEFINES)
+<<<<<<< HEAD
 INCPATH       = -I. -I/usr/local/Qt-5.12.7/include -I/usr/local/Qt-5.12.7/include/QtQuickControls2 -I/usr/local/Qt-5.12.7/include/QtQuick -I/usr/local/Qt-5.12.7/include/QtCharts -I/usr/local/Qt-5.12.7/include/QtOpenGL -I/usr/local/Qt-5.12.7/include/QtWidgets -I/usr/local/Qt-5.12.7/include/QtGui -I/usr/local/Qt-5.12.7/include/QtQml -I/usr/local/Qt-5.12.7/include/QtNetwork -I/usr/local/Qt-5.12.7/include/QtSerialPort -I/usr/local/Qt-5.12.7/include/QtSql -I/usr/local/Qt-5.12.7/include/QtCore -I. -isystem /usr/include/libdrm -I/usr/local/Qt-5.12.7/mkspecs/linux-g++
+=======
+INCPATH       = -I. -I/usr/local/Qt-5.12.7/include -I/usr/local/Qt-5.12.7/include/QtQuickControls2 -I/usr/local/Qt-5.12.7/include/QtQuick -I/usr/local/Qt-5.12.7/include/QtCharts -I/usr/local/Qt-5.12.7/include/QtOpenGL -I/usr/local/Qt-5.12.7/include/QtWidgets -I/usr/local/Qt-5.12.7/include/QtGui -I/usr/local/Qt-5.12.7/include/QtQml -I/usr/local/Qt-5.12.7/include/QtNetwork -I/usr/local/Qt-5.12.7/include/QtSerialPort -I/usr/local/Qt-5.12.7/include/QtSql -I/usr/local/Qt-5.12.7/include/QtCore -I. -I/usr/local/Qt-5.12.7/mkspecs/linux-g++
+>>>>>>> 92f2c6b18597d40993ee86586b5292de86dbce59
 QMAKE         = /usr/local/Qt-5.12.7/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -37,10 +41,17 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = SimulatingTable1.0.0
+<<<<<<< HEAD
 DISTDIR = /media/mohammad/1ED9E8D6138E2910/Work/EarthquakeSimulatingTable/Code/Linux/EarthquakeTable-master/.tmp/SimulatingTable1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-O1 -Wl,-rpath,/usr/local/Qt-5.12.7/lib -Wl,-rpath-link,/usr/local/Qt-5.12.7/lib
 LIBS          = $(SUBLIBS) /usr/local/Qt-5.12.7/lib/libQt5QuickControls2.so /usr/local/Qt-5.12.7/lib/libQt5Quick.so /usr/local/Qt-5.12.7/lib/libQt5Charts.so /usr/local/Qt-5.12.7/lib/libQt5OpenGL.so /usr/local/Qt-5.12.7/lib/libQt5Widgets.so /usr/local/Qt-5.12.7/lib/libQt5Gui.so /usr/local/Qt-5.12.7/lib/libQt5Qml.so /usr/local/Qt-5.12.7/lib/libQt5Network.so /usr/local/Qt-5.12.7/lib/libQt5SerialPort.so /usr/local/Qt-5.12.7/lib/libQt5Sql.so /usr/local/Qt-5.12.7/lib/libQt5Core.so /usr/lib/x86_64-linux-gnu/libGL.so -lpthread   
+=======
+DISTDIR = /home/pi/EarthquakeTable-master/.tmp/SimulatingTable1.0.0
+LINK          = g++
+LFLAGS        = -Wl,-O1 -Wl,-rpath,/usr/local/Qt-5.12.7/lib -Wl,-rpath-link,/usr/local/Qt-5.12.7/lib
+LIBS          = $(SUBLIBS) /usr/local/Qt-5.12.7/lib/libQt5QuickControls2.so /usr/local/Qt-5.12.7/lib/libQt5Quick.so /usr/local/Qt-5.12.7/lib/libQt5Charts.so /usr/local/Qt-5.12.7/lib/libQt5OpenGL.so /usr/local/Qt-5.12.7/lib/libQt5Widgets.so /usr/local/Qt-5.12.7/lib/libQt5Gui.so /usr/local/Qt-5.12.7/lib/libQt5Qml.so /usr/local/Qt-5.12.7/lib/libQt5Network.so /usr/local/Qt-5.12.7/lib/libQt5SerialPort.so /usr/local/Qt-5.12.7/lib/libQt5Sql.so /usr/local/Qt-5.12.7/lib/libQt5Core.so /usr/lib/arm-linux-gnueabihf/libGLESv2.so -lpthread /usr/lib/gcc/arm-linux-gnueabihf/8/libatomic.so   
+>>>>>>> 92f2c6b18597d40993ee86586b5292de86dbce59
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -52,6 +63,7 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
+<<<<<<< HEAD
 SOURCES       = Biquad.cpp \
 		Butterworth.cpp \
 		Cascade.cpp \
@@ -61,6 +73,9 @@ SOURCES       = Biquad.cpp \
 		fileitemslist.cpp \
 		fileitemsmodel.cpp \
 		main.cpp \
+=======
+SOURCES       = main.cpp \
+>>>>>>> 92f2c6b18597d40993ee86586b5292de86dbce59
 		backend.cpp \
 		csv.cpp \
 		sensorslist.cpp \
@@ -70,13 +85,17 @@ SOURCES       = Biquad.cpp \
 		colibrateitemlist.cpp \
 		colibrateitemmodel.cpp qrc_qml.cpp \
 		moc_backend.cpp \
+<<<<<<< HEAD
 		moc_fileitemslist.cpp \
 		moc_fileitemsmodel.cpp \
+=======
+>>>>>>> 92f2c6b18597d40993ee86586b5292de86dbce59
 		moc_sensorslist.cpp \
 		moc_groundmotionlist.cpp \
 		moc_groundmotionmodel.cpp \
 		moc_colibrateitemlist.cpp \
 		moc_colibrateitemmodel.cpp
+<<<<<<< HEAD
 OBJECTS       = Biquad.o \
 		Butterworth.o \
 		Cascade.o \
@@ -86,6 +105,9 @@ OBJECTS       = Biquad.o \
 		fileitemslist.o \
 		fileitemsmodel.o \
 		main.o \
+=======
+OBJECTS       = main.o \
+>>>>>>> 92f2c6b18597d40993ee86586b5292de86dbce59
 		backend.o \
 		csv.o \
 		sensorslist.o \
@@ -96,14 +118,23 @@ OBJECTS       = Biquad.o \
 		colibrateitemmodel.o \
 		qrc_qml.o \
 		moc_backend.o \
+<<<<<<< HEAD
 		moc_fileitemslist.o \
 		moc_fileitemsmodel.o \
+=======
+>>>>>>> 92f2c6b18597d40993ee86586b5292de86dbce59
 		moc_sensorslist.o \
 		moc_groundmotionlist.o \
 		moc_groundmotionmodel.o \
 		moc_colibrateitemlist.o \
 		moc_colibrateitemmodel.o
+<<<<<<< HEAD
 DIST          = MaterialDesignIcon.qml \
+=======
+DIST          = images/lock-outline.png \
+		MaterialDesignIcon.qml \
+		images/lock.png \
+>>>>>>> 92f2c6b18597d40993ee86586b5292de86dbce59
 		/usr/local/Qt-5.12.7/mkspecs/features/spec_pre.prf \
 		/usr/local/Qt-5.12.7/mkspecs/common/unix.conf \
 		/usr/local/Qt-5.12.7/mkspecs/common/linux.conf \
@@ -154,29 +185,43 @@ DIST          = MaterialDesignIcon.qml \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_devicediscovery_support_private.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_edid_support_private.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_egl_support_private.pri \
+<<<<<<< HEAD
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_eglfs_kms_support_private.pri \
+=======
+>>>>>>> 92f2c6b18597d40993ee86586b5292de86dbce59
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_eglfsdeviceintegration_private.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_eventdispatcher_support_private.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_fb_support_private.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_fontdatabase_support_private.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_gamepad.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_gamepad_private.pri \
+<<<<<<< HEAD
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_glx_support_private.pri \
+=======
+>>>>>>> 92f2c6b18597d40993ee86586b5292de86dbce59
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_gui.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_gui_private.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_help.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_help_private.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_input_support_private.pri \
+<<<<<<< HEAD
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_kms_support_private.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_multimedia.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_multimedia_private.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_multimediagsttools_private.pri \
+=======
+		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_multimedia.pri \
+		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_multimedia_private.pri \
+>>>>>>> 92f2c6b18597d40993ee86586b5292de86dbce59
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_multimediawidgets.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_multimediawidgets_private.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_network.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_network_private.pri \
+<<<<<<< HEAD
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_networkauth.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_networkauth_private.pri \
+=======
+>>>>>>> 92f2c6b18597d40993ee86586b5292de86dbce59
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_nfc.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_nfc_private.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_opengl.pri \
@@ -233,10 +278,14 @@ DIST          = MaterialDesignIcon.qml \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_uitools_private.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_virtualkeyboard.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_virtualkeyboard_private.pri \
+<<<<<<< HEAD
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_waylandclient.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_waylandclient_private.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_waylandcompositor.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_waylandcompositor_private.pri \
+=======
+		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_vulkan_support_private.pri \
+>>>>>>> 92f2c6b18597d40993ee86586b5292de86dbce59
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_webchannel.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_webchannel_private.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_websockets.pri \
@@ -245,6 +294,12 @@ DIST          = MaterialDesignIcon.qml \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_webview_private.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_widgets.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_widgets_private.pri \
+<<<<<<< HEAD
+=======
+		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_x11extras.pri \
+		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_x11extras_private.pri \
+		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_xcb_qpa_lib_private.pri \
+>>>>>>> 92f2c6b18597d40993ee86586b5292de86dbce59
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_xml.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_xml_private.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_xmlpatterns.pri \
@@ -272,6 +327,7 @@ DIST          = MaterialDesignIcon.qml \
 		/usr/local/Qt-5.12.7/mkspecs/features/exceptions.prf \
 		/usr/local/Qt-5.12.7/mkspecs/features/yacc.prf \
 		/usr/local/Qt-5.12.7/mkspecs/features/lex.prf \
+<<<<<<< HEAD
 		SimulatingTable.pro Biquad.h \
 		Butterworth.h \
 		Cascade.h \
@@ -287,6 +343,9 @@ DIST          = MaterialDesignIcon.qml \
 		backend.h \
 		fileitemslist.h \
 		fileitemsmodel.h \
+=======
+		SimulatingTable.pro backend.h \
+>>>>>>> 92f2c6b18597d40993ee86586b5292de86dbce59
 		sensor.h \
 		packet.h \
 		csv.h \
@@ -297,6 +356,7 @@ DIST          = MaterialDesignIcon.qml \
 		groundmotionlist.h \
 		groundmotionmodel.h \
 		colibrateitemlist.h \
+<<<<<<< HEAD
 		colibrateitemmodel.h Biquad.cpp \
 		Butterworth.cpp \
 		Cascade.cpp \
@@ -306,6 +366,9 @@ DIST          = MaterialDesignIcon.qml \
 		fileitemslist.cpp \
 		fileitemsmodel.cpp \
 		main.cpp \
+=======
+		colibrateitemmodel.h main.cpp \
+>>>>>>> 92f2c6b18597d40993ee86586b5292de86dbce59
 		backend.cpp \
 		csv.cpp \
 		sensorslist.cpp \
@@ -375,29 +438,43 @@ Makefile: SimulatingTable.pro /usr/local/Qt-5.12.7/mkspecs/linux-g++/qmake.conf 
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_devicediscovery_support_private.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_edid_support_private.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_egl_support_private.pri \
+<<<<<<< HEAD
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_eglfs_kms_support_private.pri \
+=======
+>>>>>>> 92f2c6b18597d40993ee86586b5292de86dbce59
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_eglfsdeviceintegration_private.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_eventdispatcher_support_private.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_fb_support_private.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_fontdatabase_support_private.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_gamepad.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_gamepad_private.pri \
+<<<<<<< HEAD
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_glx_support_private.pri \
+=======
+>>>>>>> 92f2c6b18597d40993ee86586b5292de86dbce59
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_gui.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_gui_private.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_help.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_help_private.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_input_support_private.pri \
+<<<<<<< HEAD
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_kms_support_private.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_multimedia.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_multimedia_private.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_multimediagsttools_private.pri \
+=======
+		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_multimedia.pri \
+		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_multimedia_private.pri \
+>>>>>>> 92f2c6b18597d40993ee86586b5292de86dbce59
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_multimediawidgets.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_multimediawidgets_private.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_network.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_network_private.pri \
+<<<<<<< HEAD
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_networkauth.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_networkauth_private.pri \
+=======
+>>>>>>> 92f2c6b18597d40993ee86586b5292de86dbce59
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_nfc.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_nfc_private.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_opengl.pri \
@@ -454,10 +531,14 @@ Makefile: SimulatingTable.pro /usr/local/Qt-5.12.7/mkspecs/linux-g++/qmake.conf 
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_uitools_private.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_virtualkeyboard.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_virtualkeyboard_private.pri \
+<<<<<<< HEAD
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_waylandclient.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_waylandclient_private.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_waylandcompositor.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_waylandcompositor_private.pri \
+=======
+		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_vulkan_support_private.pri \
+>>>>>>> 92f2c6b18597d40993ee86586b5292de86dbce59
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_webchannel.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_webchannel_private.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_websockets.pri \
@@ -466,6 +547,12 @@ Makefile: SimulatingTable.pro /usr/local/Qt-5.12.7/mkspecs/linux-g++/qmake.conf 
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_webview_private.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_widgets.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_widgets_private.pri \
+<<<<<<< HEAD
+=======
+		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_x11extras.pri \
+		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_x11extras_private.pri \
+		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_xcb_qpa_lib_private.pri \
+>>>>>>> 92f2c6b18597d40993ee86586b5292de86dbce59
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_xml.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_xml_private.pri \
 		/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_xmlpatterns.pri \
@@ -546,29 +633,43 @@ Makefile: SimulatingTable.pro /usr/local/Qt-5.12.7/mkspecs/linux-g++/qmake.conf 
 /usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_devicediscovery_support_private.pri:
 /usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_edid_support_private.pri:
 /usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_egl_support_private.pri:
+<<<<<<< HEAD
 /usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_eglfs_kms_support_private.pri:
+=======
+>>>>>>> 92f2c6b18597d40993ee86586b5292de86dbce59
 /usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_eglfsdeviceintegration_private.pri:
 /usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_eventdispatcher_support_private.pri:
 /usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_fb_support_private.pri:
 /usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_fontdatabase_support_private.pri:
 /usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_gamepad.pri:
 /usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_gamepad_private.pri:
+<<<<<<< HEAD
 /usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_glx_support_private.pri:
+=======
+>>>>>>> 92f2c6b18597d40993ee86586b5292de86dbce59
 /usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_gui.pri:
 /usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_gui_private.pri:
 /usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_help.pri:
 /usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_help_private.pri:
 /usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_input_support_private.pri:
+<<<<<<< HEAD
 /usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_kms_support_private.pri:
 /usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_multimedia.pri:
 /usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_multimedia_private.pri:
 /usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_multimediagsttools_private.pri:
+=======
+/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_multimedia.pri:
+/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_multimedia_private.pri:
+>>>>>>> 92f2c6b18597d40993ee86586b5292de86dbce59
 /usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_multimediawidgets.pri:
 /usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_multimediawidgets_private.pri:
 /usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_network.pri:
 /usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_network_private.pri:
+<<<<<<< HEAD
 /usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_networkauth.pri:
 /usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_networkauth_private.pri:
+=======
+>>>>>>> 92f2c6b18597d40993ee86586b5292de86dbce59
 /usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_nfc.pri:
 /usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_nfc_private.pri:
 /usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_opengl.pri:
@@ -625,10 +726,14 @@ Makefile: SimulatingTable.pro /usr/local/Qt-5.12.7/mkspecs/linux-g++/qmake.conf 
 /usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_uitools_private.pri:
 /usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_virtualkeyboard.pri:
 /usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_virtualkeyboard_private.pri:
+<<<<<<< HEAD
 /usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_waylandclient.pri:
 /usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_waylandclient_private.pri:
 /usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_waylandcompositor.pri:
 /usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_waylandcompositor_private.pri:
+=======
+/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_vulkan_support_private.pri:
+>>>>>>> 92f2c6b18597d40993ee86586b5292de86dbce59
 /usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_webchannel.pri:
 /usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_webchannel_private.pri:
 /usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_websockets.pri:
@@ -637,6 +742,12 @@ Makefile: SimulatingTable.pro /usr/local/Qt-5.12.7/mkspecs/linux-g++/qmake.conf 
 /usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_webview_private.pri:
 /usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_widgets.pri:
 /usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_widgets_private.pri:
+<<<<<<< HEAD
+=======
+/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_x11extras.pri:
+/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_x11extras_private.pri:
+/usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_xcb_qpa_lib_private.pri:
+>>>>>>> 92f2c6b18597d40993ee86586b5292de86dbce59
 /usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_xml.pri:
 /usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_xml_private.pri:
 /usr/local/Qt-5.12.7/mkspecs/modules/qt_lib_xmlpatterns.pri:
@@ -682,8 +793,13 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents qml.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/local/Qt-5.12.7/mkspecs/features/data/dummy.cpp $(DISTDIR)/
+<<<<<<< HEAD
 	$(COPY_FILE) --parents Biquad.h Butterworth.h Cascade.h Common.h FileItem.h Layout.h MathSupplement.h PoleFilter.h State.h Types.h assistant.h assistant.h backend.h fileitemslist.h fileitemsmodel.h sensor.h packet.h csv.h myutitlity.h sensorslist.h jsonstoring.h generaldata.h groundmotionlist.h groundmotionmodel.h colibrateitemlist.h colibrateitemmodel.h $(DISTDIR)/
 	$(COPY_FILE) --parents Biquad.cpp Butterworth.cpp Cascade.cpp PoleFilter.cpp State.cpp assistant.cpp fileitemslist.cpp fileitemsmodel.cpp main.cpp backend.cpp csv.cpp sensorslist.cpp jsonstoring.cpp groundmotionlist.cpp groundmotionmodel.cpp colibrateitemlist.cpp colibrateitemmodel.cpp $(DISTDIR)/
+=======
+	$(COPY_FILE) --parents backend.h sensor.h packet.h csv.h myutitlity.h sensorslist.h jsonstoring.h generaldata.h groundmotionlist.h groundmotionmodel.h colibrateitemlist.h colibrateitemmodel.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp backend.cpp csv.cpp sensorslist.cpp jsonstoring.cpp groundmotionlist.cpp groundmotionmodel.cpp colibrateitemlist.cpp colibrateitemmodel.cpp $(DISTDIR)/
+>>>>>>> 92f2c6b18597d40993ee86586b5292de86dbce59
 
 
 clean: compiler_clean 
@@ -720,6 +836,7 @@ qrc_qml.cpp: qml.qrc \
 		ControlPanel.qml \
 		MotorSpeed.qml \
 		TextInputWithBorder.qml \
+<<<<<<< HEAD
 		FileItem.qml \
 		ChartComponent.qml \
 		GroundMotionListView.qml \
@@ -728,16 +845,27 @@ qrc_qml.cpp: qml.qrc \
 		Colibrate.qml \
 		SetSensorFloor.qml \
 		InfoMessage.qml \
+=======
+		ChartComponent.qml \
+		GroundMotionListView.qml \
+		ColibrateItem.qml \
+		Colibrate.qml \
+		SetSensorFloor.qml \
+>>>>>>> 92f2c6b18597d40993ee86586b5292de86dbce59
 		SensorComboBox.qml \
 		main.qml \
 		ChooseFile.qml \
 		GroundMotionItem.qml \
 		Floor.qml \
+<<<<<<< HEAD
 		Setting.qml \
 		images/file.png \
 		images/lock.png \
 		images/lock-outline.png \
 		images/folder.png
+=======
+		Setting.qml
+>>>>>>> 92f2c6b18597d40993ee86586b5292de86dbce59
 	/usr/local/Qt-5.12.7/bin/rcc -name qml qml.qrc -o qrc_qml.cpp
 
 compiler_moc_predefs_make_all: moc_predefs.h
@@ -746,9 +874,15 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/local/Qt-5.12.7/mkspecs/features/data/dummy.cpp
 	g++ -pipe -O2 -std=gnu++11 -Wall -W -dM -E -o moc_predefs.h /usr/local/Qt-5.12.7/mkspecs/features/data/dummy.cpp
 
+<<<<<<< HEAD
 compiler_moc_header_make_all: moc_backend.cpp moc_fileitemslist.cpp moc_fileitemsmodel.cpp moc_sensorslist.cpp moc_groundmotionlist.cpp moc_groundmotionmodel.cpp moc_colibrateitemlist.cpp moc_colibrateitemmodel.cpp
 compiler_moc_header_clean:
 	-$(DEL_FILE) moc_backend.cpp moc_fileitemslist.cpp moc_fileitemsmodel.cpp moc_sensorslist.cpp moc_groundmotionlist.cpp moc_groundmotionmodel.cpp moc_colibrateitemlist.cpp moc_colibrateitemmodel.cpp
+=======
+compiler_moc_header_make_all: moc_backend.cpp moc_sensorslist.cpp moc_groundmotionlist.cpp moc_groundmotionmodel.cpp moc_colibrateitemlist.cpp moc_colibrateitemmodel.cpp
+compiler_moc_header_clean:
+	-$(DEL_FILE) moc_backend.cpp moc_sensorslist.cpp moc_groundmotionlist.cpp moc_groundmotionmodel.cpp moc_colibrateitemlist.cpp moc_colibrateitemmodel.cpp
+>>>>>>> 92f2c6b18597d40993ee86586b5292de86dbce59
 moc_backend.cpp: backend.h \
 		/usr/local/Qt-5.12.7/include/QtCore/QObject \
 		/usr/local/Qt-5.12.7/include/QtCore/qobject.h \
@@ -1316,6 +1450,7 @@ moc_backend.cpp: backend.h \
 		/usr/local/Qt-5.12.7/include/QtCore/QCoreApplication \
 		/usr/local/Qt-5.12.7/include/QtCore/QFile \
 		/usr/local/Qt-5.12.7/include/QtCore/QTextStream \
+<<<<<<< HEAD
 		Butterworth.h \
 		Common.h \
 		Cascade.h \
@@ -1325,11 +1460,14 @@ moc_backend.cpp: backend.h \
 		Layout.h \
 		PoleFilter.h \
 		State.h \
+=======
+>>>>>>> 92f2c6b18597d40993ee86586b5292de86dbce59
 		jsonstoring.h \
 		/usr/local/Qt-5.12.7/include/QtCore/QJsonObject \
 		/usr/local/Qt-5.12.7/include/QtCore/QJsonArray \
 		/usr/local/Qt-5.12.7/include/QtCore/QJsonDocument \
 		groundmotionlist.h \
+<<<<<<< HEAD
 		colibrateitemmodel.h \
 		/usr/local/Qt-5.12.7/include/QtCore/QAbstractListModel \
 		/usr/local/Qt-5.12.7/include/QtCore/QStringListModel \
@@ -1471,6 +1609,13 @@ moc_fileitemsmodel.cpp: fileitemsmodel.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.12.7/bin/moc
 	/usr/local/Qt-5.12.7/bin/moc $(DEFINES) --include /media/mohammad/1ED9E8D6138E2910/Work/EarthquakeSimulatingTable/Code/Linux/EarthquakeTable-master/moc_predefs.h -I/usr/local/Qt-5.12.7/mkspecs/linux-g++ -I/media/mohammad/1ED9E8D6138E2910/Work/EarthquakeSimulatingTable/Code/Linux/EarthquakeTable-master -I/usr/local/Qt-5.12.7/include -I/usr/local/Qt-5.12.7/include/QtQuickControls2 -I/usr/local/Qt-5.12.7/include/QtQuick -I/usr/local/Qt-5.12.7/include/QtCharts -I/usr/local/Qt-5.12.7/include/QtOpenGL -I/usr/local/Qt-5.12.7/include/QtWidgets -I/usr/local/Qt-5.12.7/include/QtGui -I/usr/local/Qt-5.12.7/include/QtQml -I/usr/local/Qt-5.12.7/include/QtNetwork -I/usr/local/Qt-5.12.7/include/QtSerialPort -I/usr/local/Qt-5.12.7/include/QtSql -I/usr/local/Qt-5.12.7/include/QtCore -I/usr/include/c++/8 -I/usr/include/arm-linux-gnueabihf/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/arm-linux-gnueabihf/8/include -I/usr/local/include -I/usr/lib/gcc/arm-linux-gnueabihf/8/include-fixed -I/usr/include/arm-linux-gnueabihf -I/usr/include fileitemsmodel.h -o moc_fileitemsmodel.cpp
+=======
+		colibrateitemlist.h \
+		/usr/local/Qt-5.12.7/include/QtCore/QStringListModel \
+		moc_predefs.h \
+		/usr/local/Qt-5.12.7/bin/moc
+	/usr/local/Qt-5.12.7/bin/moc $(DEFINES) --include /home/pi/EarthquakeTable-master/moc_predefs.h -I/usr/local/Qt-5.12.7/mkspecs/linux-g++ -I/home/pi/EarthquakeTable-master -I/usr/local/Qt-5.12.7/include -I/usr/local/Qt-5.12.7/include/QtQuickControls2 -I/usr/local/Qt-5.12.7/include/QtQuick -I/usr/local/Qt-5.12.7/include/QtCharts -I/usr/local/Qt-5.12.7/include/QtOpenGL -I/usr/local/Qt-5.12.7/include/QtWidgets -I/usr/local/Qt-5.12.7/include/QtGui -I/usr/local/Qt-5.12.7/include/QtQml -I/usr/local/Qt-5.12.7/include/QtNetwork -I/usr/local/Qt-5.12.7/include/QtSerialPort -I/usr/local/Qt-5.12.7/include/QtSql -I/usr/local/Qt-5.12.7/include/QtCore -I/usr/include/c++/8 -I/usr/include/arm-linux-gnueabihf/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/arm-linux-gnueabihf/8/include -I/usr/local/include -I/usr/lib/gcc/arm-linux-gnueabihf/8/include-fixed -I/usr/include/arm-linux-gnueabihf -I/usr/include backend.h -o moc_backend.cpp
+>>>>>>> 92f2c6b18597d40993ee86586b5292de86dbce59
 
 moc_sensorslist.cpp: sensorslist.h \
 		/usr/local/Qt-5.12.7/include/QtCore/QObject \
@@ -1561,6 +1706,7 @@ moc_sensorslist.cpp: sensorslist.h \
 		/usr/local/Qt-5.12.7/include/QtCore/QDir \
 		/usr/local/Qt-5.12.7/include/QtCore/qdir.h \
 		/usr/local/Qt-5.12.7/include/QtCore/qfileinfo.h \
+<<<<<<< HEAD
 		Butterworth.h \
 		Common.h \
 		Cascade.h \
@@ -1574,6 +1720,12 @@ moc_sensorslist.cpp: sensorslist.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.12.7/bin/moc
 	/usr/local/Qt-5.12.7/bin/moc $(DEFINES) --include /media/mohammad/1ED9E8D6138E2910/Work/EarthquakeSimulatingTable/Code/Linux/EarthquakeTable-master/moc_predefs.h -I/usr/local/Qt-5.12.7/mkspecs/linux-g++ -I/media/mohammad/1ED9E8D6138E2910/Work/EarthquakeSimulatingTable/Code/Linux/EarthquakeTable-master -I/usr/local/Qt-5.12.7/include -I/usr/local/Qt-5.12.7/include/QtQuickControls2 -I/usr/local/Qt-5.12.7/include/QtQuick -I/usr/local/Qt-5.12.7/include/QtCharts -I/usr/local/Qt-5.12.7/include/QtOpenGL -I/usr/local/Qt-5.12.7/include/QtWidgets -I/usr/local/Qt-5.12.7/include/QtGui -I/usr/local/Qt-5.12.7/include/QtQml -I/usr/local/Qt-5.12.7/include/QtNetwork -I/usr/local/Qt-5.12.7/include/QtSerialPort -I/usr/local/Qt-5.12.7/include/QtSql -I/usr/local/Qt-5.12.7/include/QtCore -I/usr/include/c++/8 -I/usr/include/arm-linux-gnueabihf/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/arm-linux-gnueabihf/8/include -I/usr/local/include -I/usr/lib/gcc/arm-linux-gnueabihf/8/include-fixed -I/usr/include/arm-linux-gnueabihf -I/usr/include sensorslist.h -o moc_sensorslist.cpp
+=======
+		packet.h \
+		moc_predefs.h \
+		/usr/local/Qt-5.12.7/bin/moc
+	/usr/local/Qt-5.12.7/bin/moc $(DEFINES) --include /home/pi/EarthquakeTable-master/moc_predefs.h -I/usr/local/Qt-5.12.7/mkspecs/linux-g++ -I/home/pi/EarthquakeTable-master -I/usr/local/Qt-5.12.7/include -I/usr/local/Qt-5.12.7/include/QtQuickControls2 -I/usr/local/Qt-5.12.7/include/QtQuick -I/usr/local/Qt-5.12.7/include/QtCharts -I/usr/local/Qt-5.12.7/include/QtOpenGL -I/usr/local/Qt-5.12.7/include/QtWidgets -I/usr/local/Qt-5.12.7/include/QtGui -I/usr/local/Qt-5.12.7/include/QtQml -I/usr/local/Qt-5.12.7/include/QtNetwork -I/usr/local/Qt-5.12.7/include/QtSerialPort -I/usr/local/Qt-5.12.7/include/QtSql -I/usr/local/Qt-5.12.7/include/QtCore -I/usr/include/c++/8 -I/usr/include/arm-linux-gnueabihf/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/arm-linux-gnueabihf/8/include -I/usr/local/include -I/usr/lib/gcc/arm-linux-gnueabihf/8/include-fixed -I/usr/include/arm-linux-gnueabihf -I/usr/include sensorslist.h -o moc_sensorslist.cpp
+>>>>>>> 92f2c6b18597d40993ee86586b5292de86dbce59
 
 moc_groundmotionlist.cpp: groundmotionlist.h \
 		/usr/local/Qt-5.12.7/include/QtCore/QObject \
@@ -1646,7 +1798,11 @@ moc_groundmotionlist.cpp: groundmotionlist.h \
 		/usr/local/Qt-5.12.7/include/QtCore/QString \
 		moc_predefs.h \
 		/usr/local/Qt-5.12.7/bin/moc
+<<<<<<< HEAD
 	/usr/local/Qt-5.12.7/bin/moc $(DEFINES) --include /media/mohammad/1ED9E8D6138E2910/Work/EarthquakeSimulatingTable/Code/Linux/EarthquakeTable-master/moc_predefs.h -I/usr/local/Qt-5.12.7/mkspecs/linux-g++ -I/media/mohammad/1ED9E8D6138E2910/Work/EarthquakeSimulatingTable/Code/Linux/EarthquakeTable-master -I/usr/local/Qt-5.12.7/include -I/usr/local/Qt-5.12.7/include/QtQuickControls2 -I/usr/local/Qt-5.12.7/include/QtQuick -I/usr/local/Qt-5.12.7/include/QtCharts -I/usr/local/Qt-5.12.7/include/QtOpenGL -I/usr/local/Qt-5.12.7/include/QtWidgets -I/usr/local/Qt-5.12.7/include/QtGui -I/usr/local/Qt-5.12.7/include/QtQml -I/usr/local/Qt-5.12.7/include/QtNetwork -I/usr/local/Qt-5.12.7/include/QtSerialPort -I/usr/local/Qt-5.12.7/include/QtSql -I/usr/local/Qt-5.12.7/include/QtCore -I/usr/include/c++/8 -I/usr/include/arm-linux-gnueabihf/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/arm-linux-gnueabihf/8/include -I/usr/local/include -I/usr/lib/gcc/arm-linux-gnueabihf/8/include-fixed -I/usr/include/arm-linux-gnueabihf -I/usr/include groundmotionlist.h -o moc_groundmotionlist.cpp
+=======
+	/usr/local/Qt-5.12.7/bin/moc $(DEFINES) --include /home/pi/EarthquakeTable-master/moc_predefs.h -I/usr/local/Qt-5.12.7/mkspecs/linux-g++ -I/home/pi/EarthquakeTable-master -I/usr/local/Qt-5.12.7/include -I/usr/local/Qt-5.12.7/include/QtQuickControls2 -I/usr/local/Qt-5.12.7/include/QtQuick -I/usr/local/Qt-5.12.7/include/QtCharts -I/usr/local/Qt-5.12.7/include/QtOpenGL -I/usr/local/Qt-5.12.7/include/QtWidgets -I/usr/local/Qt-5.12.7/include/QtGui -I/usr/local/Qt-5.12.7/include/QtQml -I/usr/local/Qt-5.12.7/include/QtNetwork -I/usr/local/Qt-5.12.7/include/QtSerialPort -I/usr/local/Qt-5.12.7/include/QtSql -I/usr/local/Qt-5.12.7/include/QtCore -I/usr/include/c++/8 -I/usr/include/arm-linux-gnueabihf/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/arm-linux-gnueabihf/8/include -I/usr/local/include -I/usr/lib/gcc/arm-linux-gnueabihf/8/include-fixed -I/usr/include/arm-linux-gnueabihf -I/usr/include groundmotionlist.h -o moc_groundmotionlist.cpp
+>>>>>>> 92f2c6b18597d40993ee86586b5292de86dbce59
 
 moc_groundmotionmodel.cpp: groundmotionmodel.h \
 		/usr/local/Qt-5.12.7/include/QtCore/QAbstractListModel \
@@ -1716,7 +1872,11 @@ moc_groundmotionmodel.cpp: groundmotionmodel.h \
 		/usr/local/Qt-5.12.7/include/QtCore/qsharedpointer_impl.h \
 		moc_predefs.h \
 		/usr/local/Qt-5.12.7/bin/moc
+<<<<<<< HEAD
 	/usr/local/Qt-5.12.7/bin/moc $(DEFINES) --include /media/mohammad/1ED9E8D6138E2910/Work/EarthquakeSimulatingTable/Code/Linux/EarthquakeTable-master/moc_predefs.h -I/usr/local/Qt-5.12.7/mkspecs/linux-g++ -I/media/mohammad/1ED9E8D6138E2910/Work/EarthquakeSimulatingTable/Code/Linux/EarthquakeTable-master -I/usr/local/Qt-5.12.7/include -I/usr/local/Qt-5.12.7/include/QtQuickControls2 -I/usr/local/Qt-5.12.7/include/QtQuick -I/usr/local/Qt-5.12.7/include/QtCharts -I/usr/local/Qt-5.12.7/include/QtOpenGL -I/usr/local/Qt-5.12.7/include/QtWidgets -I/usr/local/Qt-5.12.7/include/QtGui -I/usr/local/Qt-5.12.7/include/QtQml -I/usr/local/Qt-5.12.7/include/QtNetwork -I/usr/local/Qt-5.12.7/include/QtSerialPort -I/usr/local/Qt-5.12.7/include/QtSql -I/usr/local/Qt-5.12.7/include/QtCore -I/usr/include/c++/8 -I/usr/include/arm-linux-gnueabihf/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/arm-linux-gnueabihf/8/include -I/usr/local/include -I/usr/lib/gcc/arm-linux-gnueabihf/8/include-fixed -I/usr/include/arm-linux-gnueabihf -I/usr/include groundmotionmodel.h -o moc_groundmotionmodel.cpp
+=======
+	/usr/local/Qt-5.12.7/bin/moc $(DEFINES) --include /home/pi/EarthquakeTable-master/moc_predefs.h -I/usr/local/Qt-5.12.7/mkspecs/linux-g++ -I/home/pi/EarthquakeTable-master -I/usr/local/Qt-5.12.7/include -I/usr/local/Qt-5.12.7/include/QtQuickControls2 -I/usr/local/Qt-5.12.7/include/QtQuick -I/usr/local/Qt-5.12.7/include/QtCharts -I/usr/local/Qt-5.12.7/include/QtOpenGL -I/usr/local/Qt-5.12.7/include/QtWidgets -I/usr/local/Qt-5.12.7/include/QtGui -I/usr/local/Qt-5.12.7/include/QtQml -I/usr/local/Qt-5.12.7/include/QtNetwork -I/usr/local/Qt-5.12.7/include/QtSerialPort -I/usr/local/Qt-5.12.7/include/QtSql -I/usr/local/Qt-5.12.7/include/QtCore -I/usr/include/c++/8 -I/usr/include/arm-linux-gnueabihf/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/arm-linux-gnueabihf/8/include -I/usr/local/include -I/usr/lib/gcc/arm-linux-gnueabihf/8/include-fixed -I/usr/include/arm-linux-gnueabihf -I/usr/include groundmotionmodel.h -o moc_groundmotionmodel.cpp
+>>>>>>> 92f2c6b18597d40993ee86586b5292de86dbce59
 
 moc_colibrateitemlist.cpp: colibrateitemlist.h \
 		/usr/local/Qt-5.12.7/include/QtCore/QObject \
@@ -1789,7 +1949,11 @@ moc_colibrateitemlist.cpp: colibrateitemlist.h \
 		/usr/local/Qt-5.12.7/include/QtCore/QString \
 		moc_predefs.h \
 		/usr/local/Qt-5.12.7/bin/moc
+<<<<<<< HEAD
 	/usr/local/Qt-5.12.7/bin/moc $(DEFINES) --include /media/mohammad/1ED9E8D6138E2910/Work/EarthquakeSimulatingTable/Code/Linux/EarthquakeTable-master/moc_predefs.h -I/usr/local/Qt-5.12.7/mkspecs/linux-g++ -I/media/mohammad/1ED9E8D6138E2910/Work/EarthquakeSimulatingTable/Code/Linux/EarthquakeTable-master -I/usr/local/Qt-5.12.7/include -I/usr/local/Qt-5.12.7/include/QtQuickControls2 -I/usr/local/Qt-5.12.7/include/QtQuick -I/usr/local/Qt-5.12.7/include/QtCharts -I/usr/local/Qt-5.12.7/include/QtOpenGL -I/usr/local/Qt-5.12.7/include/QtWidgets -I/usr/local/Qt-5.12.7/include/QtGui -I/usr/local/Qt-5.12.7/include/QtQml -I/usr/local/Qt-5.12.7/include/QtNetwork -I/usr/local/Qt-5.12.7/include/QtSerialPort -I/usr/local/Qt-5.12.7/include/QtSql -I/usr/local/Qt-5.12.7/include/QtCore -I/usr/include/c++/8 -I/usr/include/arm-linux-gnueabihf/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/arm-linux-gnueabihf/8/include -I/usr/local/include -I/usr/lib/gcc/arm-linux-gnueabihf/8/include-fixed -I/usr/include/arm-linux-gnueabihf -I/usr/include colibrateitemlist.h -o moc_colibrateitemlist.cpp
+=======
+	/usr/local/Qt-5.12.7/bin/moc $(DEFINES) --include /home/pi/EarthquakeTable-master/moc_predefs.h -I/usr/local/Qt-5.12.7/mkspecs/linux-g++ -I/home/pi/EarthquakeTable-master -I/usr/local/Qt-5.12.7/include -I/usr/local/Qt-5.12.7/include/QtQuickControls2 -I/usr/local/Qt-5.12.7/include/QtQuick -I/usr/local/Qt-5.12.7/include/QtCharts -I/usr/local/Qt-5.12.7/include/QtOpenGL -I/usr/local/Qt-5.12.7/include/QtWidgets -I/usr/local/Qt-5.12.7/include/QtGui -I/usr/local/Qt-5.12.7/include/QtQml -I/usr/local/Qt-5.12.7/include/QtNetwork -I/usr/local/Qt-5.12.7/include/QtSerialPort -I/usr/local/Qt-5.12.7/include/QtSql -I/usr/local/Qt-5.12.7/include/QtCore -I/usr/include/c++/8 -I/usr/include/arm-linux-gnueabihf/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/arm-linux-gnueabihf/8/include -I/usr/local/include -I/usr/lib/gcc/arm-linux-gnueabihf/8/include-fixed -I/usr/include/arm-linux-gnueabihf -I/usr/include colibrateitemlist.h -o moc_colibrateitemlist.cpp
+>>>>>>> 92f2c6b18597d40993ee86586b5292de86dbce59
 
 moc_colibrateitemmodel.cpp: colibrateitemmodel.h \
 		/usr/local/Qt-5.12.7/include/QtCore/QAbstractListModel \
@@ -1857,12 +2021,18 @@ moc_colibrateitemmodel.cpp: colibrateitemmodel.h \
 		/usr/local/Qt-5.12.7/include/QtCore/qcontiguouscache.h \
 		/usr/local/Qt-5.12.7/include/QtCore/qsharedpointer.h \
 		/usr/local/Qt-5.12.7/include/QtCore/qsharedpointer_impl.h \
+<<<<<<< HEAD
 		generaldata.h \
 		/usr/local/Qt-5.12.7/include/QtCore/QString \
 		/usr/local/Qt-5.12.7/include/QtCore/QVector \
 		moc_predefs.h \
 		/usr/local/Qt-5.12.7/bin/moc
 	/usr/local/Qt-5.12.7/bin/moc $(DEFINES) --include /media/mohammad/1ED9E8D6138E2910/Work/EarthquakeSimulatingTable/Code/Linux/EarthquakeTable-master/moc_predefs.h -I/usr/local/Qt-5.12.7/mkspecs/linux-g++ -I/media/mohammad/1ED9E8D6138E2910/Work/EarthquakeSimulatingTable/Code/Linux/EarthquakeTable-master -I/usr/local/Qt-5.12.7/include -I/usr/local/Qt-5.12.7/include/QtQuickControls2 -I/usr/local/Qt-5.12.7/include/QtQuick -I/usr/local/Qt-5.12.7/include/QtCharts -I/usr/local/Qt-5.12.7/include/QtOpenGL -I/usr/local/Qt-5.12.7/include/QtWidgets -I/usr/local/Qt-5.12.7/include/QtGui -I/usr/local/Qt-5.12.7/include/QtQml -I/usr/local/Qt-5.12.7/include/QtNetwork -I/usr/local/Qt-5.12.7/include/QtSerialPort -I/usr/local/Qt-5.12.7/include/QtSql -I/usr/local/Qt-5.12.7/include/QtCore -I/usr/include/c++/8 -I/usr/include/arm-linux-gnueabihf/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/arm-linux-gnueabihf/8/include -I/usr/local/include -I/usr/lib/gcc/arm-linux-gnueabihf/8/include-fixed -I/usr/include/arm-linux-gnueabihf -I/usr/include colibrateitemmodel.h -o moc_colibrateitemmodel.cpp
+=======
+		moc_predefs.h \
+		/usr/local/Qt-5.12.7/bin/moc
+	/usr/local/Qt-5.12.7/bin/moc $(DEFINES) --include /home/pi/EarthquakeTable-master/moc_predefs.h -I/usr/local/Qt-5.12.7/mkspecs/linux-g++ -I/home/pi/EarthquakeTable-master -I/usr/local/Qt-5.12.7/include -I/usr/local/Qt-5.12.7/include/QtQuickControls2 -I/usr/local/Qt-5.12.7/include/QtQuick -I/usr/local/Qt-5.12.7/include/QtCharts -I/usr/local/Qt-5.12.7/include/QtOpenGL -I/usr/local/Qt-5.12.7/include/QtWidgets -I/usr/local/Qt-5.12.7/include/QtGui -I/usr/local/Qt-5.12.7/include/QtQml -I/usr/local/Qt-5.12.7/include/QtNetwork -I/usr/local/Qt-5.12.7/include/QtSerialPort -I/usr/local/Qt-5.12.7/include/QtSql -I/usr/local/Qt-5.12.7/include/QtCore -I/usr/include/c++/8 -I/usr/include/arm-linux-gnueabihf/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/arm-linux-gnueabihf/8/include -I/usr/local/include -I/usr/lib/gcc/arm-linux-gnueabihf/8/include-fixed -I/usr/include/arm-linux-gnueabihf -I/usr/include colibrateitemmodel.h -o moc_colibrateitemmodel.cpp
+>>>>>>> 92f2c6b18597d40993ee86586b5292de86dbce59
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -1880,6 +2050,7 @@ compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_heade
 
 ####### Compile
 
+<<<<<<< HEAD
 Biquad.o: Biquad.cpp Common.h \
 		MathSupplement.h \
 		Biquad.h \
@@ -2058,6 +2229,8 @@ fileitemsmodel.o: fileitemsmodel.cpp fileitemsmodel.h \
 		/usr/local/Qt-5.12.7/include/QtCore/QVector
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o fileitemsmodel.o fileitemsmodel.cpp
 
+=======
+>>>>>>> 92f2c6b18597d40993ee86586b5292de86dbce59
 main.o: main.cpp /usr/local/Qt-5.12.7/include/QtGui/QGuiApplication \
 		/usr/local/Qt-5.12.7/include/QtGui/qguiapplication.h \
 		/usr/local/Qt-5.12.7/include/QtGui/qtguiglobal.h \
@@ -2656,6 +2829,7 @@ main.o: main.cpp /usr/local/Qt-5.12.7/include/QtGui/QGuiApplication \
 		/usr/local/Qt-5.12.7/include/QtCore/QCoreApplication \
 		/usr/local/Qt-5.12.7/include/QtCore/QFile \
 		/usr/local/Qt-5.12.7/include/QtCore/QTextStream \
+<<<<<<< HEAD
 		Butterworth.h \
 		Common.h \
 		Cascade.h \
@@ -2665,11 +2839,14 @@ main.o: main.cpp /usr/local/Qt-5.12.7/include/QtGui/QGuiApplication \
 		Layout.h \
 		PoleFilter.h \
 		State.h \
+=======
+>>>>>>> 92f2c6b18597d40993ee86586b5292de86dbce59
 		jsonstoring.h \
 		/usr/local/Qt-5.12.7/include/QtCore/QJsonObject \
 		/usr/local/Qt-5.12.7/include/QtCore/QJsonArray \
 		/usr/local/Qt-5.12.7/include/QtCore/QJsonDocument \
 		groundmotionlist.h \
+<<<<<<< HEAD
 		colibrateitemmodel.h \
 		/usr/local/Qt-5.12.7/include/QtCore/QAbstractListModel \
 		/usr/local/Qt-5.12.7/include/QtCore/QStringListModel \
@@ -2678,6 +2855,13 @@ main.o: main.cpp /usr/local/Qt-5.12.7/include/QtGui/QGuiApplication \
 		fileitemsmodel.h \
 		FileItem.h \
 		assistant.h
+=======
+		colibrateitemlist.h \
+		/usr/local/Qt-5.12.7/include/QtCore/QStringListModel \
+		groundmotionmodel.h \
+		/usr/local/Qt-5.12.7/include/QtCore/QAbstractListModel \
+		colibrateitemmodel.h
+>>>>>>> 92f2c6b18597d40993ee86586b5292de86dbce59
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
 backend.o: backend.cpp /usr/local/Qt-5.12.7/include/QtCharts/QXYSeries \
@@ -3247,6 +3431,7 @@ backend.o: backend.cpp /usr/local/Qt-5.12.7/include/QtCharts/QXYSeries \
 		/usr/local/Qt-5.12.7/include/QtCore/QCoreApplication \
 		/usr/local/Qt-5.12.7/include/QtCore/QFile \
 		/usr/local/Qt-5.12.7/include/QtCore/QTextStream \
+<<<<<<< HEAD
 		Butterworth.h \
 		Common.h \
 		Cascade.h \
@@ -3256,13 +3441,19 @@ backend.o: backend.cpp /usr/local/Qt-5.12.7/include/QtCharts/QXYSeries \
 		Layout.h \
 		PoleFilter.h \
 		State.h \
+=======
+>>>>>>> 92f2c6b18597d40993ee86586b5292de86dbce59
 		jsonstoring.h \
 		/usr/local/Qt-5.12.7/include/QtCore/QJsonObject \
 		/usr/local/Qt-5.12.7/include/QtCore/QJsonArray \
 		/usr/local/Qt-5.12.7/include/QtCore/QJsonDocument \
 		groundmotionlist.h \
+<<<<<<< HEAD
 		colibrateitemmodel.h \
 		/usr/local/Qt-5.12.7/include/QtCore/QAbstractListModel \
+=======
+		colibrateitemlist.h \
+>>>>>>> 92f2c6b18597d40993ee86586b5292de86dbce59
 		/usr/local/Qt-5.12.7/include/QtCore/QStringListModel
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o backend.o backend.cpp
 
@@ -3434,6 +3625,7 @@ sensorslist.o: sensorslist.cpp sensorslist.h \
 		/usr/local/Qt-5.12.7/include/QtCore/QDir \
 		/usr/local/Qt-5.12.7/include/QtCore/qdir.h \
 		/usr/local/Qt-5.12.7/include/QtCore/qfileinfo.h \
+<<<<<<< HEAD
 		Butterworth.h \
 		Common.h \
 		Cascade.h \
@@ -3443,6 +3635,8 @@ sensorslist.o: sensorslist.cpp sensorslist.h \
 		Layout.h \
 		PoleFilter.h \
 		State.h \
+=======
+>>>>>>> 92f2c6b18597d40993ee86586b5292de86dbce59
 		packet.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sensorslist.o sensorslist.cpp
 
@@ -3810,12 +4004,21 @@ colibrateitemmodel.o: colibrateitemmodel.cpp colibrateitemmodel.h \
 		/usr/local/Qt-5.12.7/include/QtCore/qcontiguouscache.h \
 		/usr/local/Qt-5.12.7/include/QtCore/qsharedpointer.h \
 		/usr/local/Qt-5.12.7/include/QtCore/qsharedpointer_impl.h \
+<<<<<<< HEAD
 		generaldata.h \
 		/usr/local/Qt-5.12.7/include/QtCore/QString \
 		/usr/local/Qt-5.12.7/include/QtCore/QVector \
 		colibrateitemlist.h \
 		/usr/local/Qt-5.12.7/include/QtCore/QObject \
 		/usr/local/Qt-5.12.7/include/QtCore/QDebug
+=======
+		colibrateitemlist.h \
+		/usr/local/Qt-5.12.7/include/QtCore/QObject \
+		/usr/local/Qt-5.12.7/include/QtCore/QVector \
+		/usr/local/Qt-5.12.7/include/QtCore/QDebug \
+		generaldata.h \
+		/usr/local/Qt-5.12.7/include/QtCore/QString
+>>>>>>> 92f2c6b18597d40993ee86586b5292de86dbce59
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o colibrateitemmodel.o colibrateitemmodel.cpp
 
 qrc_qml.o: qrc_qml.cpp 
@@ -3824,12 +4027,15 @@ qrc_qml.o: qrc_qml.cpp
 moc_backend.o: moc_backend.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_backend.o moc_backend.cpp
 
+<<<<<<< HEAD
 moc_fileitemslist.o: moc_fileitemslist.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_fileitemslist.o moc_fileitemslist.cpp
 
 moc_fileitemsmodel.o: moc_fileitemsmodel.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_fileitemsmodel.o moc_fileitemsmodel.cpp
 
+=======
+>>>>>>> 92f2c6b18597d40993ee86586b5292de86dbce59
 moc_sensorslist.o: moc_sensorslist.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_sensorslist.o moc_sensorslist.cpp
 

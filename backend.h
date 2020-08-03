@@ -80,7 +80,6 @@ public:
     Q_INVOKABLE void storeSensorData();
     int counter = 0;
 
-//    QVector<double> tTorqueRxPktestBug;
     // charts
     QDateTimeAxis* axisXTimes[chartsNumber];
 

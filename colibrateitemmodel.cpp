@@ -147,6 +147,7 @@ void ColibrateItemModel::removeItem(QString name)
     beginResetModel();
     mList->removeItem(name);
     endResetModel();
+
 }
 
 

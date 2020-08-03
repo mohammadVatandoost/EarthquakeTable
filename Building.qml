@@ -25,6 +25,7 @@ ColumnLayout {
             }
 //            ComboBox {
 //                id: comboTimesetSelectedColibrate
+
 //                Layout.alignment: Qt.AlignHCenter
 //                width: 200
 //                model: ColibrateItemModel//BackEnd.getColibratesNames()
@@ -40,6 +41,7 @@ ColumnLayout {
                 Component.onCompleted: {
                     BackEnd.setSelectedColibrate(comboTime.currentIndex);
                 }
+
             }
         }
         ColumnLayout {
@@ -100,7 +102,6 @@ ColumnLayout {
           width: 0.8*parent.width
           height: 430
           border.color: "black"
-//          color: "white"
           border.width: 5
           Layout.alignment: Qt.AlignHCenter
           Material.elevation: 6

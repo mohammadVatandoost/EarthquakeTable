@@ -210,6 +210,7 @@ void Backend::storeSensorData()
     }
 }
 
+
 void Backend::sendSimulationData(int packetId)
 {
     cout<< "sendSimulationData : "<< packetId << ", " << dataSegments.size() <<endl;
@@ -482,6 +483,7 @@ void Backend::setSelectedColibrate(int temp)
        pdg =  generalData.colibrateItems[temp].maxDis;
        pda =  generalData.colibrateItems[temp].maxAccelarator;
        qDebug() << "setSelectedColibrate :" << temp << ", pdg:"<<pdg<<", pda:"<<pda;
+
     } else {
         cout<< "setSelectedColibrate index is not valid:"<< temp<<endl;
     }
@@ -745,6 +747,7 @@ void Backend::sendFileData(int index)
                             item.replace(" ", "");
                             qDebug()<< "item:"<<item;
                             sum = sum + (item.toDouble()*9.81*(timeStep/1000)*(timeStep/1000));
+
                             if( abs(sum) > pdg ) {
                                 qDebug() << "sum :"<< sum;
                               qDebug() << "File is wrong";
@@ -759,12 +762,14 @@ void Backend::sendFileData(int index)
                                 max = abs(dataTemp);
                                 if(max > pda) {
                                     qDebug() << "File accelarator is too high max:" << max<< ", pda :"<<pda<<", item double:"<<item.toDouble();
+
                                     messages.enqueue("Wrong, Max Acc is "+QString::number(max));
                                     file.close();
                                     return;
                                 }
                             }
                             dataList.append(dataTemp*9.81);
+
                     }
                 }
             }

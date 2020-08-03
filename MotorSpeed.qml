@@ -9,6 +9,7 @@ import QtQuick.Controls.Styles 1.4
 Pane {
     id: root
     implicitHeight: 250
+
     implicitWidth: parent.width
     Material.elevation: 5
     Layout.alignment: Qt.AlignHCenter

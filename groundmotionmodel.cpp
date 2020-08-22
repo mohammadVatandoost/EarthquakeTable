@@ -35,6 +35,8 @@ QVariant GroundMotionModel::data(const QModelIndex &index, int role) const
         return QVariant(item.timeStep);
     case fileDirectory:
        return QVariant(item.fileDirectory);
+    case fileName:
+       return QVariant(item.fileName);
     }
 
     return QVariant();
@@ -56,6 +58,8 @@ bool GroundMotionModel::setData(const QModelIndex &index, const QVariant &value,
        item.timeStep = value.toInt();
      case fileDirectory:
        item.fileDirectory = value.toString();
+     case fileName:
+       item.fileName = value.toString();
     }
 
     if(mList->setGroundMotion(index.row(), item)) {
@@ -76,6 +80,7 @@ QHash<int, QByteArray> GroundMotionModel::roleNames() const
   names[name] = "name";
   names[timeStep] = "timeStep" ;
   names[fileDirectory] = "fileDirectory" ;
+  names[fileName] = "fileName" ;
   return names;
 }
 

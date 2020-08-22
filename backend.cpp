@@ -27,7 +27,7 @@ Backend::Backend(QObject *parent) : QObject(parent)
     timer->start(1000);
     generalData = jsonStoring.getGeneralData();
     if(generalData.password == "") {
-        generalData.password = 1234;
+        generalData.password = "1234";
         qDebug() << "BackEnd password is empty";
     }
     if(generalData.groundMotion.size()>0) {
@@ -104,6 +104,8 @@ void Backend::decodePacket(QByteArray data)
               getTorquePkt(data);
           } else if (packetCode == AckRxPkt) {
               getSegmentAckPkt(data);
+          } else {
+              cout<< "packet code is wrong"<<endl;
           }
         } else {
             cout <<unsigned(((uint8_t)data[0])) << ": " << unsigned(static_cast<uint8_t>(data[data.size()-1])) << " checsum is wrong " << unsigned(((uint8_t)sum%256)&0xff)  << endl;
@@ -258,7 +260,7 @@ void Backend::recieveSerialPort()
     data = serial->readAll();
 
 //    QString temp3;temp3.append(data);
-//    qDebug()<< temp3;
+//    qDebug()<< data.size();
     for(int i=0; i< data.size(); i++) {
 //        cout<< unsigned(data[i]&0xFF) << ",";
         if(data[i] == '*' && recieveState == 0) {
@@ -310,8 +312,15 @@ void Backend::timerSlot()
    if(QSerialPortInfo::availablePorts().size()>0) {
     if(!serial->isOpen()) {
         Q_FOREACH(QSerialPortInfo port, QSerialPortInfo::availablePorts()) {
-                  // serial->setPortName(port.portName());
-                   serial->setPortName("ttyACM0");
+#ifdef linux
+ serial->setPortName("ttyACM0");
+#endif
+
+#ifdef _WIN32
+  serial->setPortName(port.portName());
+#endif
+
+
                    qDebug() << " portName : " << port.portName();
                    if(serial->open(QIODevice::ReadWrite)) {
                      connectState = true; qDebug() << " conndected : ";
@@ -400,6 +409,7 @@ void Backend::setGroundMotionList(GroundMotionList *tempList)
 //    gList->groundMotionItems.swap(generalData.groundMotion); //swap move the items
     gList->groundMotionItems = generalData.groundMotion;
 //    cout<< "generalData.groundMotion.size:"<<generalData.groundMotion.size()<<endl;
+//    cout<< generalData.groundMotion[0].fileName.toStdString() <<endl;
 }
 
 void Backend::setColibrateItemModel(ColibrateItemModel *tempList)
@@ -489,8 +499,15 @@ void Backend::setSelectedColibrate(int temp)
     }
 }
 
-bool Backend::setFilter(double f1, double f2)
+bool Backend::setFilter(double f1, double f2, bool bandPassEnabled)
 {
+    for(int i=0; i<mList->sensorItems.size(); i++) {
+        mList->sensorItems[i].filterUpdate(f1,f2, 1000/timeStep);
+    }
+
+     if(!bandPassEnabled) {
+         return true;
+     }
      if(f1 <0 and f2 < 0) {
          messages.enqueue("Frequency must be greater than zero");
          return false;
@@ -538,13 +555,20 @@ void Backend::moveLeft()
     sendConfig(temp);
 }
 
-void Backend::readFile(QString fileDirectory)
+void Backend::readFile(QString fileDirectory, QString file_name)
 {
 
     QString message;
     if(fileDirectory.contains(".txt")) {
         fileAddress = fileDirectory;
+        userFileName = file_name;
+#ifdef linux
         fileAddress.replace("file://", "");
+#endif
+
+#ifdef _WIN32
+  fileAddress.replace("file:///", "");
+ #endif
         qDebug()<< fileAddress;
     } else {
         message = "invalid file: does not contains .txt";
@@ -668,6 +692,7 @@ int Backend::saveGroundMotion(QString temp)
     tempGM.timeStep =  timeStep;
     tempGM.name = temp;
     tempGM.fileDirectory = "./Data/"+fileName+".txt";
+    tempGM.fileName = userFileName;
     generalData.groundMotion.push_back(tempGM);
     gList->appendItem(tempGM);
     jsonStoring.storeGeneralData(generalData);
@@ -721,8 +746,11 @@ void Backend::setSelectedGroundMotion(int temp)
 
 void Backend::sendFileData(int index)
 {
-    qDebug()<< "sendFileData index:"<<index;
-    setSelectedGroundMotion(index);
+//    qDebug()<< "sendFileData index:"<<index;
+    if(generalData.groundMotion.size() == 1) {
+        setSelectedGroundMotion(0);
+    }
+//    setSelectedGroundMotion(index);
     qDebug()<< "sendFileData:"<<fileAddress;
      qDebug()<< QDir::currentPath();
     QString message;

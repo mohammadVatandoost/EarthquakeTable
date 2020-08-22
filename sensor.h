@@ -36,6 +36,7 @@ struct Sensor {
     float f2 = 199;
     double sample_frequency = 200;
     double maxAccelarator = 0;
+    bool frqEnabled = false;
     Sensor() {
         f = new Iir::Butterworth::BandPass<filter_order>();
 //        f.reset();
@@ -56,14 +57,17 @@ struct Sensor {
     }
 
     void addData(double time, double value) {
-        QPointF temp(time,value);
+
         if(max < value) {
             max = value;
         } else if(min > value) {
             min = value;
         }
         // for averaging chart
-        double filteredValue = f->filter(value);
+        double filteredValue = value;
+        if(frqEnabled) {
+            filteredValue = f->filter(value);
+        }
 //        qDebug() << value<<", "<< filteredValue;
         averageSum = averageSum + filteredValue; //value
         averageCounter++;
@@ -78,6 +82,7 @@ struct Sensor {
                 dataAccXChart.erase(dataAccXChart.begin(), dataAccXChart.begin()+ dataChartNum);
             }
         }
+        QPointF temp(time,filteredValue);
 //        qDebug()<< time << " : "<< value;
         dataAccX.append(temp);
         if(dataAccX.size() > saveToFile*3) {

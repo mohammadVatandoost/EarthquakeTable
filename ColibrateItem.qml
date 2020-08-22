@@ -5,58 +5,78 @@ import QtQuick.Extras 1.4
 import QtQuick.Controls.Material 2.3
 import QtQuick.Controls.Styles 1.4
 
-//Rectangle {
-//    width: 100
-//    height: 100
-//    color: "red"
-//    border.color: "black"
-//    border.width: 5
-//    radius: 10
-//}
-
-RowLayout {
+Rectangle {
     id: root
     width: parent.width
-    property string name: "asdsad"
-    property int colibrate: 10
-    property int pga: 0
-    property int pda: 0
-    property bool auth: false
-    function setName(temp) {name = temp;}
-    function setColibrate(temp) {colibrate = temp;}
-    function setAuth(temp) {root.auth = temp;}
+    height: 55
+    color: "#FaFaFa"
+     z: 10
+     property string name: "asdsad"
+     property int colibrate: 10
+     property int pga: 0
+     property int pda: 0
+     property bool auth: false
+     property int columnW: 60
+     property int rowH: 60
+     function setName(temp) {name = temp;}
+     function setColibrate(temp) {colibrate = temp;}
+     function setAuth(temp) {root.auth = temp;}
+
+RowLayout {
+    spacing: 0
+    width: parent.width
+
 
     Item {
-        width: 100
-        Label {
-          id: label
-          text: qsTr(name)
+        width: root.columnW
+        height: root.rowH
+        Text {
+            x: (parent.width/2)-(width/2)
+            y: (parent.height/2) - (height/2)
+          text: qsTr(root.name)
           font.pixelSize: 18
         }
     }
+    ToolSeparator {}
     Item {
-        width: 100
+        width: root.columnW
+        height: root.rowH
         Text {
-            text: qsTr(pga + " mg")
-            font.pixelSize: 22
+            x: (parent.width/2)-(width/2)
+            y: (parent.height/2) - (height/2)
+            text: qsTr(root.pga + " mg")
+            font.pixelSize: 18
         }
     }
+    ToolSeparator {}
     Item {
-        width: 100
+        width: root.columnW
+        height: root.rowH
         Text {
-            text: qsTr(pda + " cm")
-            font.pixelSize: 22
+            x: (parent.width/2)-(width/2)
+            y: (parent.height/2) - (height/2)
+            text: qsTr(root.pda + " cm")
+            font.pixelSize: 18
         }
     }
 
-    Button {
-           Layout.alignment: Qt.AlignRight
-           Layout.topMargin: parent.height/2
-           text: qsTr("Delete")
-           highlighted: true
-           Material.background: Material.Red
-           onClicked: {BackEnd.removeColibrateItem(name);}
-           enabled: root.auth
+    ToolSeparator {}
+
+    Item {
+        width: root.columnW
+        height: root.rowH
+        Button {
+            x: (parent.width/2)-(width/2)
+            y: (parent.height/2) - (height/2)
+               text: qsTr("Delete")
+               highlighted: true
+               Material.background: Material.Red
+               onClicked: {BackEnd.removeColibrateItem(name);}
+               enabled: root.auth
+        }
     }
+
+
+}
 
 }

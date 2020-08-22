@@ -26,5 +26,7 @@
         <file>images/lock-outline.png</file>
         <file>images/lock.png</file>
         <file>DropDownModel.qml</file>
+        <file>GroundMotionHeader.qml</file>
+        <file>CalibrateHeader.qml</file>
     </qresource>
 </RCC>

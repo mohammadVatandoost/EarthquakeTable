@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<<<<<<< HEAD
-<!-- Written by QtCreator 4.11.1, 2020-07-25T13:17:49. -->
-=======
-<!-- Written by QtCreator 4.11.1, 2020-07-23T11:09:56. -->
->>>>>>> 92f2c6b18597d40993ee86586b5292de86dbce59
+<!-- Written by QtCreator 4.11.1, 2020-08-22T11:29:46. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -289,8 +285,8 @@
     </valuelist>
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/media/mohammad/1ED9E8D6138E2910/Work/EarthquakeSimulatingTable/Code/Linux/EarthquakeTable-master/SimulatingTable.pro</value>
-    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">/media/mohammad/1ED9E8D6138E2910/Work/EarthquakeSimulatingTable/Code/Linux/EarthquakeTable-master/SimulatingTable.pro</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/media/mohammad/1ED9E8D6138E2910/Work/EarthquakeSimulatingTable/Code/Linux/EarthquakeSimulation/SimulatingTable.pro</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">/media/mohammad/1ED9E8D6138E2910/Work/EarthquakeSimulatingTable/Code/Linux/EarthquakeSimulation/SimulatingTable.pro</value>
     <value type="QString" key="RunConfiguration.Arguments"></value>
     <value type="bool" key="RunConfiguration.Arguments.multi">false</value>
     <value type="QString" key="RunConfiguration.OverrideDebuggerStartup"></value>

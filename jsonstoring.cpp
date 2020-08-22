@@ -15,6 +15,7 @@ void JsonStoring::storeGeneralData(GeneralData generalData)
      for(int i=0; i<generalData.groundMotion.size(); i++) {
          QJsonObject temp;
          temp.insert("name", generalData.groundMotion[i].name);
+         temp.insert("fileName", generalData.groundMotion[i].fileName);
          temp.insert("fileDirectory", generalData.groundMotion[i].fileDirectory);
          temp.insert("timeStep", generalData.groundMotion[i].timeStep);
          array.push_front(temp);
@@ -54,6 +55,7 @@ GeneralData JsonStoring::getGeneralData()
        gm.name = obj.value("name").toString();
        gm.fileDirectory = obj.value("fileDirectory").toString();
        gm.timeStep = obj.value("timeStep").toInt();
+       gm.fileName = obj.value("fileName").toString();
        temp.groundMotion.push_back(gm);
    }
    // get colibrate item

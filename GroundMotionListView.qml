@@ -20,19 +20,30 @@ ListView {
     width: parent.width*0.95;
     height: 250
     Layout.alignment: Qt.AlignHCenter
+    spacing: 0
+    clip: true
     property bool auth: false
     function setAuth(temp) {root.auth = temp;}
+
+    headerPositioning: ListView.OverlayHeader
+    header: GroundMotionHeader {
+    }
+
     model: GroundMotionModel {
              list: GroundMotionList
     }
 
     delegate: GroundMotionItem {
+        fileName: model.fileName
+        name: model.name
+        stepTime: model.timeStep
+        auth: root.auth
         Component.onCompleted: {
-            setName(model.name);
-            setStepTime(model.timeStep);
-            setAuth(root.auth);
-//            console.log("GroundMotionItem :");
-//            console.log(model.timeStep);
+//            setName(model.name);
+//            setStepTime(model.timeStep);
+//            setAuth(root.auth);
+//            console.log("GroundMotionItem fileName:");
+//            console.log(model.fileName);
         }
     }
 

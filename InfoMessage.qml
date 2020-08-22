@@ -26,7 +26,7 @@ Popup {
 
        Rectangle {
            color: "blue"
-           width: 300
+           width: 350
            height: 50
 //           radius: 5
 

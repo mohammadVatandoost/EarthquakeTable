@@ -13,6 +13,7 @@ struct GroundMotion {
     QString name = "";
     int timeStep = 10;
     QString fileDirectory = "";
+    QString fileName = "";
 };
 
 struct ColibrateItem {

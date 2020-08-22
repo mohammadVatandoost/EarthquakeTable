@@ -77,7 +77,9 @@ inline void saveSensorDataToCSVFile(QVector<QPointF> *dataList, int sensorNumber
     }
 //    dataList->remove(0, n);
     dataList->remove(begin, end);
-    appendDataToCSV(dataStringList, "./Data/sensor"+QString::number(sensorNumber)+"_"+tempOrRes+"_"+QDateTime::currentDateTime().toString()+".csv"); //"_"+QString::number(minuteBuff)+
+    QString dateTime = QDateTime::currentDateTime().toString();
+    dateTime = dateTime.replace(":","_");
+    appendDataToCSV(dataStringList, "./Data/sensor"+QString::number(sensorNumber)+"_"+tempOrRes+"_"+dateTime+".csv"); //"_"+QString::number(minuteBuff)+
 
 }
 

@@ -8,7 +8,7 @@ import QtQuick.Dialogs 1.0
 
 Pane {
     id: root
-    implicitHeight: 630
+    implicitHeight: 610
     implicitWidth: parent.width*0.95
     Material.elevation: 5
     Layout.alignment: Qt.AlignHCenter
@@ -23,10 +23,10 @@ Pane {
 //            width: parent.width
             Label {
               id: label
-              Layout.alignment: Qt.AlignLeft
+              Layout.alignment: Qt.AlignHCenter
 //              anchors.left: parent.left
-              text: "Ground Motion"
-              font.pixelSize: 22
+              text: "Ground Motions"
+              font.pixelSize: 18
             }
             TextEdit {
                 id: textEdit
@@ -34,54 +34,74 @@ Pane {
 //                Layout.topMargin: 10
 //                Layout.bottomMargin: 10
                 width: 250
-                height: 50
-                font.pointSize: 22
+                height: 40
+                font.pointSize: 18
 //                inputMethodHints: Qt.ImhDigitsOnly
                 property string placeholderText: "Name"
 //                onActiveFocusChanged: BackEnd.openKeyboard()
                 Text {
                     text: textEdit.placeholderText
                     color: "#aaa"
-                    font.pointSize: 22
+                    font.pointSize: 18
                     visible: !textEdit.text && !textEdit.activeFocus // <----------- ;-)
                 }
             }
-            Text {
-                Layout.leftMargin: 80
-                font.pixelSize: 22
-                text: qsTr(root.fileName)
-                visible: root.fileName == "" ? false : true
-            }
-//        }
-         Button {
+
+            RowLayout {
                 Layout.alignment: Qt.AlignHCenter
-                text: qsTr("Choose File")
-                highlighted: true
-                Material.background: Material.Blue
-                onClicked: {
-                    if(FileItemsModel.isUSBDrive()) {
-                        FileItemsModel.refreshDirectory();
-                        fileDialogPopup.open();
-                    } else {
-                        notify.message = "No USB Drive Connected";
-                        notify.trigerTime();
-                    }
+                Text {
+                    Layout.rightMargin: 80
+                    font.pixelSize: 22
+                    text: qsTr(root.fileName)
+                    visible: root.fileName == "" ? false : true
                 }
-                enabled: root.auth
-         }
-         ComboBox {
-             id: comboTime
+                Button {
+                       Layout.alignment: Qt.AlignHCenter
+                       text: qsTr("Choose File")
+                       highlighted: true
+                       Material.background: Material.Blue
+                       onClicked: {
+//                           if(FileItemsModel.isUSBDrive()) {
+//                               FileItemsModel.refreshDirectory();
+//                               fileDialogPopup.open();
+//                           } else {
+//                               notify.open();
+//                               notify.message = "No USB Drive Connected";
+//                               notify.trigerTime();
+//                           }
+
+                           fileDialog.open();
+                       }
+                       enabled: root.auth
+                }
+            }
+
+
+//        }
+
+         RowLayout {
              Layout.alignment: Qt.AlignHCenter
-             property int floorNum: 0
-             property var timeSteps: [ "5ms", "10ms", "15ms", "20ms"]
-             width: 200
-             model: timeSteps
-             currentIndex: 1
-             onActivated: BackEnd.setTimeStep(timeSteps[currentIndex])
+             spacing: 10
+             Text {
+                 font.pixelSize: 18
+                 text: qsTr("Time step")
+             }
+             ComboBox {
+                 id: comboTime
+                 Layout.alignment: Qt.AlignHCenter
+                 property int floorNum: 0
+                 property var timeSteps: [ "5 ms", "10 ms", "15 ms", "20 ms"]
+                 width: 200
+                 model: timeSteps
+                 currentIndex: 1
+                 onActivated: BackEnd.setTimeStep(timeSteps[currentIndex])
+             }
          }
+
+
          Button {
                 Layout.alignment: Qt.AlignHCenter
-                text: qsTr("Save")
+                text: qsTr("Add")
                 highlighted: true
                 Material.background: Material.Green
                 onClicked: {
@@ -105,11 +125,11 @@ Pane {
         folder: shortcuts.home
         onAccepted: {
             console.log("You chose: " + fileDialog.fileUrl)
-//            var temp = ""+fileDialog.fileUrl;
+            var temp = ""+fileDialog.fileUrl;
 //            temp.lastIndexOf("/");
 //            console.log(temp.slice(temp.lastIndexOf("/")+1, temp.length))
             root.fileName = temp.slice(temp.lastIndexOf("/")+1, temp.length)
-             BackEnd.readFile(fileDialog.fileUrl);
+             BackEnd.readFile(fileDialog.fileUrl, root.fileName );
         }
         onRejected: {
             console.log("Canceled")

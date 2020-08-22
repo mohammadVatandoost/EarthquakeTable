@@ -8,35 +8,68 @@ import QtQuick.Controls.Styles 1.4
 RowLayout {
     id: root
     width: parent.width
+    spacing: 0
+    property int columnW: 55
+    property int columnW_small: 45
+    property int columnW_large: 60
+    property int rowH: 60
     property string name: ""
     property int stepTime: 10
     property bool auth: false
+    property string fileName: "dsafafadfa"
     function setName(temp) {name = temp;}
     function setStepTime(temp) {
         stepTime = temp;
     }
     function setAuth(temp) {root.auth = temp;}
-    Label {
-      id: label
-//      Layout.alignment: Qt.AlignLeft
-//      anchors.left: parent.left
-      text: root.name
-      font.pixelSize: 18
-//      anchors.horizontalCenter: parent.horizontalCenter
+    Item {
+        width: root.columnW
+        height: root.rowH
+        Text {
+            x: (parent.width/2)-(width/2)
+            y: (parent.height/2) - (height/2)
+          text: root.name
+          font.pixelSize: 18
+        }
     }
-    Text {
-//        Layout.leftMargin: 140
-        text: qsTr(root.stepTime+"ms")
-        font.pixelSize: 22
-//        anchors.horizontalCenter: parent.horizontalCenter
+    ToolSeparator {}
+    Item {
+        width: root.columnW
+        height: root.rowH
+        Text {
+            x: (parent.width/2)-(width/2)
+            y: (parent.height/2) - (height/2)
+            text: qsTr(root.fileName)
+            font.pixelSize: 18
+        }
     }
-    Button {
-           Layout.alignment: Qt.AlignRight
-           text: qsTr("Delete")
-           highlighted: true
-           Material.background: Material.Red
-           onClicked: {BackEnd.removeGroundMotion(name);}
-           enabled: root.auth
+    ToolSeparator {}
+
+    Item {
+        width: root.columnW
+        height: root.rowH
+        Text {
+            x: (parent.width/2)-(width/2)
+            y: (parent.height/2) - (height/2)
+            text: qsTr(root.stepTime+"ms")
+            font.pixelSize: 18
+        }
     }
+    ToolSeparator {}
+
+    Item {
+        width: root.columnW
+        height: root.rowH
+        Button {
+            x: (parent.width/2)-(width/2)
+            y: (parent.height/2) - (height/2)
+               text: qsTr("Delete")
+               highlighted: true
+               Material.background: Material.Red
+               onClicked: {BackEnd.removeGroundMotion(name);}
+               enabled: root.auth
+        }
+    }
+
 
 }

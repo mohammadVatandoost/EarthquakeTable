@@ -39,7 +39,7 @@ public:
     Q_INVOKABLE void stopMoving();
     Q_INVOKABLE void moveRight();
     Q_INVOKABLE void moveLeft();
-    Q_INVOKABLE void readFile(QString fileDirectory);
+    Q_INVOKABLE void readFile(QString fileDirectory, QString file_name);
     Q_INVOKABLE void setSensorInfo();
     Q_INVOKABLE QString getMotorSpeed();
     Q_INVOKABLE double getFloorData(int floorNum);
@@ -55,7 +55,7 @@ public:
     Q_INVOKABLE QStringList getGroundMotionNames();
     Q_INVOKABLE void setSelectedGroundMotion(int temp);
     Q_INVOKABLE void sendFileData(int index);
-    QString fileAddress;
+    QString fileAddress, userFileName;
 
     Q_INVOKABLE void changePassword(QString temp);
     Q_INVOKABLE bool verifyPassword(QString temp);
@@ -112,7 +112,7 @@ public:
     int pdg, pda;
 
     // filter
-    Q_INVOKABLE bool setFilter(double f1, double f2);
+    Q_INVOKABLE bool setFilter(double f1, double f2, bool bandPassEnabled);
 
     // message
     QQueue<QString> messages;

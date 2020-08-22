@@ -43,7 +43,7 @@ Pane {
                    onClicked: {
                        BackEnd.storeSensorData();
                    }
-                   enabled: root.auth
+//                   enabled: root.auth
             }
 
         }

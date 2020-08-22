@@ -48,7 +48,7 @@ ColumnLayout {
             width: parent.width/2
             Label {
                 Layout.alignment: Qt.AlignHCenter
-                text: "Floor Number"
+                text: "Number of Floors"
                 topPadding: 10
                 bottomPadding: 10
                 font.pixelSize: 27
@@ -100,7 +100,7 @@ ColumnLayout {
        Rectangle {
            id:building
           width: 0.8*parent.width
-          height: 430
+          height: 350
           border.color: "black"
           border.width: 5
           Layout.alignment: Qt.AlignHCenter
@@ -116,6 +116,7 @@ ColumnLayout {
           Floor {
               id: floor3
               anchors.top: paddingTop.bottom
+              floorValue: "Floor 3"
               Component.onCompleted: {
                   setSensorId(0);
                   setFloorNum(3);
@@ -131,6 +132,7 @@ ColumnLayout {
           Floor {
               id: floor2
               anchors.top: padding1.bottom
+              floorValue: "Floor 2"
               Component.onCompleted: {
                   setFloorNum(2);
               }
@@ -145,6 +147,7 @@ ColumnLayout {
           Floor {
               id: floor1
               anchors.top: padding2.bottom
+              floorValue: "Floor 1"
               Component.onCompleted: {
                   setFloorNum(1);
               }
@@ -159,6 +162,7 @@ ColumnLayout {
           Floor {
               id: floor0
               anchors.top: padding3.bottom
+              floorValue: "Ground"
               Component.onCompleted: {
                   setFloorNum(0);
               }
@@ -197,6 +201,24 @@ ColumnLayout {
            OripLine{}
        }
 
+       Text {
+           Layout.alignment: Qt.AlignHCenter
+           font.pointSize: 18
+           text: qsTr("Ground Motion")
+       }
+
+        ComboBox {
+            id: groundMotionComboBox
+            Layout.alignment: Qt.AlignHCenter
+            width: 200
+            model: BackEnd.getGroundMotionNames()
+            currentIndex: 0
+            onActivated: BackEnd.setSelectedGroundMotion(index)
+            Component.onCompleted: {
+                BackEnd.setSelectedGroundMotion(0)
+            }
+        }
+
        Timer {
            id: refreshTimer
            interval: 500//30 // 60 Hz
@@ -207,6 +229,16 @@ ColumnLayout {
                floor1.setSensorValue(BackEnd.getFloorData(1));
                floor2.setSensorValue(BackEnd.getFloorData(2));
                floor3.setSensorValue(BackEnd.getFloorData(3));
+           }
+       }
+
+       Timer {
+           id: refreshTimer2
+           interval: 1500//30 // 60 Hz
+           running: true
+           repeat: true
+           onTriggered: {
+               groundMotionComboBox.model = BackEnd.getGroundMotionNames();
            }
        }
 //       SetSensorFloor {}

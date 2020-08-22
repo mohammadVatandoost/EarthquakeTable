@@ -6,7 +6,7 @@ import QtQuick.Layouts 1.3
 import QtQuick.Extras 1.4
 import QtQuick.Controls.Material 2.3
 import QtQuick.Dialogs 1.2
-import QtQuick.FreeVirtualKeyboard 1.0
+//import QtQuick.FreeVirtualKeyboard 1.0
 
 Window {
     id: window
@@ -14,6 +14,9 @@ Window {
     width: 1280
     height: 700
     title: qsTr("Simulation Table")
+    Component.onCompleted: {
+            window.showFullScreen();
+    }
 
     TabBar {
         id: bar
@@ -54,33 +57,33 @@ Window {
         }
     }
 
-    InputPanel {
-        id: inputPanel
-        z: 1000
-        y: window.height
-        anchors.left: parent.left
-        anchors.right: parent.right
-        states: State {
-            name: "visible"
-            when: Qt.inputMethod.visible
-            PropertyChanges {
-                target: inputPanel
-                y: window.height - inputPanel.height
-            }
-        }
-        transitions: Transition {
-            from: ""
-            to: "visible"
-            reversible: true
-            ParallelAnimation {
-                NumberAnimation {
-                    properties: "y"
-                    duration: 150
-                    easing.type: Easing.InOutQuad
-                }
-            }
-        }
-    }
+//    InputPanel {
+//        id: inputPanel
+//        z: 1000
+//        y: window.height
+//        anchors.left: parent.left
+//        anchors.right: parent.right
+//        states: State {
+//            name: "visible"
+//            when: Qt.inputMethod.visible
+//            PropertyChanges {
+//                target: inputPanel
+//                y: window.height - inputPanel.height
+//            }
+//        }
+//        transitions: Transition {
+//            from: ""
+//            to: "visible"
+//            reversible: true
+//            ParallelAnimation {
+//                NumberAnimation {
+//                    properties: "y"
+//                    duration: 150
+//                    easing.type: Easing.InOutQuad
+//                }
+//            }
+//        }
+//    }
 
     InfoMessage {
         id: notify

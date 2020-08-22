@@ -11,7 +11,7 @@ Pane {
     implicitWidth: parent.width*0.95
     Material.elevation: 5
     Layout.topMargin: 21
-    Layout.rightMargin: 21
+    Layout.rightMargin: 0
     Layout.alignment: Qt.AlignHCenter
     ColumnLayout {
         width: parent.width

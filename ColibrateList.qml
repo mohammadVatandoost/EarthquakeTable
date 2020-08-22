@@ -8,10 +8,14 @@ import QtQuick.Controls.Styles 1.4
 
 ListView {
     width: parent.width*0.95;
-    height: 250
+    height: 230
+//    implicitHeight: 230
+    clip: true
     Layout.alignment: Qt.AlignHCenter
     property bool auth: false
     function setAuth(temp) {root.auth = temp;}
+    header: CalibrateHeader {
+    }
     model: ColibrateItemModel
 
     delegate: ColibrateItem {

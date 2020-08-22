@@ -37,7 +37,7 @@ Page {
                     id: axisXData3
                     min: 0
                     max: 1000
-                    titleText: "Floor 3"
+                    titleText: "Floor 3 (mg)"
                 }
                 LineSeries {
                     id: lineSeries3
@@ -65,7 +65,7 @@ Page {
                     id: axisXData2
                     min: 0
                     max: 1000
-                    titleText: "Floor 2"
+                    titleText: "Floor 2 (mg)"
                 }
                 LineSeries {
                     id: lineSeries2
@@ -95,7 +95,7 @@ Page {
                     id: axisXData1
                     min: 0
                     max: 1000
-                    titleText: "Floor 1"
+                    titleText: "Floor 1 (mg)"
                 }
                 LineSeries {
                     id: lineSeries1
@@ -125,7 +125,7 @@ Page {
                     id: axisXData0
                     min: 0
                     max: 1000
-                    titleText: "Floor 0"
+                    titleText: "Ground (mg)"
                 }
                 LineSeries {
                     id: lineSeries0

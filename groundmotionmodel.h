@@ -20,7 +20,7 @@ class GroundMotionModel : public QAbstractListModel
 public:
     GroundMotionModel();
     enum {
-      name, timeStep, fileDirectory
+      name, timeStep, fileDirectory, fileName
     };
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;

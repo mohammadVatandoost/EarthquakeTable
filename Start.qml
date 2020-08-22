@@ -8,7 +8,7 @@ import GroundMotionModel 1.0
 
 Pane {
     id: root
-    implicitHeight: 280
+    implicitHeight: 320
     implicitWidth: parent.width
     Material.elevation: 5
     Layout.alignment: Qt.AlignHCenter
@@ -16,78 +16,69 @@ Pane {
     property string fileUrl: ""
     ColumnLayout {
         width: parent.width
-        spacing: 10
-         ComboBox {
-             id: comboTime
-             Layout.alignment: Qt.AlignHCenter
-             width: 200
-//             model: timeSteps
-//             model: GroundMotionModel {
-//                 list: GroundMotionList
-//             }
-//             currentIndex: 1
-             model: BackEnd.getGroundMotionNames()
-             currentIndex: 0
-             onActivated: BackEnd.setSelectedGroundMotion(index)
-//             delegate: ItemDelegate {
-//                text: index + 1
-//             }
-//             displayText: currentIndex + 1
-//             onActivated: BackEnd.setTimeStep(timeSteps[currentIndex])
-         }
+        spacing: 5
+        Text {
+            Layout.alignment: Qt.AlignHCenter
+            font.pointSize: 18
+            text: qsTr("Running")
+        }
+
+//         ComboBox {
+//             id: comboTime
+//             Layout.alignment: Qt.AlignHCenter
+//             width: 200
+//             model: BackEnd.getGroundMotionNames()
+//             currentIndex: 0
+//             onActivated: BackEnd.setSelectedGroundMotion(index)
+//         }
+
          CheckBox {
-                 id: checkBox
+                 id: filterCheckBox
                  checked: false
-                 text: qsTr("I have centered the device.")
+                 text: qsTr("Bandpass the recorded signal")
          }
 
          RowLayout {
              width: parent.width
              Layout.alignment: Qt.AlignHCenter
              spacing: 5
+             visible: filterCheckBox.checked
              Text {
-                 font.pointSize: 18
-                 text: qsTr("Frequency 1 :")
+                 font.pointSize: 14
+                 text: qsTr("Lower bound")
              }
              TextField {
                  id: frequncy1
+                 horizontalAlignment: TextInput.AlignHCenter
                  Layout.topMargin: 10
                  Layout.bottomMargin: 10
                  Layout.rightMargin: 40
-                 width: 100
+                 width: 90
                  height: 50
                  font.pointSize: 18
                  text: "0"
              }
              Text {
-                 font.pointSize: 18
-                 text: qsTr("Frequency 2 :")
+                 font.pointSize: 14
+                 text: qsTr("Upper bound")
              }
              TextField {
                  id: frequncy2
+                 horizontalAlignment: TextInput.AlignHCenter
                  Layout.topMargin: 10
                  Layout.bottomMargin: 10
-                 width: 100
+                 width: 90
                  height: 50
                  font.pointSize: 18
                  text: "99"
              }
          }
-//         RowLayout {
-//             width: parent.width
-//             Text {
-//                 text: qsTr("Frequency 2 :")
-//             }
-//             TextEdit {
-//                 id: frequncy2
-//                 Layout.topMargin: 10
-//                 Layout.bottomMargin: 10
-//                 width: 200
-//                 height: 50
-//                 font.pointSize: 22
-//                 text: "200"
-//             }
-//         }
+
+         CheckBox {
+                 id: checkBox
+                 checked: false
+                 text: qsTr("I have centered the device")
+         }
 
          Button {
                 Layout.alignment: Qt.AlignHCenter
@@ -95,8 +86,9 @@ Pane {
                 highlighted: true
                 Material.background: Material.Green
                 onClicked: {
-                    if(BackEnd.setFilter(parseFloat(frequncy1.text), parseFloat(frequncy2.text)) ) {
-                        BackEnd.sendFileData(comboTime.currentIndex);
+                    if(BackEnd.setFilter(parseFloat(frequncy1.text), parseFloat(frequncy2.text), filterCheckBox.checked) ) {
+                        BackEnd.sendFileData(0);
+                        // comboTime.currentIndex
                         checkBox.checked = false;
                     }
                 }
@@ -104,14 +96,6 @@ Pane {
          }
 
     }
-    Timer {
-        id: refreshTimer
-        interval: 1500//30 // 60 Hz
-        running: true
-        repeat: true
-        onTriggered: {
-            comboTime.model = BackEnd.getGroundMotionNames();
-        }
-    }
+
 
 }

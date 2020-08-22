@@ -1,6 +1,6 @@
 import QtQuick 2.10
 import QtQuick.Controls 2.3 as Controls
-import QtQuick.FreeVirtualKeyboard 1.0
+//import QtQuick.FreeVirtualKeyboard 1.0
 
 Controls.TextField {
     id: control

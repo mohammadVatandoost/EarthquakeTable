@@ -7,7 +7,7 @@ import QtQuick.Controls.Styles 1.4
 
 Pane {
     id: root
-    implicitHeight: 100
+    implicitHeight: 80
     implicitWidth: parent.width*0.98
 
     Layout.alignment: Qt.AlignHCenter
@@ -16,6 +16,7 @@ Pane {
     property int sensorId: 0
     property int floorNum: 0
     property double sensorValue: 11
+    property string floorValue: ""
     function setSensorId(temp) {
         sensorId = temp;
     }
@@ -40,7 +41,7 @@ Pane {
          width: parent.width*2/3
          Label {
            id: ax1Label
-           text: qsTr("Floor "+root.floorNum)
+           text: qsTr(root.floorValue)
            topPadding: 10
            font.pixelSize: 22
            Layout.alignment: Qt.AlignHCenter

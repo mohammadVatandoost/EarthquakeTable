@@ -12,13 +12,13 @@ Page {
     Grid {
         columns: 2
         width: parent.width
-        spacing: 2
+        spacing: 5
         topPadding: 10
         rightPadding: 10
         leftPadding: 10
 
        ColumnLayout {
-          width: parent.width/2
+          width: (parent.width/2) - (5+10+10)/2
           spacing: 15
           ChooseFile {
              id: fileSelect
@@ -30,8 +30,8 @@ Page {
        }
 
        ColumnLayout {
-           width: parent.width/2
-           spacing: 15
+           width: (parent.width/2) - (5+10+10)/2
+           spacing: 10
            Move {}
            Colibrate {
                id: calibrate
@@ -47,9 +47,11 @@ Page {
            text: qsTr("Login")
            highlighted: true
            Material.background: Material.Green
-           onClicked: {popup.open()}
+           onClicked: {
+               popup.open();
+           }
            z: 1000
-           y: window.height - 100
+           y: window.height - 95
            x: window.width - 80
     }
 
@@ -62,7 +64,7 @@ Page {
                changePassPopup.open()
            }
            z: 1000
-           y: window.height - 100
+           y: window.height - 95
            x: window.width - 120 - width
            visible: false
     }
@@ -131,6 +133,7 @@ Page {
 //                                  ColibrateItemList.reRenderModel();
                                   GroundMotionList.reRenderModel();
                                   changePassword.visible = true;
+                                   window.showNormal();
                                   popup.close();
                               } else {
                                  message.text = "Password is wrong"
